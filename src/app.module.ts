@@ -8,7 +8,7 @@ import { PostModule } from './resolvers/post/post.module';
 import { AppResolver } from './resolvers/app.resolver';
 import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PartyModule } from './resolvers/auth/party.module';
+import { PartyModule } from './resolvers/party/party.module';
 
 @Module({
   imports: [
