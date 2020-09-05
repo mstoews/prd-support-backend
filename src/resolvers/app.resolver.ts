@@ -4,7 +4,7 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 export class AppResolver {
   @Query(returns => String)
   helloWorld(): string {
-    return 'Hello World!';
+    return '<h1>Hello from GLOSS API</h1>';
   }
   @Query(returns => String)
   hello(@Args('name') name: string): string {

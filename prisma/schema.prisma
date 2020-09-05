@@ -35,3 +35,87 @@ enum Role {
   ADMIN
   USER
 }
+
+
+model contacts {
+  contact_id   Int        @default(autoincrement()) @id
+  customer_id  Int?
+  contact_name String
+  phone        String?
+  email        String?
+  customers    customers? @relation(fields: [customer_id], references: [customer_id])
+}
+
+model customers {
+  customer_id   Int        @default(autoincrement()) @id
+  customer_name String
+  contacts      contacts[]
+}
+
+model party {
+  party_ref             String    @id
+  party_type            String?   @unique
+  party_short_name      String?
+  party_long_name       String?
+  party_extra_long_name String?
+  active_ind            String?
+  version_date          DateTime?
+  version_no            Int?
+  version_user          String?
+}
+
+model party_classification {
+  party_ref    String    @id
+  class_type   String?
+  class_code   String?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+}
+
+model party_ext_ref {
+  party_ref          String    @id
+  party_ext_ref_type String?
+  party_ext_ref      String?
+  user_def           String?
+  description        String?
+  version_date       DateTime?
+  version_no         Int?
+  version_user       String?
+}
+
+model party_flag {
+  party_ref    String    @id
+  flag_type    Int?
+  flag_code    String?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+}
+
+model party_instr {
+  party_ref      String    @id
+  instr_type     String?
+  instr_ref_type String?
+  instr_ref      String?
+  user_def       String?
+  description    String?
+  version_date   DateTime?
+  version_no     Int?
+  version_user   String?
+}
+
+model party_narrative {
+  party_ref    String    @id
+  narr_type    String?
+  narrative    String?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+}

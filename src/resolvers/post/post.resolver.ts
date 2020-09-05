@@ -12,6 +12,7 @@ import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection
 export class PostResolver {
   constructor(private prisma: PrismaService) {}
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   @Query((returns) => PostConnection)
   async publishedPosts(
     @Args() { skip, after, before, first, last }: PaginationArgs,
