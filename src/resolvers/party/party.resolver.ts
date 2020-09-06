@@ -6,6 +6,7 @@ import { Resolver, Query, Parent, Args, ResolveField, Mutation, Subscription } f
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { Party } from '../../models/party.model';
 import { PubSub } from 'graphql-subscriptions';
+import { PartyInput } from '../../models/inputs/party.input';
 
 const pubsub = new PubSub();
 
@@ -41,6 +42,13 @@ export class PartyResolver {
   party() { 
       return this.prisma.party.findMany();
   }  
+
+  @Mutation((returns) => Party)
+  async createPartyInput(@Args('data', { type: () => PartyInput })  newUserData: partyCreateInput) {
+    return this.prisma.party.create({
+      data: newUserData,
+    });
+  }
   
   @Query(returns => Party)
   async partyByRefNo(@Args('ref', { type: () => String }) ref: string) {
@@ -77,7 +85,6 @@ export class PartyResolver {
   }
 
   // Returns Party 
-  @Mutation((returns) => Party)
   async createOneParty(data: partyCreateInput): Promise<PartyModel> {
     return this.prisma.party.create({
       data,

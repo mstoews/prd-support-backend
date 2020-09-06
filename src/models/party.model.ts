@@ -10,8 +10,8 @@ export class Party {
   party_extra_long_name: string;
   active_ind:            string;
   version_date:          Date;
-  version_no:            string;
-  version_user:          User;
+  version_no:            number;
+  version_user:          string;
 }
 
 
@@ -24,7 +24,7 @@ export class  PartyClassification {
     description:  string;
     version_date: Date;
     version_no:   number;
-    version_user: User;
+    version_user: string;
 }
  
   
@@ -35,9 +35,10 @@ export class PartyExtRef {
     party_ext_ref:      string;
     user_def:           string;
     description:        string;
+    @Field()
     version_date:       Date;
     version_no:         number;
-    version_user:       User;
+    version_user:       string;
   }
   
 @ObjectType()
@@ -47,9 +48,10 @@ export class  PartyFlag {
     flag_code:    string;
     user_def:     string;
     description:  string;
+    @Field()
     version_date: Date;
     version_no:   number;
-    version_user: User;
+    version_user: string;
   }
   
 @ObjectType()
@@ -62,7 +64,7 @@ export class  PartyInstr {
     description:    string;
     version_date:   Date;
     version_no:     number;
-    version_user:   User;
+    version_user:   string;
   }
   
 @ObjectType()
@@ -74,6 +76,6 @@ export class  PartyNarrative {
     description:  string;
     version_date: Date;
     version_no:   number;
-    version_user: User;
+    version_user: string;
   }
   

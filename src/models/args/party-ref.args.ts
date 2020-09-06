@@ -9,7 +9,6 @@ export class PartyIdArgs {
   partyRef: string;
 }
 
-
 @ArgsType()
 class GetPartyClassArgs {
   @Field({ nullable: false })
@@ -18,4 +17,5 @@ class GetPartyClassArgs {
   @Field({ nullable: false })
   party_class: string;
 }
+
 

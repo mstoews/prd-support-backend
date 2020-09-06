@@ -5,6 +5,7 @@ import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyFlag } from '../../models/party.model';
+import { PartyFlagInput} from '../../models/inputs/party.input';
 
 import {
     Controller,
@@ -42,6 +43,14 @@ import {
      return this.prisma.party_flag.findOne({ where: {
        party_ref : ref,
       },              
+    });
+  }
+
+
+  @Mutation((returns) => PartyFlag)
+  async createPartyFlagInput(@Args('data', { type: () => PartyFlagInput })  newFlagData: party_flagCreateInput) {
+    return this.prisma.party_flag.create({
+      data: newFlagData,
     });
   }
   
@@ -86,4 +95,24 @@ import {
 
 
 
+/*
+mutation {
+	createPartyFlagInput( data: {
+    party_ref: "CMP4"
+    flag_code: "FLAG"
+    flag_type: 2
+    description: "A party flag"
+    user_def: "U"
+    version_no: 1
+    version_user: "MST"
+  }) {
+    party_ref
+    flag_code
+    flag_type
+    description
+    version_no
+    version_user
+  }
+} 
+*/
 

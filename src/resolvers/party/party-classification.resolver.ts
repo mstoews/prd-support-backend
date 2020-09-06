@@ -5,6 +5,7 @@ import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyClassification } from '../../models/party.model';
+import { PartyClassInput} from '../../models/inputs/party.input';
 
 import {
     Controller,
@@ -39,7 +40,6 @@ export class PartyClassificationResolver {
   }  
   
   
-  
   @Query((returns) => PartyClassification)
   party_classificationByRefAndClass(
     @Args('party_ref',{ nullable: false}) party_ref?: string, 
@@ -59,6 +59,15 @@ export class PartyClassificationResolver {
       return this.prisma.party_classification.findMany({ where: {
       party_ref : party_ref, 
       },              
+    });
+  }
+  
+
+
+  @Mutation((returns) => PartyClassification)
+  async createPartyClassInput(@Args('data', { type: () => PartyClassInput })  newClassData: party_classificationCreateInput) {
+    return this.prisma.party.create({
+      data: newClassData,
     });
   }
   

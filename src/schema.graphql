@@ -26,7 +26,6 @@ input LoginInput {
 
 type Mutation {
   changePassword(data: ChangePasswordInput!): User!
-  createOneParty: Party!
   createOnePartyClassification: PartyClassification!
   createOnePartyExtRef: PartyExtRef!
   createOnePartyFlag: PartyFlag!
@@ -34,8 +33,11 @@ type Mutation {
   createOnePartyNarrativer: PartyNarrative!
   createParty: Party!
   createPartyClassification: PartyClassification!
+  createPartyClassInput(data: PartyClassInput!): PartyClassification!
   createPartyExtReference: PartyExtRef!
   createPartyFlag: PartyFlag!
+  createPartyFlagInput(data: PartyFlagInput!): PartyFlag!
+  createPartyInput(data: PartyInput!): Party!
   createPartyInstr: PartyInstr!
   createPartyNarrativer: PartyNarrative!
   deleteParty: PartyNarrative!
@@ -69,8 +71,8 @@ type Party {
   party_short_name: String!
   party_type: String!
   version_date: Date!
-  version_no: String!
-  version_user: User!
+  version_no: Int!
+  version_user: String!
 }
 
 type PartyClassification {
@@ -81,7 +83,18 @@ type PartyClassification {
   user_def: String!
   version_date: Date!
   version_no: Int!
-  version_user: User!
+  version_user: String!
+}
+
+input PartyClassInput {
+  class_code: String
+  class_type: String!
+  description: String
+  party_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
 }
 
 type PartyExtRef {
@@ -92,7 +105,7 @@ type PartyExtRef {
   user_def: String!
   version_date: Date!
   version_no: Int!
-  version_user: User!
+  version_user: String!
 }
 
 type PartyFlag {
@@ -103,7 +116,30 @@ type PartyFlag {
   user_def: String!
   version_date: Date!
   version_no: Int!
-  version_user: User!
+  version_user: String!
+}
+
+input PartyFlagInput {
+  description: String
+  flag_code: String
+  flag_type: Int
+  party_ref: String
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
+}
+
+input PartyInput {
+  active_ind: String
+  party_extra_long_name: String
+  party_long_name: String
+  party_ref: String
+  party_short_name: String
+  party_type: String
+  version_date: Date
+  version_no: Int
+  version_user: String
 }
 
 type PartyInstr {
@@ -115,7 +151,7 @@ type PartyInstr {
   user_def: String!
   version_date: Date!
   version_no: Int!
-  version_user: User!
+  version_user: String!
 }
 
 type PartyNarrative {
@@ -126,7 +162,7 @@ type PartyNarrative {
   user_def: String!
   version_date: Date!
   version_no: Int!
-  version_user: User!
+  version_user: String!
 }
 
 type Post {
