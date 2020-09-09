@@ -12,8 +12,8 @@ create table if not exists party
 	party_short_name char(20),
 	party_long_name char(40),
 	party_extra_long_name char(40),
-	active_ind char,
-	version_date date,
+	active_ind char(1),
+	version_date date default now(),
 	version_no integer,
 	version_user char(12)
 );
@@ -95,7 +95,7 @@ create table if not exists party_narrative
 
 alter table party_narrative owner to postgres;
 
-select * from party_instr;
+
 
 create table if not exists party_instr
 (
@@ -198,8 +198,8 @@ SELECT * FROM party_classification;
 SELECT * FROM party;
 SELECT * FROM party_ext_ref;
 SELECT * FROM party_narrative;
-SELECT * FROM party_instr
-
+SELECT * FROM party_instr;
+SELECT * FROM party_flag;
 
 
 

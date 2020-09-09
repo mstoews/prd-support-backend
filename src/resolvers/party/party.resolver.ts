@@ -59,8 +59,8 @@ export class PartyResolver {
   }
 
 
-  @Query((returns) => [Party])
-  partyByRef(@Args('ref',{ type: () => String}) ref: string) {
+  @Query((returns) => Party)
+  async partyByRef(@Args('party_ref',{ type: () => String}) ref: string) {
      return this.prisma.party.findOne({ where: {
        party_ref : ref,
       },              

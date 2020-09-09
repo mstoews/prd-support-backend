@@ -36,11 +36,14 @@ import {
   @Query((returns) => [PartyExtRef])
   party_ext_ref() { 
       return this.prisma.party_ext_ref.findMany();
-  }  
+  } 
   
-  @Query((returns) => PartyExtRef)
-  party_ext_refByRef(ref: string) {
-     return this.prisma.party_ext_ref.findOne({ where: {
+  
+  @Query((returns) => [PartyExtRef])
+  async party_ext_refByRef( 
+  @Args('party_ref',{ nullable: false}) ref?: string) 
+  {
+     return this.prisma.party_ext_ref.findMany({ where: {
        party_ref : ref,
       },              
     });

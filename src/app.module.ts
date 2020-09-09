@@ -9,6 +9,7 @@ import { AppResolver } from './resolvers/app.resolver';
 import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PartyModule } from './resolvers/party/party.module';
+import { PubSub } from 'graphql-subscriptions';
 
 @Module({
   imports: [

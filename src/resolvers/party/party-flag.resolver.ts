@@ -34,18 +34,20 @@ import {
     private prisma: PrismaService) {}
   
   @Query((returns) => [PartyFlag])
-  party_flag() { 
+  async party_flag() { 
       return this.prisma.party_flag.findMany();
   }  
   
-  @Query((returns) => PartyFlag)
-  party_flagByRef(ref: string) {
-     return this.prisma.party_flag.findOne({ where: {
+  @Query((returns) => [PartyFlag])
+  async partyFlagByRef( 
+  @Args('party_ref',{ nullable: false}) ref?: string) 
+  {
+     return this.prisma.party_flag.findMany({ where: {
        party_ref : ref,
       },              
     });
   }
-
+  
 
   @Mutation((returns) => PartyFlag)
   async createPartyFlagInput(@Args('data', { type: () => PartyFlagInput })  newFlagData: party_flagCreateInput) {

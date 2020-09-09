@@ -210,15 +210,15 @@ type Query {
   party_classificationByRef(party_ref: String!): [PartyClassification!]!
   party_classificationByRefAndClass(class_ref: String!, party_ref: String!): PartyClassification!
   party_ext_ref: [PartyExtRef!]!
-  party_ext_refByRef: PartyExtRef!
+  party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
   party_flag: [PartyFlag!]!
-  party_flagByRef: PartyFlag!
   party_instr: [PartyInstr!]!
   party_instrByRef: PartyInstr!
   party_narrative: [PartyNarrative!]!
   party_narrativeByRef: PartyNarrative!
-  partyByRef(ref: String!): [Party!]!
+  partyByRef(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
+  partyFlagByRef(party_ref: String!): [PartyFlag!]!
   post(postId: String!): Post!
   publishedPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, query: String, skip: Int): PostConnection!
   userPosts(userId: String!): [Post!]!

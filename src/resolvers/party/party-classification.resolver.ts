@@ -39,6 +39,7 @@ export class PartyClassificationResolver {
       return this.prisma.party_classification.findMany();
   }  
   
+
   
   @Query((returns) => PartyClassification)
   party_classificationByRefAndClass(
@@ -54,7 +55,7 @@ export class PartyClassificationResolver {
 
   @Query((returns) => [PartyClassification])
   party_classificationByRef(
-    @Args('party_ref',{ nullable: false}) party_ref?: string,) 
+    @Args('party_ref',{ nullable: false}) party_ref?: string) 
     {
       return this.prisma.party_classification.findMany({ where: {
       party_ref : party_ref, 
