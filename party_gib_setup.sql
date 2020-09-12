@@ -115,6 +115,23 @@ create table if not exists party_instr
 
 );
 
+create table if not exists trades (
+    host_reference char(12) not null,
+    tref_ext_ref char(4) not null,
+    opertion char(12) not null,
+    instrument_ref_type char(4) not null,
+    quantity int not null,
+    counterparty char(12) not null,
+    trade_price decimal(12,6) not null,
+    trade_time time,
+    value_date date not null,
+    company varchar(12) not null,
+    book varchar(4) not null,
+    trade_currency varchar(4) not null,
+    PRIMARY KEY(host_reference,tref_ext_ref)
+);
+
+
 
 DROP ROLE Role
 CREATE ROLE role;

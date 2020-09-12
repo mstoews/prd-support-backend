@@ -31,15 +31,9 @@ type Mutation {
   createOnePartyFlag: PartyFlag!
   createOnePartyInstr: PartyInstr!
   createOnePartyNarrativer: PartyNarrative!
-  createParty: Party!
-  createPartyClassification: PartyClassification!
   createPartyClassInput(data: PartyClassInput!): PartyClassification!
-  createPartyExtReference: PartyExtRef!
-  createPartyFlag: PartyFlag!
   createPartyFlagInput(data: PartyFlagInput!): PartyFlag!
   createPartyInput(data: PartyInput!): Party!
-  createPartyInstr: PartyInstr!
-  createPartyNarrativer: PartyNarrative!
   deleteParty: PartyNarrative!
   login(data: LoginInput!): Auth!
   refreshToken(token: String!): Token!
@@ -213,9 +207,7 @@ type Query {
   party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
   party_flag: [PartyFlag!]!
   party_instr: [PartyInstr!]!
-  party_instrByRef: PartyInstr!
   party_narrative: [PartyNarrative!]!
-  party_narrativeByRef: PartyNarrative!
   partyByRef(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!

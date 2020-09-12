@@ -37,6 +37,7 @@ import {
       return this.prisma.party_narrative.findMany();
   }  
   
+  /*
   @Query((returns) => PartyNarrative)
   party_narrativeByRef(ref: string) {
      return this.prisma.party_narrative.findOne({ where: {
@@ -44,6 +45,7 @@ import {
       },              
     });
   }
+
   
   @Mutation((returns) => PartyNarrative)
   async createPartyNarrativer(
@@ -56,8 +58,9 @@ import {
       party_ref,
     });
   }
-
-  @Mutation((returns) => PartyNarrative)
+ */
+ 
+ @Mutation((returns) => PartyNarrative)
   async createOnePartyNarrativer(data: party_narrativeCreateInput): Promise<PartyNarrativeModel> {
     return this.prisma.party_narrative.create({
       data,

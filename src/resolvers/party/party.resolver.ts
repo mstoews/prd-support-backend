@@ -72,6 +72,7 @@ export class PartyResolver {
     return pubsub.asyncIterator('partyMutated');
   }
   
+  /*
   @Mutation((returns) => Party)
   async createParty(
     @Body() partyData: { 
@@ -83,6 +84,7 @@ export class PartyResolver {
       party_ref,
     });
   }
+*/
 
   // Returns Party 
   async createOneParty(data: partyCreateInput): Promise<PartyModel> {

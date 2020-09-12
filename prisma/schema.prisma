@@ -1,11 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRESQL_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-  // previewFeatures = ["aggregateApi", "connectOrCreate", "distinct", "transactionApi"]
 }
 
 model User {
@@ -36,7 +35,6 @@ enum Role {
   USER
 }
 
-
 model contacts {
   contact_id   Int        @default(autoincrement()) @id
   customer_id  Int?
@@ -53,69 +51,106 @@ model customers {
 }
 
 model party {
-  party_ref             String    @id
-  party_type            String?   @unique
+  party_ref             String                 @id
+  party_type            String                 @unique
   party_short_name      String?
   party_long_name       String?
   party_extra_long_name String?
   active_ind            String?
-  version_date          DateTime?
+  version_date          DateTime?              @default(now())
   version_no            Int?
   version_user          String?
+  party_classification  party_classification[]
+  party_ext_ref         party_ext_ref[]
+  party_flag            party_flag[]
+  party_instr           party_instr[]
+  party_narrative       party_narrative[]
 }
 
 model party_classification {
-  party_ref    String    @id
-  class_type   String?
+  party_ref    String
+  class_type   String
   class_code   String?
   user_def     String?
   description  String?
   version_date DateTime?
   version_no   Int?
   version_user String?
+  party        party     @relation(fields: [party_ref], references: [party_ref])
+
+  @@id([party_ref, class_type])
 }
 
 model party_ext_ref {
-  party_ref          String    @id
-  party_ext_ref_type String?
+  party_ref          String
+  party_ext_ref_type String
   party_ext_ref      String?
   user_def           String?
   description        String?
   version_date       DateTime?
   version_no         Int?
   version_user       String?
+  party              party     @relation(fields: [party_ref], references: [party_ref])
+
+  @@id([party_ref, party_ext_ref_type])
 }
 
 model party_flag {
-  party_ref    String    @id
-  flag_type    Int?
+  party_ref    String
+  flag_type    Int
   flag_code    String?
   user_def     String?
   description  String?
   version_date DateTime?
   version_no   Int?
   version_user String?
+  party        party     @relation(fields: [party_ref], references: [party_ref])
+
+  @@id([party_ref, flag_type])
 }
 
 model party_instr {
-  party_ref      String    @id
-  instr_type     String?
+  party_ref      String
+  instr_type     String
   instr_ref_type String?
-  instr_ref      String?
+  instr_ref      String
   user_def       String?
   description    String?
   version_date   DateTime?
   version_no     Int?
   version_user   String?
+  party          party     @relation(fields: [party_ref], references: [party_ref])
+
+  @@id([party_ref, instr_ref])
 }
 
 model party_narrative {
-  party_ref    String    @id
-  narr_type    String?
+  party_ref    String
+  narr_type    String
   narrative    String?
   user_def     String?
   description  String?
   version_date DateTime?
   version_no   Int?
   version_user String?
+  party        party     @relation(fields: [party_ref], references: [party_ref])
+
+  @@id([party_ref, narr_type])
+}
+
+model trades {
+  host_reference      String
+  tref_ext_ref        String
+  opertion            String
+  instrument_ref_type String
+  quantity            Int
+  counterparty        String
+  trade_price         Float
+  trade_time          DateTime?
+  value_date          DateTime
+  company             String
+  book                String
+  trade_currency      String
+
+  @@id([host_reference, tref_ext_ref])
 }

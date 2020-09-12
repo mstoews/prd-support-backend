@@ -24,6 +24,7 @@ import {
     party_classificationWhereUniqueInput,
     party_classificationWhereInput,
     party_classificationOrderByInput,
+    partyCreateInput,
   } from '@prisma/client';
 
 
@@ -66,25 +67,13 @@ export class PartyClassificationResolver {
 
 
   @Mutation((returns) => PartyClassification)
-  async createPartyClassInput(@Args('data', { type: () => PartyClassInput })  newClassData: party_classificationCreateInput) {
+  async createPartyClassInput(@Args('data', { type: () => PartyClassInput })  newClassData: partyCreateInput) {
     return this.prisma.party.create({
       data: newClassData,
     });
   }
   
   
-  @Mutation((returns) => PartyClassification)
-  async createPartyClassification(
-    @Body() partyClassData: { 
-        party_ref : string 
-    },
-  ): Promise<ClassModel> {
-    const { party_ref } = partyClassData;
-    return this.createOnePartyClassification({
-      party_ref,
-    });
-  }
-
   @Mutation((returns) => PartyClassification)
   async createOnePartyClassification(data: party_classificationCreateInput): Promise<ClassModel> {
     return this.prisma.party_classification.create({

@@ -35,6 +35,7 @@ import {
       return this.prisma.party_instr.findMany();
   }  
   
+  /*
   @Query((returns) => PartyInstr)
   party_instrByRef(ref: string) {
      return this.prisma.party_instr.findOne({ where: {
@@ -54,7 +55,7 @@ import {
       party_ref,
     });
   }
-
+*/
   @Mutation((returns) => PartyInstr)
   async createOnePartyInstr(data: party_instrCreateInput): Promise<PartyInstrModel> {
     return this.prisma.party_instr.create({

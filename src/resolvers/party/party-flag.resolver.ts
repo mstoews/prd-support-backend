@@ -56,6 +56,7 @@ import {
     });
   }
   
+  /*
   @Mutation((returns) => PartyFlag)
   async createPartyFlag(
     @Body() partyClassData: { 
@@ -67,6 +68,7 @@ import {
       party_ref,
     });
   }
+  */
 
   @Mutation((returns) => PartyFlag)
   async createOnePartyFlag(data: party_flagCreateInput): Promise<PartyFlagModel> {

@@ -49,6 +49,7 @@ import {
     });
   }
   
+  /*
   @Mutation((returns) => PartyExtRef)
   async createPartyExtReference(
     @Body() partyClassData: { 
@@ -60,6 +61,8 @@ import {
       party_ref,
     });
   }
+
+  */
 
   @Mutation((returns) => PartyExtRef)
   async createOnePartyExtRef(data: party_ext_refCreateInput): Promise<PartyExtRefModel> {
