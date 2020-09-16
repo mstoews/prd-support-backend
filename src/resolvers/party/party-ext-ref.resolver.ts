@@ -24,6 +24,7 @@ import {
     party_ext_refWhereInput,
     party_ext_refOrderByInput,
   } from '@prisma/client';
+import { PartyInstrInput, PartyExtRefInput } from 'src/models/inputs/party.input';
 
 
   @Resolver('PartyExtRef')
@@ -37,7 +38,8 @@ import {
   party_ext_ref() { 
       return this.prisma.party_ext_ref.findMany();
   } 
-  
+
+
   
   @Query((returns) => [PartyExtRef])
   async party_ext_refByRef( 
@@ -64,12 +66,14 @@ import {
 
   */
 
-  @Mutation((returns) => PartyExtRef)
-  async createOnePartyExtRef(data: party_ext_refCreateInput): Promise<PartyExtRefModel> {
-    return this.prisma.party_ext_ref.create({
-      data,
-    });
-  }
+
+ @Mutation((returns) => PartyExtRef)
+ async createPartyInstrumentInput(@Args('data', { type: () => PartyExtRefInput })  newPartyExtData: party_ext_refCreateInput) {
+   return this.prisma.party_ext_ref.create({
+     data: newPartyExtData,
+   });
+ }
+
   
   @Mutation((returns) => PartyExtRef)
   async updateParty(params: {

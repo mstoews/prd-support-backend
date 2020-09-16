@@ -10,12 +10,22 @@ export class PartyIdArgs {
 }
 
 @ArgsType()
-class GetPartyClassArgs {
+export class GetPartyClassArgs {
   @Field({ nullable: false })
   party_ref?: string;
 
   @Field({ nullable: false })
-  party_class: string;
+  party_class?: string;
 }
 
+
+
+@ArgsType()
+export class PartyNarrativeArgs {
+  @Field({ nullable: false })
+  party_ref?: string;
+  
+  @Field({ nullable: false })
+  narr_type?: string
+}
 

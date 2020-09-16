@@ -41,7 +41,6 @@ export class PartyClassificationResolver {
   }  
   
 
-  
   @Query((returns) => PartyClassification)
   party_classificationByRefAndClass(
     @Args('party_ref',{ nullable: false}) party_ref?: string, 

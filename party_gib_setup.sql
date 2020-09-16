@@ -32,10 +32,7 @@ create table if not exists party_classification
 	version_date date,
 	version_no integer,
 	version_user char(12),
-    PRIMARY KEY(party_ref,class_type),
-    CONSTRAINT fk_party_class
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
+    PRIMARY KEY(party_ref,class_type)
 
 );
 
@@ -51,10 +48,7 @@ create table if not exists party_ext_ref
 	version_date date,
 	version_no integer,
 	version_user char(12),
-    PRIMARY KEY(party_ref,party_ext_ref_type),
-    CONSTRAINT fk_party_ext_ref
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
+    PRIMARY KEY(party_ref,party_ext_ref_type)
 );
 
 alter table party_ext_ref owner to postgres;
@@ -69,14 +63,11 @@ create table if not exists party_flag
 	version_date date,
 	version_no integer,
 	version_user char(12),
-    PRIMARY KEY(party_ref, flag_type),
-    CONSTRAINT fk_party_flag
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
+    PRIMARY KEY(party_ref, flag_type)
 );
 
 alter table party_flag owner to postgres;
-
+drop table if exists party_narrative;
 create table if not exists party_narrative
 (
 	party_ref char(12) not null,
@@ -84,35 +75,27 @@ create table if not exists party_narrative
 	narrative char(255),
 	user_def char,
 	description char(40),
-	version_date date,
-	version_no integer,
-	version_user char(12),
-    PRIMARY KEY(party_ref, narr_type),
-    CONSTRAINT fk_party_narr
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
+	version_date date default now(),
+	version_no integer default 1,
+	version_user char(12) default user,
+	PRIMARY KEY(party_ref, narr_type)
 );
 
 alter table party_narrative owner to postgres;
 
-
-
+drop table if exists party_instr;
 create table if not exists party_instr
 (
-	party_ref char(12) not null,
+    party_ref char(12) not null,
+    instr_ref char(12),
 	instr_type char(4) not null,
 	instr_ref_type char(4),
-	instr_ref char(12),
 	user_def char,
 	description char(40),
-	version_date date,
+	version_date date default now(),
 	version_no integer,
 	version_user char(12),
-    PRIMARY KEY(party_ref, instr_ref),
-    CONSTRAINT fk_party_instr
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
-
+    PRIMARY KEY(party_ref,instr_ref)
 );
 
 create table if not exists trades (
@@ -132,9 +115,9 @@ create table if not exists trades (
 );
 
 
-
-DROP ROLE Role
-CREATE ROLE role;
+--
+-- DROP ROLE Role
+-- CREATE ROLE role;
 
 drop table if exists "User";
 create table if not exists "User"
@@ -152,51 +135,10 @@ create table if not exists "User"
 );
 
 alter table "User" owner to postgres;
-drop table if exists contacts;
-drop table if exists customers;
-create table if not exists customers
-(
-	customer_id integer generated always as identity
-		constraint customers_pkey
-			primary key,
-	customer_name varchar(255) not null
-);
-
-alter table customers owner to postgres;
-
-
-create table if not exists contacts
-(
-	contact_id integer generated always as identity
-		constraint contacts_pkey
-			primary key,
-	customer_id integer
-		constraint fk_customer
-			references customers,
-	contact_name varchar(255) not null,
-	phone varchar(15),
-	email varchar(100)
-);
-
-alter table contacts owner to postgres;
-
-SELECT * FROM party;
-DELETE FROM party where party_ref = 'JASD71';
-DELETE FROM party where party_ref = 'JASD72';
-DELETE FROM party where party_ref = 'JASD73';
 
 INSERT INTO party SELECT 'CMP4', 'CMP4','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
 INSERT INTO party SELECT 'JASD91', 'DAC1','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
 INSERT INTO party SELECT 'JASD92', 'DAC2','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD93', 'DAC3','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD94', 'DAC4','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD95', 'DAC5','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD99', 'DAC6','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD98', 'DAC8','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD71', 'DAC9','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD72', 'DA10','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD73', 'DA11','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD74', 'DA12','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
 INSERT INTO party_classification SELECT 'CMP4','LOCN','TOK','N','Location', now(), 1, 'JMARSDEN';
 INSERT INTO party_classification SELECT 'CMP4','CTRY','JP','N','Country', now(),1, 'JMARSDEN';
 INSERT INTO party_classification SELECT 'CMP4','HOL','JP','N','Holiday',now(),1,'JMARSDEN';
@@ -207,9 +149,12 @@ INSERT INTO party_ext_ref SELECT 'CMP4','BOJ','2345','Y','BOJ Code', now(), 1, '
 INSERT INTO party_narrative SELECT 'CMP4','INAM','BR SEC JAPAN','Y','Internal Narrative',now(),1,'JMARSDEN';
 INSERT INTO party_narrative SELECT 'CMP4','PJEX','ブロードリッジ証券ジャパン','Y','Japanese Narrative', now(), 1, 'JMARSDEN';
 INSERT INTO party_instr SELECT 'CMP4','COBI','ISO','JPY','N','Base Ccy',now(),1,'JMARSDEN';
+INSERT INTO party_instr SELECT 'CMP4','COB3','ISO','JPY','N','Base Ccy',now(),1,'MST';
 
+DELETE FROM party_instr;
+SELECT * FROM party_instr;
 
-select party_ref, count(*) from party group by party_ref;
+SELECT party_ref, count(*) from party group by party_ref;
 
 SELECT * FROM party_classification;
 SELECT * FROM party;
@@ -218,5 +163,4 @@ SELECT * FROM party_narrative;
 SELECT * FROM party_instr;
 SELECT * FROM party_flag;
 
-
-
+DELETE FROM party WHERE party_ref = 'MYPT';

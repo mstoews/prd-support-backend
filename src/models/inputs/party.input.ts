@@ -1,25 +1,16 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ArgsType } from '@nestjs/graphql';
 
 @InputType()
 export class PartyInput {
-  @Field({ nullable: true })
-  party_ref:             string;  
-  @Field({ nullable: true })  
-  party_type:            string;
-  @Field({ nullable: true })  
-  party_short_name:      string;
-  @Field({ nullable: true })
-  party_long_name:       string;
-  @Field({ nullable: true })
-  party_extra_long_name: string;
-  @Field({ nullable: true })
-  active_ind:            string;
-  @Field({ nullable: true })
-  version_date:          Date;
-  @Field({ nullable: true })
-  version_no:            number;
-  @Field({ nullable: true })
-  version_user:          string;
+  @Field({ nullable: true })  party_ref:             string;  
+  @Field({ nullable: true })  party_type:            string;
+  @Field({ nullable: true })  party_short_name:      string;
+  @Field({ nullable: true })  party_long_name:       string;
+  @Field({ nullable: true })  party_extra_long_name: string;
+  @Field({ nullable: true })  active_ind:            string;
+  @Field({ nullable: true })  version_date:          Date;
+  @Field({ nullable: true })  version_no:            number;
+  @Field({ nullable: true })  version_user:          string;
 }
 
 @InputType()
@@ -61,9 +52,9 @@ export class  PartyFlagInput {
 @InputType()
 export class  PartyInstrInput {
   @Field({nullable: true })  party_ref:      string;
+  @Field({nullable: true })  instr_ref:      string;
   @Field({nullable: true })  instr_type:     string;
   @Field({nullable: true })  instr_ref_type: string;
-  @Field({nullable: true })  instr_ref:      string;
   @Field({nullable: true })  user_def:       string;
   @Field({nullable: true })  description:    string;
   @Field({nullable: true })  version_date:   Date;
@@ -83,4 +74,8 @@ export class  PartyNarrativeInput {
   @Field({nullable: true })  version_user: string;
   }
   
-
+@ArgsType()
+export class  PartyNarrativeArgs {
+  @Field({nullable: true })  party_ref:    string;
+  @Field({nullable: true })  narr_type:    string;
+}

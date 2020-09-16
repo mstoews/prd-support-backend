@@ -5,6 +5,7 @@ import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyInstr } from '../../models/party.model';
+import { PartyInstrInput} from '../../models/inputs/party.input';
 
 import {
     Controller,
@@ -26,40 +27,20 @@ import {
   } from '@prisma/client';
 
   @Resolver('PartyInstr')
-    export class PartyInstrResolver {
-    constructor(
-    private prisma: PrismaService) {}
+
+  export class PartyInstrResolver {
+  
+  constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartyInstr])
-  party_instr() { 
-      return this.prisma.party_instr.findMany();
-  }  
-  
-  /*
-  @Query((returns) => PartyInstr)
-  party_instrByRef(ref: string) {
-     return this.prisma.party_instr.findOne({ where: {
-       party_ref : ref,
-      },              
-    });
-  }
-  
+    party_instr() { 
+        return this.prisma.party_instr.findMany();
+    }  
+    
   @Mutation((returns) => PartyInstr)
-  async createPartyInstr(
-    @Body() partyClassData: { 
-        party_ref : string 
-    },
-  ): Promise<PartyInstrModel> {
-    const { party_ref } = partyClassData;
-    return this.createOnePartyInstr({
-      party_ref,
-    });
-  }
-*/
-  @Mutation((returns) => PartyInstr)
-  async createOnePartyInstr(data: party_instrCreateInput): Promise<PartyInstrModel> {
+    async createPartyInstrumentInput(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: party_instrCreateInput) {
     return this.prisma.party_instr.create({
-      data,
+      data: newInstrumentData,
     });
   }
   

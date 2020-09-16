@@ -39,7 +39,7 @@ export class PartyResolver {
   {}
   
   @Query((returns) => [Party])
-  party() { 
+  async party() { 
       return this.prisma.party.findMany();
   }  
 
@@ -68,7 +68,7 @@ export class PartyResolver {
   }
   
   @Subscription(returns => Party)
-  partyMutated() {
+  async partyMutated() {
     return pubsub.asyncIterator('partyMutated');
   }
   

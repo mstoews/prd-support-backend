@@ -8,16 +8,16 @@ services:
     ports:
       - 3000:3010
     depends_on:
-      - postgres
+      - db
     env_file:
       - .env
 
-  postgres:
+  db:
     image: postgres:12
     container_name: postgres
     restart: always
     ports:
-      - 3301:5432
+      - 3302:5432
     environment:
       POSTGRES_USER: ${POSTGRESQL_USER}
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}

@@ -22,48 +22,48 @@ export class AuthService {
     private readonly configService: ConfigService
   ) {}
 
-  async createUser(payload: SignupInput): Promise<Token> {
-    const hashedPassword = await this.passwordService.hashPassword(
-      payload.password
-    );
+  // async createUser(payload: SignupInput): Promise<Token> {
+  //   const hashedPassword = await this.passwordService.hashPassword(
+  //     payload.password
+  //   );
 
-    try {
-      const user = await this.prisma.user.create({
-        data: {
-          ...payload,
-          password: hashedPassword,
-          role: 'USER',
-        },
-      });
+  //   try {
+  //     const user = await this.prisma.user.create({
+  //       data: {
+  //         ...payload,
+  //         password: hashedPassword,
+  //         role: 'USER',
+  //       },
+  //     });
 
-      return this.generateToken({
-        userId: user.id,
-      });
-    } catch (error) {
-      throw new ConflictException(`Email ${payload.email} already used.`);
-    }
-  }
+  //     return this.generateToken({
+  //       userId: user.id,
+  //     });
+  //   } catch (error) {
+  //     throw new ConflictException(`Email ${payload.email} already used.`);
+  //   }
+  // }
 
-  async login(email: string, password: string): Promise<Token> {
-    const user = await this.prisma.user.findOne({ where: { email } });
+  // async login(email: string, password: string): Promise<Token> {
+  //   const user = await this.prisma.user.findOne({ where: { email } });
 
-    if (!user) {
-      throw new NotFoundException(`No user found for email: ${email}`);
-    }
+  //   if (!user) {
+  //     throw new NotFoundException(`No user found for email: ${email}`);
+  //   }
 
-    const passwordValid = await this.passwordService.validatePassword(
-      password,
-      user.password
-    );
+  //   const passwordValid = await this.passwordService.validatePassword(
+  //     password,
+  //     user.password
+  //   );
 
-    if (!passwordValid) {
-      throw new BadRequestException('Invalid password');
-    }
+  //   if (!passwordValid) {
+  //     throw new BadRequestException('Invalid password');
+  //   }
 
-    return this.generateToken({
-      userId: user.id,
-    });
-  }
+  //   return this.generateToken({
+  //     userId: user.id,
+  //   });
+  // }
 
   validateUser(userId: string): Promise<User> {
     return this.prisma.user.findOne({ where: { id: userId } });

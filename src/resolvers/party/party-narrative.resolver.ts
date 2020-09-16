@@ -2,11 +2,11 @@
 
 import { PrismaService } from './../../services/prisma.service';
 import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs} from '../../models/args/party-ref.args';
+import { PartyIdArgs } from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyNarrative } from '../../models/party.model';
+import { PartyNarrativeArgs } from 'src/models/inputs/party.input';
 
 import {
     Controller,
@@ -27,48 +27,41 @@ import {
     party_narrativeOrderByInput,
   } from '@prisma/client';
 
+
   @Resolver('PartyNarrative')
   export class PartyNarrativeResolver {
       constructor(
     private prisma: PrismaService) {}
   
   @Query((returns) => [PartyNarrative])
-  party_narrative() { 
+  async partyNarrative() { 
       return this.prisma.party_narrative.findMany();
-  }  
+  }
   
   /*
-  @Query((returns) => PartyNarrative)
-  party_narrativeByRef(ref: string) {
-     return this.prisma.party_narrative.findOne({ where: {
-       party_ref : ref,
-      },              
+  @Mutation((returns) => PartyNarrative)
+  async createPartyNarrative(@Args('data', { type: () => PartyNarrative })  newNarrativeData: party_narrativeCreateInput) {
+  return this.prisma.party_narrative.create({
+    data: newNarrativeData,
     });
   }
+  */
+  
 
-  
+ @Query((returns) => PartyNarrative)
+  async partyNarrativeByRef(
+   @Args('party_ref',{ nullable: false}) party_ref?: string, 
+   @Args('narrative_type',{ nullable: false}) narr_type?: string,) 
+   {
+     return this.prisma.party_narrative.findMany({ where: {
+      party_ref : party_ref, 
+      narr_type : narr_type,
+     },              
+   });
+ }
+
   @Mutation((returns) => PartyNarrative)
-  async createPartyNarrativer(
-    @Body() partyClassData: { 
-        party_ref : string 
-    },
-  ): Promise<PartyNarrativeModel> {
-    const { party_ref } = partyClassData;
-    return this.createOnePartyNarrativer({
-      party_ref,
-    });
-  }
- */
- 
- @Mutation((returns) => PartyNarrative)
-  async createOnePartyNarrativer(data: party_narrativeCreateInput): Promise<PartyNarrativeModel> {
-    return this.prisma.party_narrative.create({
-      data,
-    });
-  }
-  
-  @Mutation((returns) => PartyNarrative)
-  async updateParty(params: {
+  async updateNarrative(params: {
     where: party_narrativeWhereUniqueInput;
     data: party_narrativeUpdateInput;
   }): Promise<PartyNarrativeModel> {
@@ -80,7 +73,7 @@ import {
   }
   
   @Mutation((returns) => PartyNarrative)
-  async deleteParty(where: party_narrativeWhereUniqueInput): Promise<PartyNarrativeModel> {
+  async deleteNarrative(where: party_narrativeWhereUniqueInput): Promise<PartyNarrativeModel> {
     return this.prisma.party_narrative.delete({
       where,
     });
