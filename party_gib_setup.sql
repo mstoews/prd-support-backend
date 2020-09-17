@@ -134,6 +134,8 @@ create table if not exists "User"
 	-- role Role not null
 );
 
+select * FROM party_classification where class_type = 'LOCN' and party_ref = 'CMP4';
+
 alter table "User" owner to postgres;
 
 INSERT INTO party SELECT 'CMP4', 'CMP4','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';

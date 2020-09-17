@@ -19,6 +19,7 @@ import { PubSub } from 'graphql-subscriptions';
         buildSchemaOptions: {
           numberScalarMode: 'integer',
         },
+        tracing: true,
         sortSchema: true,
         autoSchemaFile:
           configService.get('GRAPHQL_SCHEMA_DEST') || './src/schema.graphql',

@@ -48,7 +48,7 @@ import {
   */
   
 
- @Query((returns) => PartyNarrative)
+ @Query((returns) => [PartyNarrative])
   async partyNarrativeByRef(
    @Args('party_ref',{ nullable: false}) party_ref?: string, 
    @Args('narrative_type',{ nullable: false}) narr_type?: string,) 

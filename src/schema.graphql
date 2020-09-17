@@ -155,7 +155,7 @@ type Query {
   party: [Party!]!
   party_classification: [PartyClassification!]!
   party_classificationByRef(party_ref: String!): [PartyClassification!]!
-  party_classificationByRefAndClass(class_ref: String!, party_ref: String!): PartyClassification!
+  party_classificationByRefAndClass(class_type: String!, party_ref: String!): [PartyClassification!]!
   party_ext_ref: [PartyExtRef!]!
   party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
   party_flag: [PartyFlag!]!
@@ -164,7 +164,7 @@ type Query {
   partyByRefNo(ref: String!): Party!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!
   partyNarrative: [PartyNarrative!]!
-  partyNarrativeByRef(narrative_type: String!, party_ref: String!): PartyNarrative!
+  partyNarrativeByRef(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
 }
 
 """User role"""
