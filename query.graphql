@@ -1,0 +1,36 @@
+fragment ClassificationData on  PartyClassification {
+  party_ref
+  class_code
+  class_type
+  description
+  user_def
+  version_date
+  version_no
+  version_user
+}
+  
+fragment PartyData on Party {
+  party_ref
+  active_ind
+  party_extra_long_name
+  party_long_name
+  party_short_name
+  party_type
+  version_date
+  version_no
+  version_user
+}
+
+query {
+  partyByRefNo(ref: "CMP4" ){
+    ...PartyData 
+  }
+ 	party_classificationByRef(party_ref: "CMP4") {
+      ...ClassificationData
+  }
+  party_ext_refByRef(party_ref: "CMP4") {
+      party_ref
+    	party_ext_ref
+  }
+}
+
