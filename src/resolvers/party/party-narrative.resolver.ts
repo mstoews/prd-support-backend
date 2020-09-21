@@ -38,14 +38,27 @@ import {
       return this.prisma.party_narrative.findMany();
   }
   
-  /*
-  @Mutation((returns) => PartyNarrative)
-  async createPartyNarrative(@Args('data', { type: () => PartyNarrative })  newNarrativeData: party_narrativeCreateInput) {
-  return this.prisma.party_narrative.create({
-    data: newNarrativeData,
+  @Query((returns) => [PartyNarrative])
+  async partyNarrativeByRef(@Args('party_ref',{ type: () => String}) ref: string) {
+   return this.prisma.party_narrative.findMany({ where: {
+     party_ref : ref,
+    },              
+  });
+  }
+  
+ 
+  @Query((returns) => [PartyNarrative])
+   async partyNarrativeByRefAndType(
+    @Args('party_ref',{ nullable: false}) party_ref?: string, 
+    @Args('narrative_type',{ nullable: false}) narr_type?: string,) 
+    {
+      return this.prisma.party_narrative.findMany({ where: {
+       party_ref : party_ref, 
+       narr_type : narr_type,
+      },              
     });
   }
-  */
+ 
   
 
  @Query((returns) => [PartyNarrative])
