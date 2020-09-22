@@ -164,7 +164,8 @@ type Query {
   partyByRefNo(ref: String!): Party!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!
   partyNarrative: [PartyNarrative!]!
-  partyNarrativeByRef(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
+  partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
+  partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
 }
 
 """User role"""

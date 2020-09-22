@@ -7,12 +7,12 @@ drop table if exists party;
 
 create table if not exists party
 (
-	party_ref char(12) not null constraint party_idx primary key,
-	party_type char(4) not null,
-	party_short_name char(20),
-	party_long_name char(40),
-	party_extra_long_name char(40),
-	active_ind char(1),
+	party_ref varchar(12) not null constraint party_idx primary key,
+	party_type varchar(4) not null,
+	party_short_name varchar(20),
+	party_long_name varchar(40),
+	party_extra_long_name varchar(40),
+	active_ind varchar(1),
 	version_date date default now(),
 	version_no integer,
 	version_user char(12)
