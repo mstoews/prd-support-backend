@@ -73,7 +73,37 @@ export class  PartyNarrativeInput {
   @Field({nullable: true })  version_no:   number;
   @Field({nullable: true })  version_user: string;
   }
-  
+
+  @InputType()
+  export class  PartyAssocInput {
+   @Field({nullable: null}) party_ref:       string;
+   @Field({nullable: null}) assoc_type:      string;
+   @Field({nullable: null}) assoc_party_ref: string;
+   @Field({nullable: null}) user_def:       string;
+   @Field({nullable: null}) description:     string;
+   @Field({nullable: null}) version_date:  Date;      
+   @Field({nullable: null}) version_no:    number;      
+   @Field({nullable: null}) version_user:  string;   
+    }
+
+    @InputType()
+    export class  PartySSIInput {
+    @Field({nullable: null})  party_ref:     string;       
+    @Field({nullable: null})  depot_alias:   string;      
+    @Field({nullable: null})  depot_descr:   string; 
+    @Field({nullable: null})  depot_type:    string; 
+    @Field({nullable: null})  comms_service: string;  
+    @Field({nullable: null})  dacc_ref:      string;  
+    @Field({nullable: null})  account_no:    string;  
+    @Field({nullable: null})  account_name:  string;  
+    @Field({nullable: null})  depo_ref:      string;  
+    @Field({nullable: null})  active_ind:    string; 
+    @Field({nullable: null})  user_def:      string; 
+    @Field({nullable: null})  description:   string;  
+    @Field({nullable: null})  version_date:  Date;      
+    @Field({nullable: null})  version_no:    number;      
+    @Field({nullable: null})  version_user:  string;    
+      }
 @ArgsType()
 export class  PartyNarrativeArgs {
   @Field({nullable: true })  party_ref:    string;

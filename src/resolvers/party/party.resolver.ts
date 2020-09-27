@@ -4,7 +4,7 @@ import { UserIdArgs } from '../../models/args/user-id.args';
 import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation, Subscription } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
-import { Party } from '../../models/party.model';
+import { Party, PartyClassification } from '../../models/party.model';
 import { PubSub } from 'graphql-subscriptions';
 import { PartyInput } from '../../models/inputs/party.input';
 
@@ -27,6 +27,7 @@ import {
     partyWhereUniqueInput,
     partyWhereInput,
     partyOrderByInput,
+    party_classificationArgs
   } from '@prisma/client';
 
 
@@ -42,6 +43,11 @@ export class PartyResolver {
   async party() { 
       return this.prisma.party.findMany();
   }  
+
+  // @ResolveField('classes', returns => [PartyClassification])
+  // async getPosts(@Parent() party: party_classificationArgs) {
+  //   return this.prisma.party_classification.findMany({ party });
+  // }
 
   @Mutation((returns) => Party)
   async createPartyInput(@Args('data', { type: () => PartyInput })  newUserData: partyCreateInput) {

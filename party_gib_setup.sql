@@ -36,6 +36,49 @@ create table if not exists party_classification
 
 );
 
+drop table if exists party_assoc;
+create table if not exists party_assoc
+(
+    party_ref       varchar(12),
+    assoc_type      varchar(4),
+    assoc_party_ref varchar(12),
+    user_def        varchar(1),
+    description     varchar(40),
+    version_date    date,
+    version_no      integer,
+    version_user    varchar(12),
+     PRIMARY KEY(party_ref, assoc_type),
+       CONSTRAINT fk_party_assoc
+      FOREIGN KEY(party_ref)
+	  REFERENCES party(party_ref)
+);
+
+alter table party_assoc owner to prisma;
+
+drop table if exists party_ssi;
+create table if not exists party_ssi
+(
+    party_ref     varchar(12),
+    depot_alias   varchar(12),
+    depot_descr   varchar(35),
+    depot_type    varchar(6),
+    comms_service varchar(12),
+    dacc_ref      varchar(12),
+    account_no    varchar(35),
+    account_name  varchar(35),
+    depo_ref      varchar(12),
+    active_ind    varchar(1),
+    user_def      varchar(1),
+    description   varchar(40),
+    version_date  date,
+    version_no    integer,
+    version_user  varchar(12),
+    PRIMARY KEY(party_ref, depot_alias)
+
+);
+
+
+
 alter table party_classification owner to postgres;
 
 create table if not exists party_ext_ref

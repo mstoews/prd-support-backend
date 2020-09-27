@@ -27,6 +27,7 @@ type Mutation {
 
 type Party {
   active_ind: String!
+  classes: [PartyClassification!]!
   party_extra_long_name: String!
   party_long_name: String!
   party_ref: String!

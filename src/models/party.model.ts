@@ -12,6 +12,8 @@ export class Party {
   version_date:          Date;
   version_no:            number;
   version_user:          string;
+  @Field(type => [PartyClassification])
+  classes: PartyClassification[];
 }
 
 
@@ -78,4 +80,35 @@ export class  PartyNarrative {
     version_no:   number;
     version_user: string;
   }
-  
+@ObjectType()
+export class  PartyAssoc {
+  party_ref:       string;
+  assoc_type:      string;
+  assoc_party_ref: string;
+  user_def:       string;
+  description:     string;
+  version_date:  Date;      
+  version_no:    number;      
+  version_user:  string;   
+}
+
+@ObjectType()
+export class  PartySSI {
+  party_ref:     string;       
+  depot_alias:   string;      
+  depot_descr:   string; 
+  depot_type:    string; 
+  comms_service: string;  
+  dacc_ref:      string;  
+  account_no:    string;  
+  account_name:  string;  
+  depo_ref:      string;  
+  active_ind:    string; 
+  user_def:      string; 
+  description:   string;  
+  version_date:  Date;      
+  version_no:    number;      
+  version_user:  string;    
+}
+
+
