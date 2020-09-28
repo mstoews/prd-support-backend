@@ -26,8 +26,8 @@ import {
     party_ssiOrderByInput,
   } from '@prisma/client';
 
-  @Resolver('Partyssi')
-  export class PartyInstrResolver {
+  @Resolver((of) => PartySSI)
+  export class PartySSIResolver {
   
   constructor(private prisma: PrismaService) {}
   

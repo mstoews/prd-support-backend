@@ -26,9 +26,9 @@ import {
     party_assocOrderByInput,
   } from '@prisma/client';
 
-  @Resolver('PartyAssoc')
-  export class PartyInstrResolver {
-  
+  @Resolver((of) => PartyAssoc)
+  export class PartyAssocResolver {
+
   constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartyAssoc])

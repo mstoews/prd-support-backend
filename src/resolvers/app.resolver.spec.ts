@@ -15,9 +15,9 @@ describe('AppResolver', () => {
     appResolver = app.get<AppResolver>(AppResolver);
   });
 
-  describe('helloWorld', () => {
-    it('should return "Hello World!"', () => {
-      expect(appResolver.GIB()).toBe('Hello World!');
+  describe('GIB', () => {
+    it('Explanation about GIB!"', () => {
+      expect(appResolver.GIB()).toBe('<h1>Hello from GLOSS API Server\nOpen graphql playground by entering the end point graphql</h1>');
     });
   });
 });
