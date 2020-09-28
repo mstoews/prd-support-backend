@@ -32,19 +32,42 @@ import {
   constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartyAssoc])
-    party_instr() { 
+    party_assoc() { 
         return this.prisma.party_assoc.findMany();
     }  
+
+  @Query((returns) => [PartyAssoc])
+  async partyAssocByRef( 
+  @Args('party_ref',{ nullable: false}) ref?: string) 
+  {
+     return this.prisma.party_assoc.findMany({ where: {
+       party_ref : ref,
+      },              
+    });
+  }
+
+  @Query((returns) => [PartyAssoc])
+  partyAssocByRefAndType(
+    @Args('party_ref',{ nullable: false}) party_ref?: string, 
+    @Args('assoc_type',{ nullable: false}) assoc_type?: string,) 
+    {
+      return this.prisma.party_classification.findMany({ where: {
+       party_ref : party_ref, 
+       class_type : assoc_type,
+      },              
+    });
+  }
+
     
   @Mutation((returns) => PartyAssoc)
-    async createPartyInstrumentInput(@Args('data', { type: () => PartyAssocInput })  newInstrumentData: party_assocCreateInput) {
+    async createAssoc(@Args('data', { type: () => PartyAssocInput })  newInstrumentData: party_assocCreateInput) {
     return this.prisma.party_assoc.create({
       data: newInstrumentData,
     });
   }
   
   @Mutation((returns) => PartyAssoc)
-  async updateParty(params: {
+  async updateAssoc(params: {
     where: party_assocWhereUniqueInput;
     data: party_assocUpdateInput;
   }): Promise<PartyAssocModel> {
@@ -56,7 +79,7 @@ import {
   }
   
   @Mutation((returns) => PartyAssoc)
-  async deleteParty(where: party_assocWhereUniqueInput): Promise<PartyAssocModel> {
+  async deleteAssoc(where: party_assocWhereUniqueInput): Promise<PartyAssocModel> {
     return this.prisma.party_assoc.delete({
       where,
     });

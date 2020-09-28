@@ -151,7 +151,7 @@ type Post {
 }
 
 type Query {
-  helloWorld: String!
+  GIB: String!
   me: User!
   party: [Party!]!
   party_classification: [PartyClassification!]!

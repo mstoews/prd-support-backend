@@ -37,14 +37,14 @@ import {
     }  
     
   @Mutation((returns) => PartySSI)
-    async createPartyInstrumentInput(@Args('data', { type: () => PartySSIInput })  newInstrumentData: party_ssiCreateInput) {
+    async createSSI(@Args('data', { type: () => PartySSIInput })  newInstrumentData: party_ssiCreateInput) {
     return this.prisma.party_ssi.create({
       data: newInstrumentData,
     });
   }
   
   @Mutation((returns) => PartySSI)
-  async updateParty(params: {
+  async updateSSI(params: {
     where: party_ssiWhereUniqueInput;
     data: party_ssiUpdateInput;
   }): Promise<PartyssiModel> {
@@ -56,7 +56,7 @@ import {
   }
   
   @Mutation((returns) => PartySSI)
-  async deleteParty(where: party_ssiWhereUniqueInput): Promise<PartyssiModel> {
+  async deleteSSI(where: party_ssiWhereUniqueInput): Promise<PartyssiModel> {
     return this.prisma.party_ssi.delete({
       where,
     });

@@ -17,13 +17,7 @@ describe('AppResolver', () => {
 
   describe('helloWorld', () => {
     it('should return "Hello World!"', () => {
-      expect(appResolver.helloWorld()).toBe('Hello World!');
-    });
-  });
-  describe('hello', () => {
-    it('should return "Hello ${name}!"', () => {
-      const name = chance.name();
-      expect(appResolver.hello(name)).toBe(`Hello ${name}!`);
+      expect(appResolver.GIB()).toBe('Hello World!');
     });
   });
 });

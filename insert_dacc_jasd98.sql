@@ -15,3 +15,4 @@ INSERT INTO party_assoc SELECT 'JASD98', 'ASDP', 'JJSDJPJT', 'N', 'Place of Sett
 select * from party;
 select * from party_classification;
 
+select * from party_assoc;
