@@ -66,19 +66,19 @@ export class PartyClassificationResolver {
 
 
   @Mutation((returns) => PartyClassification)
-  async createPartyClassInput(@Args('data', { type: () => PartyClassInput })  newClassData: partyCreateInput) {
+  async createPartyClassification(@Args('data', { type: () => PartyClassInput })  newClassData: partyCreateInput) {
     return this.prisma.party.create({
       data: newClassData,
     });
   }
   
   
-  @Mutation((returns) => PartyClassification)
-  async createOnePartyClassification(data: party_classificationCreateInput): Promise<ClassModel> {
-    return this.prisma.party_classification.create({
-      data,
-    });
-  }
+  // @Mutation((returns) => PartyClassification)
+  // async createPartyClassification(data: party_classificationCreateInput): Promise<ClassModel> {
+  //   return this.prisma.party_classification.create({
+  //     data,
+  //   });
+  // }
   
   @Mutation((returns) => PartyClassification)
   async updateParty(params: {

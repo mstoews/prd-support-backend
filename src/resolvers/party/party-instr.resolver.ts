@@ -36,6 +36,17 @@ import {
     party_instr() { 
         return this.prisma.party_instr.findMany();
     }  
+
+  @Query((returns) => [PartyInstr])
+    async partyInstrByRef( 
+    @Args('party_ref',{ nullable: false}) ref?: string) 
+    {
+       return this.prisma.party_instr.findMany({ where: {
+         party_ref : ref,
+        },              
+      });
+    }
+    
     
   @Mutation((returns) => PartyInstr)
     async createPartyInstrumentInput(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: party_instrCreateInput) {

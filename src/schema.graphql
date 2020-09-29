@@ -13,9 +13,8 @@ scalar Date
 type Mutation {
   changePassword(data: ChangePasswordInput!): User!
   createAssoc(data: PartyAssocInput!): PartyAssoc!
-  createOnePartyClassification: PartyClassification!
-  createOnePartyFlag: PartyFlag!
-  createPartyClassInput(data: PartyClassInput!): PartyClassification!
+  createPartyClassification(data: PartyClassInput!): PartyClassification!
+  createPartyFlag: PartyFlag!
   createPartyFlagInput(data: PartyFlagInput!): PartyFlag!
   createPartyInput(data: PartyInput!): Party!
   createPartyInstrumentInput(data: PartyInstrInput!): PartyInstr!
@@ -225,15 +224,18 @@ type Query {
   party_ext_ref: [PartyExtRef!]!
   party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
   party_flag: [PartyFlag!]!
-  party_instr: [PartySSI!]!
+  party_instr: [PartyInstr!]!
+  party_ssi: [PartySSI!]!
   partyAssocByRef(party_ref: String!): [PartyAssoc!]!
   partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
   partyByRef(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!
+  partyInstrByRef(party_ref: String!): [PartyInstr!]!
   partyNarrative: [PartyNarrative!]!
   partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
   partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
+  partySSIByRef(party_ref: String!): [PartySSI!]!
 }
 
 """User role"""

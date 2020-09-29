@@ -44,17 +44,6 @@ export class PartyResolver {
       return this.prisma.party.findMany();
   }  
 
-  // @ResolveField('classes', returns => [PartyClassification])
-  // async getPosts(@Parent() party: party_classificationArgs) {
-  //   return this.prisma.party_classification.findMany({ party });
-  // }
-
-  @Mutation((returns) => Party)
-  async createPartyInput(@Args('data', { type: () => PartyInput })  newUserData: partyCreateInput) {
-    return this.prisma.party.create({
-      data: newUserData,
-    });
-  }
   
   @Query(returns => Party)
   async partyByRefNo(@Args('ref', { type: () => String }) ref: string) {
@@ -72,28 +61,21 @@ export class PartyResolver {
       },              
     });
   }
+
+  @Mutation((returns) => Party)
+  async createPartyInput(@Args('data', { type: () => PartyInput })  newUserData: partyCreateInput) {
+    return this.prisma.party.create({
+      data: newUserData,
+    });
+  }
   
   @Subscription(returns => Party)
   async partyMutated() {
     return pubsub.asyncIterator('partyMutated');
   }
   
-  /*
-  @Mutation((returns) => Party)
-  async createParty(
-    @Body() partyData: { 
-        party_ref : string 
-    },
-  ): Promise<PartyModel> {
-    const { party_ref } = partyData;
-    return this.createOneParty({
-      party_ref,
-    });
-  }
-*/
-
   // Returns Party 
-  async createOneParty(data: partyCreateInput): Promise<PartyModel> {
+  async createParty(data: partyCreateInput): Promise<PartyModel> {
     return this.prisma.party.create({
       data,
     });

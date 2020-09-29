@@ -32,7 +32,7 @@ import {
   constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartySSI])
-    party_instr() { 
+    party_ssi() { 
         return this.prisma.party_ssi.findMany();
     }  
     
@@ -52,6 +52,17 @@ import {
     return this.prisma.party_ssi.update({
       data,
       where,
+    });
+  }
+
+
+  @Query((returns) => [PartySSI])
+  async partySSIByRef( 
+  @Args('party_ref',{ nullable: false}) ref?: string) 
+  {
+     return this.prisma.party_ssi.findMany({ where: {
+       party_ref : ref,
+      },              
     });
   }
   

@@ -58,7 +58,7 @@ import {
   }
 
   @Mutation((returns) => PartyFlag)
-  async createOnePartyFlag(data: party_flagCreateInput): Promise<PartyFlagModel> {
+  async createPartyFlag(data: party_flagCreateInput): Promise<PartyFlagModel> {
     return this.prisma.party_flag.create({
       data,
     });
