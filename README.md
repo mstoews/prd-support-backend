@@ -1,18 +1,47 @@
+# Query
+  ### Party
+  party: [Party!]!
+  partyByRef(party_ref: String!): Party!
+  partyByRefNo(ref: String!): Party!
+  
+  ## Assocation
+  party_assoc: [PartyAssoc!]!
+  partyAssocByRef(party_ref: String!): [PartyAssoc!]!
+  partyAssocByRefAndType(assoc_type: String! party_ref: String! ): [PartyAssoc!]!
+  
+  ## Classification
+  party_classification: [PartyClassification!]!
+  party_classificationByRef(party_ref: String!): [PartyClassification!]!
+  party_classificationByRefAndClass(class_type: String! party_ref: String!): [PartyClassification!]!
+  
+  ## Party Ext
+  party_ext_ref: [PartyExtRef!]!
+  party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
+  
+  ## Party Flag
+  party_flag: [PartyFlag!]!
+  partyFlagByRef(party_ref: String!): [PartyFlag!]!
+  
+  
+  ## Instruments
+  party_instr: [PartyInstr!]!
+  partyInstrByRef(party_ref: String!): [PartyInstr!]!
+ 
+  ## SSI
+  party_ssi: [PartySSI!]!
+  partySSIByRef(party_ref: String!): [PartySSI!]!
+  
+  ## Narrative 
+  partyNarrative: [PartyNarrative!]!
+  partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
+  partyNarrativeByRefAndType(narrative_type: String! party_ref: String!): [PartyNarrative!]!
+  
+  
 # Instructions
 
 Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/).
 
 > Checkout [NestJS Prisma Schematics](https://github.com/marcjulian/nestjs-prisma) to automatically add Prisma support to your Nest application.
-
-## Version
-
-| Branch                                                                                                       |  Nest | Prisma                                               |  Graphql                                                              |
-| ------------------------------------------------------------------------------------------------------------ | ----- | ---------------------------------------------------- | --------------------------------------------------------------------- |
-| master                                                                                                       | v7    | [prisma2](https://github.com/prisma/prisma2)         | [Code-first](https://docs.nestjs.com/graphql/quick-start#code-first)  |
-| [Prisma2 Code First](https://github.com/fivethree-team/nestjs-prisma-starter/tree/nest-6-prisma2-code-first) | v6    | [prisma2-preview](https://github.com/prisma/prisma2) | [Code-first](https://github.com/19majkel94/type-graphql)              |
-| [Prisma1 Code First](https://github.com/fivethree-team/nestjs-prisma-starter/tree/nest-6-code-first)         | v6    | [v1](https://github.com/prisma/prisma)               | [Code-first](https://github.com/19majkel94/type-graphql)              |
-| [Prisma1 SDL First]()                                                                                        | v6    | [v1](https://github.com/prisma/prisma)               | [SDL First](https://docs.nestjs.com/graphql/quick-start#schema-first) |
-| [Prisma1 SDL First](https://github.com/fivethree-team/nestjs-prisma-starter/tree/nest-5)                     | v5    | [v1](https://github.com/prisma/prisma)               | [SDL First](https://docs.nestjs.com/graphql/quick-start#schema-first) |
 
 ## Features
 
@@ -21,32 +50,6 @@ Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www
 - [Prisma](https://www.prisma.io/) for database modelling, migration and type-safe access (Postgres, MySQL & MongoDB)
 - 🔐 JWT authentication w/ [passport-jwt](https://github.com/mikenicholson/passport-jwt)
 - REST API docs w/ [Swagger](https://swagger.io/)
-
-## Overview
-
-- [Instructions](#instructions)
-  - [Features](#features)
-  - [Overview](#overview)
-  - [Prisma Setup](#prisma-setup)
-    - [1. Install Dependencies](#1-install-dependencies)
-    - [2. Prisma2: Prisma Migrate](#2-prisma2-prisma-migrate)
-    - [3. Prisma2: Prisma Client JS](#3-prisma2-client-js)
-    - [4. Seed the database data with this script](#4-seed-the-database-data-with-this-script)
-    - [5. Install Nestjs](#5-install-nestjs)
-  - [Start NestJS Server](#start-nestjs-server)
-  - [Playground](#playground)
-  - [Rest Api](#rest-api)
-  - [Docker](#docker)
-  - [Schema Development](#schema-development)
-  - [NestJS - Api Schema](#nestjs---api-schema)
-    - [Resolver](#resolver)
-  - [Graphql Client](#graphql-client)
-    - [Angular](#angular)
-      - [Setup](#setup)
-      - [Queries](#queries)
-      - [Mutations](#mutations)
-      - [Subscriptions](#subscriptions)
-      - [Authentication](#authentication)
 
 ## Prisma Setup
 
