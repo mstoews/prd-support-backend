@@ -1,3 +1,42 @@
+# Query
+  ## Party
+  party: [Party!]!
+  partyByRef(party_ref: String!): Party!
+  partyByRefNo(ref: String!): Party!
+  
+  ## Assocation
+  party_assoc: [PartyAssoc!]!
+  partyAssocByRef(party_ref: String!): [PartyAssoc!]!
+  partyAssocByRefAndType(assoc_type: String! party_ref: String! ): [PartyAssoc!]!
+  
+  ## Classification
+  party_classification: [PartyClassification!]!
+  party_classificationByRef(party_ref: String!): [PartyClassification!]!
+  party_classificationByRefAndClass(class_type: String! party_ref: String!): [PartyClassification!]!
+  
+  ## Party Ext
+  party_ext_ref: [PartyExtRef!]!
+  party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
+  
+  ## Party Flag
+  party_flag: [PartyFlag!]!
+  partyFlagByRef(party_ref: String!): [PartyFlag!]!
+  
+  
+  ## Instruments
+  party_instr: [PartyInstr!]!
+  partyInstrByRef(party_ref: String!): [PartyInstr!]!
+ 
+  ## SSI
+  party_ssi: [PartySSI!]!
+  partySSIByRef(party_ref: String!): [PartySSI!]!
+  
+  ## Narrative 
+  partyNarrative: [PartyNarrative!]!
+  partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
+  partyNarrativeByRefAndType(narrative_type: String! party_ref: String!): [PartyNarrative!]!
+  
+  
 # Instructions
 
 Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/).
