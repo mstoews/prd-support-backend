@@ -38,7 +38,12 @@ import {
   async party_flag() { 
       return this.prisma.party_flag.findMany();
   }  
-  
+
+  @Query((returns) => [PartyFlag])
+  async partyFlag() { 
+      return this.prisma.party_flag.findMany();
+  }  
+
   @Query((returns) => [PartyFlag])
   async partyFlagByRef( 
   @Args('party_ref',{ nullable: false}) ref?: string) 

@@ -53,6 +53,25 @@ export class PartyClassificationResolver {
     });
   }
 
+
+  @Query((returns) => [PartyClassification])
+  partyClassification() { 
+      return this.prisma.party_classification.findMany();
+  }  
+  
+
+  @Query((returns) => [PartyClassification])
+  partyClassificationByRefAndClass(
+    @Args('party_ref',{ nullable: false}) party_ref?: string, 
+    @Args('class_type',{ nullable: false}) class_type?: string,) 
+    {
+      return this.prisma.party_classification.findMany({ where: {
+       class_type : class_type,
+       party_ref : party_ref, 
+      },              
+    });
+  }
+
   @Query((returns) => [PartyClassification])
   party_classificationByRef(
     @Args('party_ref',{ nullable: false}) party_ref?: string) 
@@ -64,6 +83,16 @@ export class PartyClassificationResolver {
   }
   
 
+  @Query((returns) => [PartyClassification])
+  partyClassificationByRef(
+    @Args('party_ref',{ nullable: false}) party_ref?: string) 
+    {
+      return this.prisma.party_classification.findMany({ where: {
+      party_ref : party_ref, 
+      },              
+    });
+  }
+  
 
   @Mutation((returns) => PartyClassification)
   async createPartyClassification(@Args('data', { type: () => PartyClassInput })  newClassData: partyCreateInput) {

@@ -39,6 +39,10 @@ import { PartyInstrInput, PartyExtRefInput } from 'src/models/inputs/party.input
       return this.prisma.party_ext_ref.findMany();
   } 
 
+  @Query((returns) => [PartyExtRef])
+  partyExtRef() { 
+      return this.prisma.party_ext_ref.findMany();
+  } 
 
   
   @Query((returns) => [PartyExtRef])
@@ -51,6 +55,17 @@ import { PartyInstrInput, PartyExtRefInput } from 'src/models/inputs/party.input
     });
   }
   
+  @Query((returns) => [PartyExtRef])
+  async partyExtRefByRef( 
+  @Args('party_ref',{ nullable: false}) ref?: string) 
+  {
+     return this.prisma.party_ext_ref.findMany({ where: {
+       party_ref : ref,
+      },              
+    });
+  }
+  
+
   /*
   @Mutation((returns) => PartyExtRef)
   async createPartyExtReference(

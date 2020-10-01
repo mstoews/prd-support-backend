@@ -27,13 +27,17 @@ import {
   } from '@prisma/client';
 
   @Resolver('PartyInstr')
-
   export class PartyInstrResolver {
   
   constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartyInstr])
     party_instr() { 
+        return this.prisma.party_instr.findMany();
+    }  
+
+  @Query((returns) => [PartyInstr])
+    partyInstr() { 
         return this.prisma.party_instr.findMany();
     }  
 
@@ -46,7 +50,6 @@ import {
         },              
       });
     }
-    
     
   @Mutation((returns) => PartyInstr)
     async createPartyInstrumentInput(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: party_instrCreateInput) {

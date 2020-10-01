@@ -1,6 +1,6 @@
-import { PartyResolver } from './party.resolver';
 import { PrismaService } from '../../services/prisma.service';
 import { Module } from '@nestjs/common';
+import { PartyResolver } from './party.resolver';
 import { PartyExtRefResolver } from './party-ext-ref.resolver';
 import { PartyClassificationResolver } from './party-classification.resolver';
 import { PartyFlagResolver } from './party-flag.resolver';

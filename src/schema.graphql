@@ -226,15 +226,24 @@ type Query {
   party_flag: [PartyFlag!]!
   party_instr: [PartyInstr!]!
   party_ssi: [PartySSI!]!
+  partyAssoc: [PartyAssoc!]!
   partyAssocByRef(party_ref: String!): [PartyAssoc!]!
   partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
   partyByRef(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
+  partyClassification: [PartyClassification!]!
+  partyClassificationByRef(party_ref: String!): [PartyClassification!]!
+  partyClassificationByRefAndClass(class_type: String!, party_ref: String!): [PartyClassification!]!
+  partyExtRef: [PartyExtRef!]!
+  partyExtRefByRef(party_ref: String!): [PartyExtRef!]!
+  partyFlag: [PartyFlag!]!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!
+  partyInstr: [PartyInstr!]!
   partyInstrByRef(party_ref: String!): [PartyInstr!]!
   partyNarrative: [PartyNarrative!]!
   partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
   partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
+  partySSI: [PartySSI!]!
   partySSIByRef(party_ref: String!): [PartySSI!]!
 }
 

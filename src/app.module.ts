@@ -9,6 +9,7 @@ import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PartyModule } from './resolvers/party/party.module';
 import { PubSub } from 'graphql-subscriptions';
+import { InstrumentsModule } from './resolvers/instruments/instruments.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PubSub } from 'graphql-subscriptions';
     AuthModule,
     UserModule,
     PartyModule,
+    InstrumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, DateScalar],

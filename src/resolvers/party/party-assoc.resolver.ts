@@ -37,6 +37,11 @@ import {
     }  
 
   @Query((returns) => [PartyAssoc])
+    partyAssoc() { 
+        return this.prisma.party_assoc.findMany();
+    }  
+
+  @Query((returns) => [PartyAssoc])
   async partyAssocByRef( 
   @Args('party_ref',{ nullable: false}) ref?: string) 
   {

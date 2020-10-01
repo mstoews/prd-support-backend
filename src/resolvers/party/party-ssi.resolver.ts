@@ -36,6 +36,22 @@ import {
         return this.prisma.party_ssi.findMany();
     }  
     
+  @Query((returns) => [PartySSI])
+    partySSI() { 
+        return this.prisma.party_ssi.findMany();
+    }  
+
+  @Query((returns) => [PartySSI])
+    async partySSIByRef( 
+    @Args('party_ref',{ nullable: false}) ref?: string) 
+    {
+       return this.prisma.party_ssi.findMany({ where: {
+         party_ref : ref,
+        },              
+      });
+    }
+  
+    
   @Mutation((returns) => PartySSI)
     async createSSI(@Args('data', { type: () => PartySSIInput })  newInstrumentData: party_ssiCreateInput) {
     return this.prisma.party_ssi.create({
@@ -56,15 +72,6 @@ import {
   }
 
 
-  @Query((returns) => [PartySSI])
-  async partySSIByRef( 
-  @Args('party_ref',{ nullable: false}) ref?: string) 
-  {
-     return this.prisma.party_ssi.findMany({ where: {
-       party_ref : ref,
-      },              
-    });
-  }
   
   @Mutation((returns) => PartySSI)
   async deleteSSI(where: party_ssiWhereUniqueInput): Promise<PartyssiModel> {
