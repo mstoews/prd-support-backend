@@ -1,5 +1,5 @@
 # Query
-  ## Party
+  ### Party
   party: [Party!]!
   partyByRef(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
@@ -60,32 +60,6 @@ Starter template for 😻 [NestJS](https://nestjs.com/) and [Prisma](https://www
 - [Prisma](https://www.prisma.io/) for database modelling, migration and type-safe access (Postgres, MySQL & MongoDB)
 - 🔐 JWT authentication w/ [passport-jwt](https://github.com/mikenicholson/passport-jwt)
 - REST API docs w/ [Swagger](https://swagger.io/)
-
-## Overview
-
-- [Instructions](#instructions)
-  - [Features](#features)
-  - [Overview](#overview)
-  - [Prisma Setup](#prisma-setup)
-    - [1. Install Dependencies](#1-install-dependencies)
-    - [2. Prisma2: Prisma Migrate](#2-prisma2-prisma-migrate)
-    - [3. Prisma2: Prisma Client JS](#3-prisma2-client-js)
-    - [4. Seed the database data with this script](#4-seed-the-database-data-with-this-script)
-    - [5. Install Nestjs](#5-install-nestjs)
-  - [Start NestJS Server](#start-nestjs-server)
-  - [Playground](#playground)
-  - [Rest Api](#rest-api)
-  - [Docker](#docker)
-  - [Schema Development](#schema-development)
-  - [NestJS - Api Schema](#nestjs---api-schema)
-    - [Resolver](#resolver)
-  - [Graphql Client](#graphql-client)
-    - [Angular](#angular)
-      - [Setup](#setup)
-      - [Queries](#queries)
-      - [Mutations](#mutations)
-      - [Subscriptions](#subscriptions)
-      - [Authentication](#authentication)
 
 ## Prisma Setup
 
