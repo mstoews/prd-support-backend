@@ -1,0 +1,2 @@
+To build the containers: docker-compose up -d --build
+To stop the containers: docker-compose down -d
