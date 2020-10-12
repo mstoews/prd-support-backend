@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3010:3010
+      - 3010:3011
     depends_on:
       - db
     env_file:
@@ -19,7 +19,7 @@ services:
     container_name: postgres
     restart: always
     ports:
-      - 3302:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: ${POSTGRESQL_USER}
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
