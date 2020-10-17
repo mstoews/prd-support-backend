@@ -1,3 +1,13 @@
+# Change the container 
+in the Dockerfile 
+```bash
+FROM node:12 AS builder
+```
+
+the first line above needs to be changed to linux other than alpine and then in the builder section of the docker file 
+nodejs needs to be installed. 
+Bit complicated actually 
+
 # Query
   ### Party
   party: [Party!]!
