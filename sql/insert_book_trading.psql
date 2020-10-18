@@ -126,4 +126,5 @@ SELECT 'TRADING',
 ;
 
 DELETE FROM party_assoc
+WHERE party_ref = 'TRADING'
 ;
