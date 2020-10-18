@@ -1,4 +1,4 @@
-# Modified by RJM - 18-Oct-2020 - use v14 nodejs - fix to WSL2 issue
+# Modified by RJM - 18-Oct-2020 - Use v14 nodejs - fix to WSL2 issue
 FROM node:14 AS builder
 
 # Create app directory
@@ -11,7 +11,7 @@ COPY prisma ./prisma/
 # Install app dependencies
 RUN npm install
 
-# Added by RJM - 18-Oct-2020 - fix WSL2 issue
+# Added by RJM - 18-Oct-2020 - to fix WSL2 issue
 RUN npm rebuild
 
 # Required if not done in postinstall
