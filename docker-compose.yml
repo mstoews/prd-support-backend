@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3010:3011
+      - 3000:3000
     depends_on:
       - db
     env_file:
@@ -15,7 +15,7 @@ services:
       - gloss-api-backend_default
   
   db:
-    image: postgres:12
+    image: nexus.devops.broadridge.net:9090/library/postgres:12
     container_name: postgres
     restart: always
     ports:
