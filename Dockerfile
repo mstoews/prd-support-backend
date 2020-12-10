@@ -1,5 +1,5 @@
 # Modified by RJM - 18-Oct-2020 - Use v14 nodejs - fix to WSL2 issue
-FROM nexus.devops.broadridge.net:9090/library/node:14 AS builder
+FROM node:14 AS builder
 
 # Create app directory
 WORKDIR /app
@@ -22,7 +22,7 @@ COPY . .
 RUN npm run build
 
 # Modified by RJM - 18-Oct-2020 - use v14 nodejs - fix to WSL2 issue
-FROM nexus.devops.broadridge.net:9090/library/node:14
+FROM node:14
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./

@@ -6,7 +6,7 @@ import { PartyIdArgs } from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyNarrative } from '../../models/party.model';
-import { PartyNarrativeArgs } from 'src/models/inputs/party.input';
+import { PartyNarrativeArgs, PartyNarrativeInput } from 'src/models/inputs/party.input';
 
 import {
     Controller,
@@ -18,14 +18,7 @@ import {
     Delete,
   } from '@nestjs/common'
 
-import {
-    party_narrative as PartyNarrativeModel,
-    party_narrativeCreateInput,
-    party_narrativeUpdateInput,
-    party_narrativeWhereUniqueInput,
-    party_narrativeWhereInput,
-    party_narrativeOrderByInput,
-  } from '@prisma/client';
+import { party_narrative as PartyNarrativeModel, Prisma } from '@prisma/client';
 
 
   @Resolver('PartyNarrative')
@@ -61,23 +54,37 @@ import {
  
 
   @Mutation((returns) => PartyNarrative)
-  async updateNarrative(params: {
-    where: party_narrativeWhereUniqueInput;
-    data: party_narrativeUpdateInput;
-  }): Promise<PartyNarrativeModel> {
-    const { data, where } = params;
-    return this.prisma.party_narrative.update({
-      data,
-      where,
-    });
+  async updateNarrative(
+    @Args('party_ref', { type: () => String }) party_ref?: string,
+    @Args('narr_type', { type: () => String }) narr_type?: string,
+    @Args('data', { type: () => PartyNarrativeInput }) newData?: PartyNarrativeModel,) {
+    return this.prisma.party_narrative.update(
+      {
+        where: {
+          party_ref_narr_type: {
+            party_ref: party_ref,
+            narr_type: narr_type,
+          },
+        },
+        data: newData,
+      });
   }
   
   @Mutation((returns) => PartyNarrative)
-  async deleteNarrative(where: party_narrativeWhereUniqueInput): Promise<PartyNarrativeModel> {
-    return this.prisma.party_narrative.delete({
-      where,
-    });
+  async deleteNarrative(
+    @Args('party_ref', { type: () => String }) party_ref?: string,
+    @Args('narr_type', { type: () => String }) narr_type?: string,) {
+    return this.prisma.party_narrative.delete(
+      {
+        where: {
+          party_ref_narr_type: {
+            party_ref: party_ref,
+            narr_type: narr_type,
+          },
+        },
+      });
   }
+  
 }
 
 

@@ -1,30 +1,15 @@
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyInstr } from '../../models/party.model';
 import { PartyInstrInput} from '../../models/inputs/party.input';
 
 import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
-
-import {
     party_instr as PartyInstrModel,
-    party_instrCreateInput,
-    party_instrUpdateInput,
-    party_instrWhereUniqueInput,
-    party_instrWhereInput,
-    party_instrOrderByInput,
+    Prisma,
   } from '@prisma/client';
+import { type } from 'os';
+
+type instrCreateInput = Prisma.party_instrCreateInput;
 
   @Resolver('PartyInstr')
   export class PartyInstrResolver {
@@ -52,29 +37,45 @@ import {
     }
     
   @Mutation((returns) => PartyInstr)
-    async createPartyInstrumentInput(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: party_instrCreateInput) {
+    async createPartyInstrument(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: instrCreateInput) {
     return this.prisma.party_instr.create({
       data: newInstrumentData,
     });
   }
   
-  @Mutation((returns) => PartyInstr)
-  async updateParty(params: {
-    where: party_instrWhereUniqueInput;
-    data: party_instrUpdateInput;
-  }): Promise<PartyInstrModel> {
-    const { data, where } = params;
-    return this.prisma.party_instr.update({
-      data,
-      where,
-    });
-  }
+  // Delete
+    @Mutation((returns) => PartyInstr)
+    async deletePartyInstr(
+      @Args('party_ref', { type: () => String }) party?: string,
+      @Args('instr_ref', { type: () => String }) instr?: string,) {
+      return this.prisma.party_instr.delete(
+        {
+          where: {
+            party_ref_instr_ref: {
+              party_ref: party,
+              instr_ref: instr,
+            }
+          }
+        });
+    }
   
+  
+  // Update
   @Mutation((returns) => PartyInstr)
-  async deleteParty(where: party_instrWhereUniqueInput): Promise<PartyInstrModel> {
-    return this.prisma.party_instr.delete({
-      where,
-    });
+  async updatePartyInstr(
+    @Args('party_ref', { type: () => String }) party?: string,
+    @Args('instr_ref', { type: () => String }) instr?: string,
+    @Args('data', { type: () => PartyInstrInput }) newData?: PartyInstrModel,)
+    {
+    return this.prisma.party_instr.update({
+        where: {
+          party_ref_instr_ref: {
+            party_ref: party,
+            instr_ref: instr,
+          }
+        },
+        data: newData
+      });
   }
 }
 

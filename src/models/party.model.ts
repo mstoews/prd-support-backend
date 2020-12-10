@@ -37,10 +37,10 @@ export class PartyExtRef {
     party_ext_ref:      string;
     user_def:           string;
     description:        string;
-    @Field()
     version_date:       Date;
     version_no:         number;
     version_user:       string;
+    
   }
   
 @ObjectType()
@@ -80,6 +80,7 @@ export class  PartyNarrative {
     version_no:   number;
     version_user: string;
   }
+
 @ObjectType()
 export class  PartyAssoc {
   party_ref:       string;
@@ -110,5 +111,11 @@ export class  PartySSI {
   version_no:    number;      
   version_user:  string;    
 }
+
+@ObjectType()
+export class Something {
+  description: string;       
+}
+
 
 

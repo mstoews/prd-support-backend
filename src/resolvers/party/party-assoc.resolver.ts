@@ -19,11 +19,7 @@ import {
 
 import {
     party_assoc as PartyAssocModel,
-    party_assocCreateInput,
-    party_assocUpdateInput,
-    party_assocWhereUniqueInput,
-    party_assocWhereInput,
-    party_assocOrderByInput,
+    Prisma,
   } from '@prisma/client';
 
   @Resolver((of) => PartyAssoc)
@@ -63,31 +59,38 @@ import {
     });
   }
 
-    
   @Mutation((returns) => PartyAssoc)
-    async createAssoc(@Args('data', { type: () => PartyAssocInput })  newInstrumentData: party_assocCreateInput) {
-    return this.prisma.party_assoc.create({
-      data: newInstrumentData,
-    });
+  async updatePartyAssoc(
+    @Args('party_ref', { type: () => String }) party_ref?: string,
+    @Args('assoc_type', { type: () => String }) assoc_type?: string,
+    @Args('data', { type: () => PartyAssocInput }) newData?: PartyAssocModel,) {
+    return this.prisma.party_assoc.update(
+      {
+        where: {
+          party_ref_assoc_type: {
+            party_ref: party_ref,
+            assoc_type: assoc_type,
+          },
+        },
+        data: newData,
+
+      });
   }
+
   
   @Mutation((returns) => PartyAssoc)
-  async updateAssoc(params: {
-    where: party_assocWhereUniqueInput;
-    data: party_assocUpdateInput;
-  }): Promise<PartyAssocModel> {
-    const { data, where } = params;
-    return this.prisma.party_assoc.update({
-      data,
-      where,
-    });
-  }
-  
-  @Mutation((returns) => PartyAssoc)
-  async deleteAssoc(where: party_assocWhereUniqueInput): Promise<PartyAssocModel> {
-    return this.prisma.party_assoc.delete({
-      where,
-    });
-  }
+  async deletePartyAssoc(
+    @Args('party_ref', { type: () => String }) party_ref?: string,
+    @Args('assoc_type', { type: () => String }) assoc_type?: string,){
+    return this.prisma.party_assoc.delete(
+      {
+        where: {
+          party_ref_assoc_type: {
+            party_ref: party_ref,
+            assoc_type: assoc_type,
+          },
+        },
+      });
+    }
 }
 

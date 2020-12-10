@@ -1,4 +1,5 @@
 import { InputType, Field, ArgsType } from '@nestjs/graphql';
+import { StringValueNode } from 'graphql';
 
 @InputType()
 export class PartyInput {
@@ -104,8 +105,20 @@ export class  PartyNarrativeInput {
     @Field({nullable: null})  version_no:    number;      
     @Field({nullable: null})  version_user:  string;    
       }
+
 @ArgsType()
 export class  PartyNarrativeArgs {
   @Field({nullable: true })  party_ref:    string;
   @Field({nullable: true })  narr_type:    string;
 }
+
+@ArgsType()
+export class  PartyExtRefArgs {
+  @Field({nullable: false })  party_ref: string;
+  @Field({nullable: false })  type: string;
+}
+
+
+
+
+

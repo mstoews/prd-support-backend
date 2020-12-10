@@ -1,5 +1,5 @@
 import { GraphQLModule } from '@nestjs/graphql';
-import { Module } from '@nestjs/common';
+import { HttpModule, HttpService, Module } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
 import { AppService } from './services/app.service';
 import { AuthModule } from './resolvers/auth/auth.module';
@@ -10,6 +10,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PartyModule } from './resolvers/party/party.module';
 import { PubSub } from 'graphql-subscriptions';
 import { InstrumentsModule } from './resolvers/instruments/instruments.module';
+import { HttpPostService } from './services/http-post/http-post.service';
+import { MessagesController } from './messages/messages.controller';
+import { GlossController } from './gloss/gloss.controller';
+
 
 @Module({
   imports: [
@@ -34,8 +38,13 @@ import { InstrumentsModule } from './resolvers/instruments/instruments.module';
     UserModule,
     PartyModule,
     InstrumentsModule,
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+    
   ],
-  controllers: [AppController],
-  providers: [AppService, AppResolver, DateScalar],
+  controllers: [AppController, MessagesController, GlossController],
+  providers: [AppService, AppResolver, DateScalar, HttpPostService],
 })
 export class AppModule {}

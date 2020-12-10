@@ -18,21 +18,15 @@ model User {
 }
 
 model party {
-  party_ref             String                 @id
-  party_type            String                 @unique
+  party_ref             String    @id
+  party_type            String?
   party_short_name      String?
   party_long_name       String?
   party_extra_long_name String?
   active_ind            String?
-  version_date          DateTime?              @default(now())
+  version_date          DateTime? @default(now())
   version_no            Int?
   version_user          String?
-  party_assoc           party_assoc[]
-  party_classification  party_classification[]
-  party_ext_ref         party_ext_ref[]
-  party_flag            party_flag[]
-  party_instr           party_instr[]
-  party_narrative       party_narrative[]
 }
 
 model party_assoc {
@@ -44,7 +38,6 @@ model party_assoc {
   version_date    DateTime?
   version_no      Int?
   version_user    String?
-  party           party     @relation(fields: [party_ref], references: [party_ref])
 
   @@id([party_ref, assoc_type])
 }
@@ -58,7 +51,6 @@ model party_classification {
   version_date DateTime?
   version_no   Int?
   version_user String?
-  party        party     @relation(fields: [party_ref], references: [party_ref])
 
   @@id([party_ref, class_type])
 }
@@ -72,36 +64,33 @@ model party_ext_ref {
   version_date       DateTime?
   version_no         Int?
   version_user       String?
-  party              party     @relation(fields: [party_ref], references: [party_ref])
 
-  @@id([party_ref, party_ext_ref_type])
+  @@unique([party_ref, party_ext_ref_type], name: "party_ref_party_ext_index")
 }
 
 model party_flag {
   party_ref    String
   flag_type    Int
-  flag_code    String
+  flag_code    String?
   user_def     String?
   description  String?
-  version_date DateTime? @default(now())
+  version_date DateTime?
   version_no   Int?
   version_user String?
-  party        party     @relation(fields: [party_ref], references: [party_ref])
 
-  @@id([party_ref, flag_code])
+  @@id([party_ref, flag_type])
 }
 
 model party_instr {
   party_ref      String
+  instr_ref      String
   instr_type     String
   instr_ref_type String?
-  instr_ref      String
   user_def       String?
   description    String?
-  version_date   DateTime?
+  version_date   DateTime? @default(now())
   version_no     Int?
   version_user   String?
-  party          party     @relation(fields: [party_ref], references: [party_ref])
 
   @@id([party_ref, instr_ref])
 }
@@ -112,10 +101,9 @@ model party_narrative {
   narrative    String?
   user_def     String?
   description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-  party        party     @relation(fields: [party_ref], references: [party_ref])
+  version_date DateTime? @default(now())
+  version_no   Int?      @default(1)
+  version_user String?   @default(dbgenerated())
 
   @@id([party_ref, narr_type])
 }
@@ -138,4 +126,153 @@ model party_ssi {
   version_user  String?
 
   @@id([party_ref, depot_alias])
+}
+
+model instr {
+  instr_ref        String    @id
+  instr_type       String?
+  template_ref     String?
+  instr_short_name String?
+  instr_long_name  String?
+  active_ind       String?
+  issu_date        DateTime?
+  issu_price       Float?
+  matu_date        DateTime?
+  matu_price       Float?
+  denom_ccy        String?
+  price_dec        Float?
+  price_div        Float?
+  price_mul        Float?
+  price_type       String?
+  tick_value       Float?
+  book_ref         String?
+  market_ref       String?
+  lot_size         Int?
+  qty_dec_places   Int?
+  version_date     DateTime?
+  version_no       Int?
+  version_user     String?
+}
+
+model instr_accrual {
+  instr_ref       String
+  seq_no          Int
+  accr_basis      String?
+  amort_flag      String?
+  capi_flag       String?
+  paym_ccy        String?
+  start_accr_date DateTime?
+  first_paym_date DateTime?
+  last_paym_date  DateTime?
+  frn_flag        String?
+  neg_flag        String?
+  freq_rule       String?
+  freq_unit       Int?
+  cal_code        String?
+  date_rule       String?
+  eom_flag        String?
+  cpon_rate       Float?
+  rnd_rule        String?
+  rdat_offset     Int?
+  user_def        String?
+  description     String?
+  version_date    DateTime?
+  version_no      Int?
+  version_user    String?
+
+  @@id([instr_ref, seq_no])
+}
+
+model instr_classification {
+  instr_ref    String
+  class_type   String
+  class_code   String?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+
+  @@id([instr_ref, class_type])
+}
+
+model instr_date {
+  instr_ref    String
+  date_type    String
+  date         DateTime?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+
+  @@id([instr_ref, date_type])
+}
+
+model instr_ext_ref {
+  instr_ref          String
+  instr_ext_ref_type String
+  instr_ext_ref      String?
+  user_def           String?
+  description        String?
+  version_date       DateTime?
+  version_no         Int?
+  version_user       String?
+
+  @@id([instr_ref, instr_ext_ref_type])
+}
+
+model instr_flag {
+  instr_ref    String
+  flag_type    Int
+  flag_code    String
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+
+  @@id([instr_ref, flag_type, flag_code])
+}
+
+model instr_narrative {
+  instr_ref    String
+  narr_type    String
+  narrative    String?
+  user_def     String?
+  description  String?
+  version_date DateTime?
+  version_no   Int?
+  version_user String?
+
+  @@id([instr_ref, narr_type])
+}
+
+model trades {
+  host_reference      String
+  tref_ext_ref        String
+  opertion            String
+  instrument_ref_type String
+  quantity            Int
+  counterparty        String
+  trade_price         Float
+  trade_time          DateTime?
+  value_date          DateTime
+  company             String
+  book                String
+  trade_currency      String
+
+  @@id([host_reference, tref_ext_ref])
+}
+
+model environment {
+  environment String  @id
+  image       String?
+  description String?
+  usr         String?
+  active      String?
+}
+
+model something {
+  description String @id
 }

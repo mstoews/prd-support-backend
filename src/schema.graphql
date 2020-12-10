@@ -10,23 +10,226 @@ input ChangePasswordInput {
 """Date custom scalar type"""
 scalar Date
 
+type Environment {
+  active: String!
+  description: String!
+  environment: String!
+  image: String!
+  usr: String!
+}
+
+type Instr {
+  active_ind: String!
+  book_ref: String
+  classes: [InstrClassification!]!
+  denom_ccy: String!
+  instr_long_name: String!
+  instr_ref: String!
+  instr_short_name: String!
+  instr_type: String!
+  issu_date: Date
+  issu_price: String
+  lot_size: Int!
+  market_ref: String
+  matu_date: Date
+  matu_price: String
+  price_dec: Int!
+  price_div: Int!
+  price_mul: Int!
+  price_type: String!
+  qty_dec_places: Int!
+  template_ref: String!
+  tick_value: Int!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+type InstrAccrual {
+  accr_basis: String!
+  amort_flag: String!
+  cal_code: String!
+  capi_flag: String!
+  cpon_rate: String
+  date_rule: String!
+  description: String!
+  eom_flag: String!
+  first_paym_date: Date!
+  freq_rule: String!
+  freq_unit: Int!
+  frn_flag: String!
+  instr_ref: String!
+  last_paym_date: Date!
+  neg_flag: String!
+  paym_ccy: String!
+  rdat_offset: Int!
+  rnd_rule: String!
+  seq_no: Int!
+  start_accr_date: Date!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input InstrAccrualInput {
+  accr_basis: String
+  amort_flag: String
+  cal_code: String
+  capi_flag: String
+  cpon_rate: Int
+  date_rule: String
+  description: String!
+  eom_flag: String
+  first_paym_date: Date
+  freq_rule: String
+  freq_unit: Int
+  frn_flag: String
+  instr_ref: String!
+  last_paym_date: Date
+  neg_flag: String
+  paym_ccy: String
+  rdat_offset: Int
+  rnd_rule: String
+  seq_no: Int!
+  start_accr_date: Date
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+type InstrClassification {
+  class_code: String
+  class_type: String!
+  description: String!
+  instr_ref: String!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input InstrClassInput {
+  class_code: String
+  class_type: String!
+  description: String
+  instr_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
+}
+
+type InstrDate {
+  date: Date!
+  date_type: String!
+  description: String!
+  instr_ref: String!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input InstrDateInput {
+  date: String
+  date_type: String!
+  description: String
+  instr_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
+}
+
+type InstrExtRef {
+  description: String!
+  instr_ext_ref: String
+  instr_ext_ref_type: String!
+  instr_ref: String!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input InstrExtRefInput {
+  description: String
+  instr_ext_ref: String
+  instr_ext_ref_type: String!
+  instr_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
+}
+
+type InstrFlag {
+  description: String!
+  flag_code: String!
+  flag_type: Int!
+  instr_ref: String!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input InstrFlagInput {
+  description: String
+  flag_code: String
+  flag_type: Int!
+  instr_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
+}
+
+type InstrNarrative {
+  description: String!
+  instr_ref: String!
+  narr_type: String!
+  narrative: String!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
 type Mutation {
   changePassword(data: ChangePasswordInput!): User!
-  createAssoc(data: PartyAssocInput!): PartyAssoc!
+  createInstrClassification(data: InstrClassInput!): InstrClassification!
+  createInstrDate: InstrDate!
+  createInstrDateInput(data: InstrDateInput!): InstrDate!
+  createInstrFlag: InstrFlag!
+  createInstrFlagInput(data: InstrFlagInput!): InstrFlag!
+  createInstrInput(data: InstrExtRefInput!): InstrExtRef!
   createPartyClassification(data: PartyClassInput!): PartyClassification!
   createPartyFlag: PartyFlag!
   createPartyFlagInput(data: PartyFlagInput!): PartyFlag!
   createPartyInput(data: PartyInput!): Party!
-  createPartyInstrumentInput(data: PartyInstrInput!): PartyInstr!
-  createSSI(data: PartySSIInput!): PartySSI!
-  deleteAssoc: PartyAssoc!
-  deleteNarrative: PartyNarrative!
-  deleteParty: PartyInstr!
-  deleteSSI: PartySSI!
-  updateAssoc: PartyAssoc!
-  updateNarrative: PartyNarrative!
-  updateParty: PartyInstr!
-  updateSSI: PartySSI!
+  createPartyInstrument(data: PartyInstrInput!): PartyInstr!
+  deleteInstr: InstrDate!
+  deleteInstrAccrual(instr_ref: String!, seq_no: Int!): InstrAccrual!
+  deleteNarrative: InstrNarrative!
+  deletePartyAssoc(assoc_type: String!, party_ref: String!): PartyAssoc!
+  deletePartyByRef(party_ref: String!): Party!
+  deletePartyClassification(class_type: String!, party_ref: String!): PartyClassification!
+  deletePartyExtRef(party_ext_ref_type: String!, party_ref: String!): PartyExtRef!
+  deletePartyFlag(party_ref: String!, party_type: Int!): PartyFlag!
+  deletePartyInstr(instr_ref: String!, party_ref: String!): PartyInstr!
+  deleteSSI(depot_alias: String!, party_ref: String!): PartySSI!
+  updateInstr: InstrClassification!
+  updateInstrAccrual(data: InstrAccrualInput!, instr_ref: String!, seq_no: Int!): InstrAccrual!
+  updateNarrative: InstrNarrative!
+  updatePartyAssoc(assoc_type: String!, data: PartyAssocInput!, party_ref: String!): PartyAssoc!
+  updatePartyByRef(data: PartyInput!, party_ref: String!): Party!
+  updatePartyClassification(class_type: String!, data: PartyClassInput!, party_ref: String!): PartyClassification!
+  updatePartyExtRef(data: PartyExtRefInput!, party_ext_ref_type: String!, party_ref: String!): PartyExtRef!
+  updatePartyInstr(data: PartyInstrInput!, instr_ref: String!, party_ref: String!): PartyInstr!
+  updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
   updateUser(data: UpdateUserInput!): User!
 }
 
@@ -96,6 +299,17 @@ type PartyExtRef {
   version_date: Date!
   version_no: Int!
   version_user: String!
+}
+
+input PartyExtRefInput {
+  description: String
+  party_ext_ref: String
+  party_ext_ref_type: String!
+  party_ref: String!
+  user_def: String
+  version_date: Date
+  version_no: Int
+  version_user: String
 }
 
 type PartyFlag {
@@ -214,14 +428,44 @@ type Post {
 }
 
 type Query {
+  createInstrGlossXML(Type: String!): String!
+  createPartyGlossXML(partyType: String!): String!
+  environement: [Environment!]!
+  firstPartyByType(party_type: String!): Party!
+  firstPartyType: Party!
   GIB: String!
+  instr: [Instr!]!
+  instr_classification: [InstrClassification!]!
+  instr_classificationByRef(instr_ref: String!): [InstrClassification!]!
+  instr_classificationByRefAndClass(class_type: String!, instr_ref: String!): [InstrClassification!]!
+  instr_date: [InstrDate!]!
+  instr_ext_ref: [InstrExtRef!]!
+  instr_ext_refByRef(instr_ref: String!): [InstrExtRef!]!
+  instr_flag: [InstrFlag!]!
+  instrAccrual: [InstrAccrual!]!
+  instrAccrualByRef(instr_ref: String!): [InstrAccrual!]!
+  instrAccrualByRefAndSeq(instr_ref: String!, seq_no: Int!): [InstrAccrual!]!
+  instrByRef(instr_ref: String!): Instr!
+  instrByRefNo(ref: String!): Instr!
+  instrByType(instr_type: String!): [Instr!]!
+  instrClassification: [InstrClassification!]!
+  instrClassificationByRef(instr_ref: String!): [InstrClassification!]!
+  instrClassificationByRefAndClass(class_type: String!, instr_ref: String!): [InstrClassification!]!
+  instrDate: [InstrDate!]!
+  instrDateByRef(instr_ref: String!): [InstrDate!]!
+  instrExtRef: [InstrExtRef!]!
+  instrExtRefByRef(instr_ref: String!): [InstrExtRef!]!
+  instrFlag: [InstrFlag!]!
+  instrFlagByRef(instr_ref: String!): [InstrFlag!]!
+  instrNarrative: [InstrNarrative!]!
+  instrNarrativeByRef(instr_ref: String!): [InstrNarrative!]!
+  instrNarrativeByRefAndType(instr_ref: String!, narrative_type: String!): [InstrNarrative!]!
   me: User!
   party: [Party!]!
   party_assoc: [PartyAssoc!]!
   party_classification: [PartyClassification!]!
   party_classificationByRef(party_ref: String!): [PartyClassification!]!
   party_classificationByRefAndClass(class_type: String!, party_ref: String!): [PartyClassification!]!
-  party_ext_ref: [PartyExtRef!]!
   party_ext_refByRef(party_ref: String!): [PartyExtRef!]!
   party_flag: [PartyFlag!]!
   party_instr: [PartyInstr!]!
@@ -230,7 +474,9 @@ type Query {
   partyAssocByRef(party_ref: String!): [PartyAssoc!]!
   partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
   partyByRef(party_ref: String!): Party!
+  partyByRefFirst(party_ref: String!): Party!
   partyByRefNo(ref: String!): Party!
+  partyByType(party_type: String!): [Party!]!
   partyClassification: [PartyClassification!]!
   partyClassificationByRef(party_ref: String!): [PartyClassification!]!
   partyClassificationByRefAndClass(class_type: String!, party_ref: String!): [PartyClassification!]!
@@ -254,6 +500,7 @@ enum Role {
 }
 
 type Subscription {
+  instrMutated: Instr!
   partyMutated: Party!
 }
 

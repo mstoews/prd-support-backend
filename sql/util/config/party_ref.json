@@ -1,0 +1,6 @@
+{
+"BIC":		"BIC Code,Y",
+"FIID":		"BOJ Code (4 digits),Y",
+"JDEC":		"JASDEC Code (5 digits),Y",
+"BMBG":		"Bloomberg Ref,Y"
+}

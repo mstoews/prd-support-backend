@@ -12,7 +12,3 @@ INSERT INTO party_narrative SELECT 'JASD98',  'INAM',  'JASD98 Pledge A/C',  'Y'
 INSERT INTO party_narrative  SELECT 'JASD98', 'PJEX', '質権口', 'Y', 'Japanese Narrative',  current_timestamp,  1,  'JMARSDEN';
 INSERT INTO party_assoc SELECT 'JASD98', 'ASDP', 'JJSDJPJT', 'N', 'Place of Settlement (PSET) Party', current_timestamp, 1, 'JMARSDEN';
 
-select * from party;
-select * from party_classification;
-
-select * from party_assoc;

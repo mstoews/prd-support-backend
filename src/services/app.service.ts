@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+
 @Injectable()
 export class AppService {
   getHello(): string {
@@ -8,5 +9,9 @@ export class AppService {
 
   getHelloName(name: string): string {
     return `Hello ${name}!`;
+  }
+
+  getUpdateName(party: string): string {
+    return `<h1> ${party}! </h1>`;
   }
 }

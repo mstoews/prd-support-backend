@@ -4,24 +4,25 @@ drop table if exists party_flag;
 drop table if exists party_ext_ref;
 drop table if exists party_classification;
 drop table if exists party;
+drop table if exists party_ssi;
+drop table if exists party_assoc;
 
 create table if not exists party
 (
-	party_ref varchar(12) not null constraint party_idx primary key,
-	party_type varchar(4) not null,
+	party_ref varchar(12) not null,
+	party_type varchar(4) null,
 	party_short_name varchar(20),
 	party_long_name varchar(40),
 	party_extra_long_name varchar(40),
 	active_ind varchar(1),
 	version_date date default now(),
 	version_no integer,
-	version_user char(12)
+	version_user char(12),
+	PRIMARY KEY(party_ref)
 );
 
+
 alter table party owner to postgres;
-create unique index if not exists "party.party_type_unique" on party (party_type);
-
-
 create table if not exists party_classification
 (
 	party_ref char(12) not null,
@@ -47,13 +48,10 @@ create table if not exists party_assoc
     version_date    date,
     version_no      integer,
     version_user    varchar(12),
-     PRIMARY KEY(party_ref, assoc_type),
-       CONSTRAINT fk_party_assoc
-      FOREIGN KEY(party_ref)
-	  REFERENCES party(party_ref)
+    PRIMARY KEY(party_ref, assoc_type)
 );
 
-alter table party_assoc owner to prisma;
+alter table party_assoc owner to postgres;
 
 drop table if exists party_ssi;
 create table if not exists party_ssi
@@ -81,17 +79,18 @@ create table if not exists party_ssi
 
 alter table party_classification owner to postgres;
 
+drop table if exists party_ext_ref;
 create table if not exists party_ext_ref
 (
-	party_ref char(12) not null,
-	party_ext_ref_type char(4) not null,
-	party_ext_ref char(20),
-	user_def char,
-	description char(40),
+	party_ref varchar(12) not null,
+	party_ext_ref_type varchar(4) not null,
+	party_ext_ref varchar(20),
+	user_def varchar,
+	description varchar(40),
 	version_date date,
 	version_no integer,
-	version_user char(12),
-    PRIMARY KEY(party_ref,party_ext_ref_type)
+	version_user varchar(12),
+	primary key (party_ref, party_ext_ref_type)
 );
 
 alter table party_ext_ref owner to postgres;
@@ -177,35 +176,466 @@ create table if not exists "User"
 	-- role Role not null
 );
 
-select * FROM party_classification where class_type = 'LOCN' and party_ref = 'CMP4';
+DELETE FROM party WHERE party_ref = 'CMP10'
+;
 
-alter table "User" owner to postgres;
+INSERT INTO party
+SELECT 'CMP11',
+       'COMP',
+       'BA SEC JAPAN',
+       'SA SEC JAPAN',
+       'SA SEC JAPAN',
+       'A',
+        current_timestamp,
+        1,
+        'YAT'
+;
 
-INSERT INTO party SELECT 'CMP4', 'CMP4','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD91', 'DAC1','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party SELECT 'JASD92', 'DAC2','JASD98', 'JASD98','JASD98','A', now(), 1, 'JMARSDEN';
-INSERT INTO party_classification SELECT 'CMP4','LOCN','TOK','N','Location', now(), 1, 'JMARSDEN';
-INSERT INTO party_classification SELECT 'CMP4','CTRY','JP','N','Country', now(),1, 'JMARSDEN';
-INSERT INTO party_classification SELECT 'CMP4','HOL','JP','N','Holiday',now(),1,'JMARSDEN';
-INSERT INTO party_classification SELECT 'CMP4','PPUR','VALU','Y','Price Purpose',now(),1,'JMARSDEN';
-INSERT INTO party_ext_ref SELECT 'CMP4','BIC','BRSCJPJT','Y','BIC Code',now(),1, 'JMARSDEN';
-INSERT INTO party_ext_ref SELECT 'CMP4','JASD','12345','Y','JASDEC Code', now(), 1, 'JMARSDEN';
-INSERT INTO party_ext_ref SELECT 'CMP4','BOJ','2345','Y','BOJ Code', now(), 1, 'JMARSDEN';
-INSERT INTO party_narrative SELECT 'CMP4','INAM','BR SEC JAPAN','Y','Internal Narrative',now(),1,'JMARSDEN';
-INSERT INTO party_narrative SELECT 'CMP4','PJEX','ブロードリッジ証券ジャパン','Y','Japanese Narrative', now(), 1, 'JMARSDEN';
-INSERT INTO party_instr SELECT 'CMP4','COBI','ISO','JPY','N','Base Ccy',now(),1,'JMARSDEN';
-INSERT INTO party_instr SELECT 'CMP4','COB3','ISO','JPY','N','Base Ccy',now(),1,'MST';
 
-DELETE FROM party_instr;
-SELECT * FROM party_instr;
+DELETE FROM party_classification
+WHERE party_ref = 'CMP10'
+;
 
-SELECT party_ref, count(*) from party group by party_ref;
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'LOCN',
+       'TOK',
+       'N',
+       'Location',
+        current_timestamp,
+        1,
+        'YAT'
+;
 
-SELECT * FROM party_classification;
-SELECT * FROM party;
-SELECT * FROM party_ext_ref;
-SELECT * FROM party_narrative;
-SELECT * FROM party_instr;
-SELECT * FROM party_flag;
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'CTRY',
+       'JP',
+       'N',
+       'Country',
+        current_timestamp,
+        1,
+        'YAT'
+;
 
-DELETE FROM party WHERE party_ref = 'MYPT';
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'HOL',
+       'JP',
+       'N',
+       'Holiday',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'HFRQ',
+       'DAY',
+       'Y',
+       'Holding Statement Frequency',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'INRF',
+       'ISIN',
+       'Y',
+       'Instrument External Reference',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'PPUR',
+       'VALU',
+       'Y',
+       'Price Purpose',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'PCNF',
+       'NORM',
+       'Y',
+       'Party Confirm Class',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       '1401',
+       'INT',
+       'Y',
+       'Party External Refs',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'PTSP',
+       'NONE',
+       'Y',
+       'Split Driver',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'CCPV',
+       'APEI',
+       'Y',
+       'Cost of Carry Pos Valuation',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       '5020',
+       'OO',
+       'Y',
+       'Trailer Code 1 Calc Method',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       '5021',
+       'NONE',
+       'Y',
+       'Trailer Code 2 Calc Method',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       '5022',
+       'NONE',
+       'Y',
+       'Trailer Code 3 Calc Method',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_classification
+SELECT 'CMP10',
+       'VDDA',
+       '01MO',
+       'Y',
+       'Value Date Days Ahead',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+DELETE FROM party_ext_ref
+WHERE party_ref = 'CMP10'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP11',
+       'BIC',
+       'SMPLJPJT',
+       'Y',
+       'BIC Code',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP11',
+       'JSD',
+       '88888',
+       'Y',
+       'JASDEC Ref',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'JSDA',
+       '0999',
+       'Y',
+       'JSDA Ref',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'TSE',
+       '88888',
+       'Y',
+       'TSE Ref',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'OSE',
+       '88888',
+       'Y',
+       'JSDA Ref',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'BOJ',
+       '0888',
+       'Y',
+       'BOJ Code',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'JGNA',
+       'SMPLJPJT001',
+       'Y',
+       'JSCC Netting A/C',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'ABJJ',
+       'SMPLJPJT',
+       'Y',
+       'Agent BIC (JGBCC)',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'CMP10',
+       'ABJN',
+       'SMPLJPJT',
+       'Y',
+       'Agent BIC (Non-JGBCC)',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+DELETE FROM party_narrative WHERE party_ref = 'CMP10'
+;
+
+INSERT INTO party_narrative
+SELECT 'CMP10',
+       'INAM',
+       'Sample Japan Securities',
+       'Y',
+       'Internal Narrative',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_narrative
+SELECT 'CMP10',
+       'PJEX',
+       'サンプル証券ジャパン',
+       'Y',
+       'Japanese Narrative',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+INSERT INTO party_narrative
+SELECT 'CMP10',
+       'PEEX',
+       'Sample Japan Securities',
+       'Y',
+       'English Narrative',
+        current_timestamp,
+        1,
+        'YAT'
+;
+
+DELETE FROM party_instr
+WHERE party_ref = 'CMP10'
+;
+
+INSERT INTO party_instr
+SELECT 'CMP10',
+       'COBI',
+       'ISO',
+       'JPY',
+       'N',
+       'Base Ccy',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+DELETE FROM party_ssi
+WHERE party_ref = 'CMP10'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JASD00',
+       'JASD00',
+       'Depot',
+       'JASDEC',
+       'JASD00',
+       '8888800',
+       'JASDEC OWN',
+       'SMPLJPJT',
+       'A',
+       'Y',
+       'JASDEC TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JASD40',
+       'JASD40',
+       'Depot',
+       'JASDEC',
+       'JASD40',
+       '8888840',
+       'JASDEC ASSGN COLL',
+       'SMPLJPJT',
+       'A',
+       'Y',
+       'JASDEC TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JASD60',
+       'JASD60',
+       'Depot',
+       'JASDEC',
+       'JASD60',
+       '8888860',
+       'JASDEC SAFEKEEPING',
+       'SMPLJPJT',
+       'A',
+       'Y',
+       'JASDEC TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JASD80',
+       'JASD80',
+       'Depot',
+       'JASDEC',
+       'JASD80',
+       '8888880',
+       'JASDEC NR A/C',
+       'SMPLJPJT',
+       'A',
+       'Y',
+       'JASDEC TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JASD98',
+       'JASD98',
+       'Depot',
+       'JASDEC',
+       'JASD00',
+       '8888898',
+       'JASDEC PLEDGE',
+       'SMPLJPJT',
+       'A',
+       'Y',
+       'JASDEC TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'BOJ CASH',
+       'BOJ CASH',
+       'Nostro',
+       'BOJ',
+       'BOJ CASH',
+       '0888001',
+       'BOJ CASH',
+       'BOTKJPJT',
+       'A',
+       'Y',
+       'BOJ TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+
+INSERT INTO party_ssi
+SELECT 'CMP10',
+       'JPY CASH',
+       'JPY CASH',
+       'Nostro',
+       'BOJ',
+       'JPY CASH',
+       '0888001',
+       'JPY CASH',
+       'BOTKJPJT',
+       'A',
+       'Y',
+       'JPY CASH TEMPLATE',
+       current_timestamp,
+       1,
+       'YAT'
+;
+select * from party;
+
+-- select * from party_ssi;
+
+
