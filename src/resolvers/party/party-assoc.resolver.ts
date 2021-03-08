@@ -1,25 +1,11 @@
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyAssoc } from '../../models/party.model';
 import { PartyAssocInput} from '../../models/inputs/party.input';
 
 import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
-
-import {
     party_assoc as PartyAssocModel,
-    Prisma,
+    Prisma ,
   } from '@prisma/client';
 
   @Resolver((of) => PartyAssoc)
@@ -52,13 +38,22 @@ import {
     @Args('party_ref',{ nullable: false}) party_ref?: string, 
     @Args('assoc_type',{ nullable: false}) assoc_type?: string,) 
     {
-      return this.prisma.party_classification.findMany({ where: {
+      return this.prisma.party_assoc.findMany({ where: {
        party_ref : party_ref, 
-       class_type : assoc_type,
+       assoc_type : assoc_type,
       },              
     });
   }
 
+  // Create Associaton
+  @Mutation((returns) => PartyAssoc)
+  async createPartyAssoc(@Args('data', { type: () => PartyAssocInput }) newUserData: Prisma.party_assocCreateInput) {
+    return this.prisma.party_assoc.create({
+      data: newUserData,
+    });
+  }
+  
+  // Update Associaton
   @Mutation((returns) => PartyAssoc)
   async updatePartyAssoc(
     @Args('party_ref', { type: () => String }) party_ref?: string,
@@ -77,7 +72,7 @@ import {
       });
   }
 
-  
+  // Delete Association  
   @Mutation((returns) => PartyAssoc)
   async deletePartyAssoc(
     @Args('party_ref', { type: () => String }) party_ref?: string,

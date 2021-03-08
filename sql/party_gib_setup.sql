@@ -3,9 +3,9 @@ drop table if exists party_narrative;
 drop table if exists party_flag;
 drop table if exists party_ext_ref;
 drop table if exists party_classification;
-drop table if exists party;
 drop table if exists party_ssi;
 drop table if exists party_assoc;
+drop table if exists party;
 
 create table if not exists party
 (
@@ -180,7 +180,7 @@ DELETE FROM party WHERE party_ref = 'CMP10'
 ;
 
 INSERT INTO party
-SELECT 'CMP11',
+SELECT 'CMP10',
        'COMP',
        'BA SEC JAPAN',
        'SA SEC JAPAN',
@@ -456,184 +456,7 @@ SELECT 'CMP10',
 DELETE FROM party_narrative WHERE party_ref = 'CMP10'
 ;
 
-INSERT INTO party_narrative
-SELECT 'CMP10',
-       'INAM',
-       'Sample Japan Securities',
-       'Y',
-       'Internal Narrative',
-        current_timestamp,
-        1,
-        'YAT'
-;
 
-INSERT INTO party_narrative
-SELECT 'CMP10',
-       'PJEX',
-       'サンプル証券ジャパン',
-       'Y',
-       'Japanese Narrative',
-        current_timestamp,
-        1,
-        'YAT'
-;
-
-INSERT INTO party_narrative
-SELECT 'CMP10',
-       'PEEX',
-       'Sample Japan Securities',
-       'Y',
-       'English Narrative',
-        current_timestamp,
-        1,
-        'YAT'
-;
-
-DELETE FROM party_instr
-WHERE party_ref = 'CMP10'
-;
-
-INSERT INTO party_instr
-SELECT 'CMP10',
-       'COBI',
-       'ISO',
-       'JPY',
-       'N',
-       'Base Ccy',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-DELETE FROM party_ssi
-WHERE party_ref = 'CMP10'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JASD00',
-       'JASD00',
-       'Depot',
-       'JASDEC',
-       'JASD00',
-       '8888800',
-       'JASDEC OWN',
-       'SMPLJPJT',
-       'A',
-       'Y',
-       'JASDEC TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JASD40',
-       'JASD40',
-       'Depot',
-       'JASDEC',
-       'JASD40',
-       '8888840',
-       'JASDEC ASSGN COLL',
-       'SMPLJPJT',
-       'A',
-       'Y',
-       'JASDEC TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JASD60',
-       'JASD60',
-       'Depot',
-       'JASDEC',
-       'JASD60',
-       '8888860',
-       'JASDEC SAFEKEEPING',
-       'SMPLJPJT',
-       'A',
-       'Y',
-       'JASDEC TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JASD80',
-       'JASD80',
-       'Depot',
-       'JASDEC',
-       'JASD80',
-       '8888880',
-       'JASDEC NR A/C',
-       'SMPLJPJT',
-       'A',
-       'Y',
-       'JASDEC TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JASD98',
-       'JASD98',
-       'Depot',
-       'JASDEC',
-       'JASD00',
-       '8888898',
-       'JASDEC PLEDGE',
-       'SMPLJPJT',
-       'A',
-       'Y',
-       'JASDEC TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'BOJ CASH',
-       'BOJ CASH',
-       'Nostro',
-       'BOJ',
-       'BOJ CASH',
-       '0888001',
-       'BOJ CASH',
-       'BOTKJPJT',
-       'A',
-       'Y',
-       'BOJ TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
-
-INSERT INTO party_ssi
-SELECT 'CMP10',
-       'JPY CASH',
-       'JPY CASH',
-       'Nostro',
-       'BOJ',
-       'JPY CASH',
-       '0888001',
-       'JPY CASH',
-       'BOTKJPJT',
-       'A',
-       'Y',
-       'JPY CASH TEMPLATE',
-       current_timestamp,
-       1,
-       'YAT'
-;
 select * from party;
 
 -- select * from party_ssi;

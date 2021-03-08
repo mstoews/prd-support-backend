@@ -9,7 +9,7 @@ import {
   } from '@prisma/client';
 import { type } from 'os';
 
-type instrCreateInput = Prisma.party_instrCreateInput;
+// type instrCreateInput = Prisma.party_instrCreateInput;
 
   @Resolver('PartyInstr')
   export class PartyInstrResolver {
@@ -35,9 +35,10 @@ type instrCreateInput = Prisma.party_instrCreateInput;
         },              
       });
     }
-    
+  
+  // Create  
   @Mutation((returns) => PartyInstr)
-    async createPartyInstrument(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: instrCreateInput) {
+    async createPartyInstrument(@Args('data', { type: () => PartyInstrInput })  newInstrumentData: Prisma.party_instrCreateInput) {
     return this.prisma.party_instr.create({
       data: newInstrumentData,
     });
@@ -51,9 +52,9 @@ type instrCreateInput = Prisma.party_instrCreateInput;
       return this.prisma.party_instr.delete(
         {
           where: {
-            party_ref_instr_ref: {
+            party_ref_instr_type: {
               party_ref: party,
-              instr_ref: instr,
+              instr_type: instr,
             }
           }
         });
@@ -69,9 +70,9 @@ type instrCreateInput = Prisma.party_instrCreateInput;
     {
     return this.prisma.party_instr.update({
         where: {
-          party_ref_instr_ref: {
+          party_ref_instr_type: {
             party_ref: party,
-            instr_ref: instr,
+            instr_type: instr,
           }
         },
         data: newData

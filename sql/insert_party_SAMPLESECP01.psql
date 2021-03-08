@@ -1,0 +1,178 @@
+DELETE FROM party WHERE party_ref = 'SAMPLESECP01';
+
+INSERT INTO party
+SELECT 'SAMPLESECP01',
+       'SECP',
+       'SAMPLESECP01',
+       'SAMPLESECP01',
+       'SAMPLESECP01',
+       'A',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+DELETE FROM party_classification WHERE party_ref = 'SAMPLESECP01';
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'LOCN',
+       'TOK',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'CTRY',
+       'JP',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'HOL',
+       'JP',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'PADC',
+       'EXT',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'PCHG',
+       'NONE',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'PCCS',
+       'NONE',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_classification
+SELECT 'SAMPLESECP01',
+       'PCUS',
+       'NORM',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+DELETE FROM party_ext_ref WHERE party_ref = 'SAMPLESECP01';
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'BMBG',
+       'SAMPLESECP',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'JDCB',
+       '923456',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'JDEC',
+       '923456',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'JSD',
+       '923456',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'JPLC',
+       '923456',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+INSERT INTO party_ext_ref
+SELECT 'SAMPLESECP01',
+       'BIC',
+       'SAMPLE01',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+DELETE FROM party_flag WHERE party_ref = 'SAMPLESECP01';
+
+DELETE FROM party_assoc WHERE party_ref = 'SAMPLESECP01';
+
+INSERT INTO party_assoc
+SELECT 'SAMPLESECP01',
+       'SEGP',
+       'SEGPARTY1',
+       'Y',
+       'TBC',
+       current_timestamp,
+       1,
+       'SQL_UTIL'
+;
+
+DELETE FROM party_instr WHERE party_ref = 'SAMPLESECP01';
+

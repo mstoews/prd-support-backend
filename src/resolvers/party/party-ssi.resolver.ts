@@ -1,27 +1,15 @@
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs } from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartySSI } from '../../models/party.model';
 import { PartySSIInput } from '../../models/inputs/party.input';
-import { Something } from '../../models/party.model';
-
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  Put,
-  Delete,
-} from '@nestjs/common'
+import { Logger } from '@nestjs/common';
 
 import { party_ssi as PartySSIModel, Prisma } from '@prisma/client';
 
 @Resolver((of) => PartySSI)
 export class PartySSIResolver {
+  private readonly logger = new Logger('PartyResolver');
 
   constructor(private prisma: PrismaService) { }
 
@@ -44,6 +32,15 @@ export class PartySSIResolver {
       },
     });
   }
+
+  @Mutation((returns) => PartySSI)
+  async createPartySSI(@Args('data', { type: () => PartySSIInput }) newUserData: Prisma.party_ssiCreateInput) {
+    this.logger.log('createPartySSI account:', newUserData.account_name);
+    return this.prisma.party_ssi.create({
+      data: newUserData,
+    });
+  }
+
 
   @Mutation((returns) => PartySSI)
   async updateSSI(

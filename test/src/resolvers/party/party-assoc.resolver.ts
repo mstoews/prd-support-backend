@@ -49,9 +49,9 @@ import { party_assoc as PartyAssocModel, Prisma } from '@prisma/client';
     @Args('party_ref',{ nullable: false}) party_ref?: string, 
     @Args('assoc_type',{ nullable: false}) assoc_type?: string,) 
     {
-      return this.prisma.party_classification.findMany({ where: {
+      return this.prisma.party_assoc.findMany({ where: {
        party_ref : party_ref, 
-       class_type : assoc_type,
+       assoc_type : assoc_type,
       },              
     });
   }

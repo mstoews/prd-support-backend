@@ -4,6 +4,16 @@ in the Dockerfile
 FROM node:12 AS builder
 ```
 
+# Start podman Postgres 
+```bash
+podman run -d \
+    --name gloss-api-postgres \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -e PGDATA=/var/lib/postgresql/data/pgdata \
+    -v /custom/mount:/var/lib/postgresql/gloss-data \
+    postgres
+```
+
 the first line above needs to be changed to linux other than alpine and then in the builder section of the docker file 
 nodejs needs to be installed. 
 Bit complicated actually 
@@ -85,7 +95,8 @@ npm run prisma:save
 
 Perform the database migration:
 
-```bash
+
+
 npx prisma migrate up --experimental
 # or
 npm run prisma:up

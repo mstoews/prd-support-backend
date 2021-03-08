@@ -1,27 +1,9 @@
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { InstrIdArgs} from '../../models/args/instr-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation, Subscription } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { Instr, InstrClassification } from '../../models/instr.model';
-import { PubSub } from 'graphql-subscriptions';
 import { InstrInput } from '../../models/inputs/instr.input';
 import { HttpPostService} from '../../services/http-post/http-post.service';
- 
-const pubsub = new PubSub();
-
-import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-    Inject,
-    Injectable,
-  } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 import { Prisma, instr as InstrModel } from '@prisma/client';
 
@@ -69,45 +51,40 @@ export class InstrResolver {
   @Query((returns) => String)
   async createInstrGlossXML(@Args('Type',{ type: () => String}) ref: string) {
     /*  TODO - need to fix this */
-     return this.postService.updateGlossByPartyRef("TRADING");
+     //return this.postService.updateGlossByPartyRef("TRADING");
   }
 
-  @Mutation((returns) => Instr)
+ // Create 
+ @Mutation((returns) => Instr)
   async createInstrInput(@Args('data', { type: () => InstrInput })  newUserData: Prisma.instrCreateInput) {
     return this.prisma.instr.create({
       data: newUserData,
    });
   }
 
-  @Subscription(returns => Instr)
-  async instrMutated() {
-    return pubsub.asyncIterator('instrMutated');
-  }
-  
-  // Returns Party 
-  async createInstr(data: Prisma.instrCreateInput): Promise<InstrModel> {
-    return this.prisma.instr.create({
-      data,
-    });
-    pubsub.publish('instrMutated', { instrMutated: data });
-  }
-  
-  @Mutation((returns) => Instr)
-  async updateInstr(params: {
-    where: Prisma.instrWhereUniqueInput;
-    data: Prisma.instrUpdateInput;
-  }): Promise<InstrModel> {
-    const { data, where } = params;
-    return this.prisma.instr.update({
-      data,
-      where,
-    });
-  }
-  
-  @Mutation((returns) => Instr)
-  async deleteInstr(where: Prisma.instrWhereUniqueInput): Promise<InstrModel> {
-    return this.prisma.instr.delete({
-      where,
-    });
-  }
+// Update
+@Mutation((returns) => Instr)
+async updateInstrByRef(
+  @Args('instr_ref',{ type: () => String }) instrRef?: string, 
+  @Args('data',{ nullable: false}) data?: InstrInput,) 
+{
+  return this.prisma.instr.update({
+    data: data,
+    where: {
+      instr_ref: instrRef,
+    }
+  });
+}
+
+// Delete
+@Mutation((returns) => Instr)
+   async deleteInstrByRef(
+    @Args('instr_ref',{ type: () => String }) instrRef?: string, ) {
+     return this.prisma.instr.delete({
+       where: {
+         instr_ref: instrRef,
+       },
+     });
+ }
+ 
 }

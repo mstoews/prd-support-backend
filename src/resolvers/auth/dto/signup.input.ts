@@ -17,4 +17,10 @@ export class SignupInput {
 
   @Field({ nullable: true })
   lastname?: string;
+  
+  @Field({ nullable: false })
+  updatedAt: string
+  
+  @Field({ nullable: false })
+  id: string
 }

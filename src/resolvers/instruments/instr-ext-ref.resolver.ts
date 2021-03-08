@@ -67,25 +67,49 @@ import { InstrInput, InstrExtRefInput } from 'src/models/inputs/instr.input';
    });
  }
 
-  
-  @Mutation((returns) => InstrExtRef)
-  async updateInstr(params: {
-    where: Prisma.instr_ext_refWhereUniqueInput;
-    data: Prisma.instr_ext_refUpdateInput;
-  }): Promise<InstrExtRefModel> {
-    const { data, where } = params;
-    return this.prisma.instr_ext_ref.update({
-      data,
-      where,
+// Create 
+@Mutation((returns) => InstrExtRef)
+async createInstrExtRef(@Args('data', { type: () => InstrExtRefInput })  newUserData: Prisma.instr_ext_refCreateInput) {
+  return this.prisma.instr_ext_ref.create({
+    data: newUserData,
+ });
+}
+
+// Update
+@Mutation((returns) => InstrExtRef)
+async updateInstrExtRef(
+  @Args('instr_ref', { type: () => String }) instr_ref?: string,
+  @Args('instr_ext_ref_type', { type: () => String }) instr_ext_ref_type?: string,
+  @Args('data', { type: () => InstrExtRefInput }) newData?: InstrExtRefModel,) {
+  return this.prisma.instr_ext_ref.update(
+    {
+      where: {
+        instr_ref_instr_ext_ref_type: {
+          instr_ref: instr_ref,
+          instr_ext_ref_type: instr_ext_ref_type
+        },
+      },
+      data: newData,
+
     });
-  }
-  
-  @Mutation((returns) => InstrExtRef)
-  async deleteInstr(where: Prisma.instr_ext_refWhereUniqueInput): Promise<InstrExtRefModel> {
-    return this.prisma.instr_ext_ref.delete({
-      where,
+}
+
+// Delete
+@Mutation((returns) => InstrExtRef)
+async deleteInstrExtRef(
+  @Args('instr_ref', { type: () => String }) instr_ref?: string,
+  @Args('instr_ext_ref_type', { type: () => String }) instr_ext_ref_type?: string,) {
+  return this.prisma.instr_ext_ref.delete(
+    {
+      where: {
+        instr_ref_instr_ext_ref_type: {
+          instr_ref: instr_ref,
+          instr_ext_ref_type: instr_ext_ref_type
+        },
+      },
     });
-  }
+}
+  
 }
 
 

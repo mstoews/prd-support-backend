@@ -1,17 +1,15 @@
-apiVersion: skaffold/v2beta7
+apiVersion: skaffold/v2beta10
 kind: Config
 metadata:
   name: gloss-api-backend
 build:
   artifacts:
-  - image: mstoews/gloss-api-backend_nest-api
+  - image: docker.io/mstoews/gloss-api-backend
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
-    - db-deployment.yaml
     - db-service.yaml
-    - nest-api-api-env-configmap.yaml
-    - nest-api-deployment.yaml
-    - nest-api-env-configmap.yaml
-    - nest-api-service.yaml
-    - postgres-persistentvolumeclaim.yaml
+    - db-deployment.yaml
+    

@@ -1,6 +1,8 @@
 import { InputType, Field, ArgsType } from '@nestjs/graphql';
 import { StringValueNode } from 'graphql';
 
+
+
 @InputType()
 export class PartyInput {
   @Field({ nullable: true })  party_ref:             string;  
@@ -40,7 +42,8 @@ export class PartyExtRefInput {
   
 @InputType()
 export class  PartyFlagInput {
-   @Field({nullable: true }) party_ref:    string;
+   @Field({nullable: true 
+  }) party_ref:    string;
    @Field({nullable: true }) flag_type:    number;
    @Field({nullable: true }) flag_code:    string;
    @Field({nullable: true }) user_def:     string;
@@ -62,6 +65,7 @@ export class  PartyInstrInput {
   @Field({nullable: true })  version_no:     number;
   @Field({nullable: true })  version_user:   string;
   }
+
   
 @InputType()
 export class  PartyNarrativeInput {
@@ -77,15 +81,15 @@ export class  PartyNarrativeInput {
 
   @InputType()
   export class  PartyAssocInput {
-   @Field({nullable: null}) party_ref:       string;
-   @Field({nullable: null}) assoc_type:      string;
+   @Field({nullable: false}) party_ref: string;
+   @Field({nullable: false}) assoc_type: string;
    @Field({nullable: null}) assoc_party_ref: string;
-   @Field({nullable: null}) user_def:       string;
-   @Field({nullable: null}) description:     string;
-   @Field({nullable: null}) version_date:  Date;      
-   @Field({nullable: null}) version_no:    number;      
-   @Field({nullable: null}) version_user:  string;   
-    }
+   @Field({nullable: null}) user_def: string;
+   @Field({nullable: null}) description: string;
+   @Field({nullable: null}) version_date: Date;      
+   @Field({nullable: null}) version_no: number;      
+   @Field({nullable: null}) version_user: string;   
+   }
 
     @InputType()
     export class  PartySSIInput {
@@ -104,7 +108,19 @@ export class  PartyNarrativeInput {
     @Field({nullable: null})  version_date:  Date;      
     @Field({nullable: null})  version_no:    number;      
     @Field({nullable: null})  version_user:  string;    
-      }
+  }
+
+  @InputType()
+  export class  PartySwiftInput {
+    @Field({nullable: true })  party_ref:      string;
+    @Field({nullable: true })  bic_code:      string;
+    @Field({nullable: true })  logical_term_id:     string;
+    @Field({nullable: true })  version_date:   Date;
+    @Field({nullable: true })  version_no:     number;
+    @Field({nullable: true })  version_user:   string;
+    }
+  
+  
 
 @ArgsType()
 export class  PartyNarrativeArgs {

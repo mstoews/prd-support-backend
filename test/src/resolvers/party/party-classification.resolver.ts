@@ -1,22 +1,7 @@
 import { PrismaService } from '../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyClassification } from '../../models/party.model';
 import { PartyClassInput} from '../../models/inputs/party.input';
-
-import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
-
 import { party_classification as ClassModel, Prisma } from '@prisma/client';
 
 
@@ -29,7 +14,7 @@ export class PartyClassificationResolver {
   
   @Query((returns) => [PartyClassification])
   party_classification() { 
-      return this.prisma.party_classification.findMany();
+      return this.prisma.party_instr.findMany();
   }  
   
 
@@ -39,8 +24,9 @@ export class PartyClassificationResolver {
     @Args('class_type',{ nullable: false}) class_type?: string,) 
     {
       return this.prisma.party_classification.findMany({ where: {
-       class_type : class_type,
        party_ref : party_ref, 
+       class_type : class_type
+       
       },              
     });
   }
@@ -48,7 +34,7 @@ export class PartyClassificationResolver {
 
   @Query((returns) => [PartyClassification])
   partyClassification() { 
-      return this.prisma.party_classification.findMany();
+      return this.prisma.party_instr.findMany();
   }  
   
 
@@ -58,8 +44,8 @@ export class PartyClassificationResolver {
     @Args('class_type',{ nullable: false}) class_type?: string,) 
     {
       return this.prisma.party_classification.findMany({ where: {
-       class_type : class_type,
        party_ref : party_ref, 
+       class_type : class_type,
       },              
     });
   }
@@ -68,7 +54,7 @@ export class PartyClassificationResolver {
   party_classificationByRef(
     @Args('party_ref',{ nullable: false}) party_ref?: string) 
     {
-      return this.prisma.party_classification.findMany({ where: {
+      return this.prisma.party_instr.findMany({ where: {
       party_ref : party_ref, 
       },              
     });
@@ -79,7 +65,7 @@ export class PartyClassificationResolver {
   partyClassificationByRef(
     @Args('party_ref',{ nullable: false}) party_ref?: string) 
     {
-      return this.prisma.party_classification.findMany({ where: {
+      return this.prisma.party_instr.findMany({ where: {
       party_ref : party_ref, 
       },              
     });
@@ -93,14 +79,7 @@ export class PartyClassificationResolver {
     });
   }
   
-  
-  // @Mutation((returns) => PartyClassification)
-  // async createPartyClassification(data: party_classificationCreateInput): Promise<ClassModel> {
-  //   return this.prisma.party_classification.create({
-  //     data,
-  //   });
-  // }
-  
+
   @Mutation((returns) => PartyClassification)
   async updateParty(params: {
     where: Prisma.party_classificationWhereUniqueInput;

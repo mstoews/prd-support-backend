@@ -2,30 +2,6 @@ DELETE FROM party
 WHERE  party_ref = 'TRADING'
 ;
 
-select * from party_classification;
-
-select * from party_ext_ref;
-update party_ext_ref set party_ext_ref = 'SMPLJPJT' where party_ref = 'CMP11' and party_ext_ref_type = 'BIC';
-
-
-
-drop table party_ext_ref
-
-create table party_ext_ref
-(
-	party_ref varchar(12) not null,
-	party_ext_ref_type varchar(4) not null,
-	party_ext_ref varchar(20),
-	user_def varchar,
-	description varchar(40),
-	version_date date,
-	version_no integer,
-	version_user varchar(12),
-	constraint party_ext_ref_pkey
-		primary key (party_ref, party_ext_ref_type)
-);
-
-alter table party_ext_ref owner to postgres;
 
 INSERT INTO party
 SELECT 'TRADING',
@@ -40,7 +16,7 @@ SELECT 'TRADING',
 ;
 
 
-select * from party_ext_ref;
+
 
 DELETE FROM party_classification
 WHERE party_ref = 'TRADING'

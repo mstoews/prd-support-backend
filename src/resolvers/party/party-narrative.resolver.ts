@@ -38,38 +38,47 @@ import { party_narrative as PartyNarrativeModel, Prisma } from '@prisma/client';
     },              
   });
   }
-  
- 
+
   @Query((returns) => [PartyNarrative])
-   async partyNarrativeByRefAndType(
-    @Args('party_ref',{ nullable: false}) party_ref?: string, 
-    @Args('narrative_type',{ nullable: false}) narr_type?: string,) 
-    {
-      return this.prisma.party_narrative.findMany({ where: {
-       party_ref : party_ref, 
-       narr_type : narr_type,
-      },              
+  async partyNarrativeByRefAndType(
+   @Args('party_ref',{ nullable: false}) party_ref?: string, 
+   @Args('narrative_type',{ nullable: false}) narr_type?: string,) 
+   {
+     return this.prisma.party_narrative.findMany({ where: {
+      party_ref : party_ref, 
+      narr_type : narr_type,
+     },              
+   });
+ }
+
+ // Create
+  @Mutation((returns) => PartyNarrative)
+  async createPartyNarrative(@Args('data', { type: () => PartyNarrativeInput }) newUserData: Prisma.party_narrativeCreateInput) {
+    return this.prisma.party_narrative.create({
+      data: newUserData,
     });
   }
  
-
+ 
+  // Update
   @Mutation((returns) => PartyNarrative)
-  async updateNarrative(
+  async updatePartyNarrative(
     @Args('party_ref', { type: () => String }) party_ref?: string,
-    @Args('narr_type', { type: () => String }) narr_type?: string,
-    @Args('data', { type: () => PartyNarrativeInput }) newData?: PartyNarrativeModel,) {
-    return this.prisma.party_narrative.update(
-      {
+    @Args('narr_type', { type: () => String }) narr_type?: string, 
+    @Args('newData', { type: () => PartyNarrativeInput }) newData?: PartyNarrativeModel,)
+    {
+    return this.prisma.party_narrative.update({
         where: {
           party_ref_narr_type: {
             party_ref: party_ref,
             narr_type: narr_type,
-          },
+          }
         },
-        data: newData,
+        data: newData
       });
   }
-  
+
+  // Delete
   @Mutation((returns) => PartyNarrative)
   async deleteNarrative(
     @Args('party_ref', { type: () => String }) party_ref?: string,

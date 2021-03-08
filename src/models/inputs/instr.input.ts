@@ -73,7 +73,7 @@ export class InstrNarrativeInput {
   @Field({nullable: true })  version_date:           Date;
   @Field({nullable: true })  version_no:             number;
   @Field({nullable: true })  version_user:           string;
-  }
+}
 
 @InputType()
 export class InstrDateInput {

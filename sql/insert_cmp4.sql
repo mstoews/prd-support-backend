@@ -88,9 +88,9 @@ WHERE party_ref = 'CMP4'
 ;
 
 INSERT INTO party_ext_ref
-SELECT 'CMP4',
-       'BIC',
-       'BRSCJPJT',
+SELECT 'C030',
+       'AEID',
+       'Customer Company ID',
        'Y',
        'BIC Code',
         current_timestamp,

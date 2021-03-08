@@ -1,22 +1,10 @@
 
 
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { InstrIdArgs } from '../../models/args/instr-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { InstrNarrative } from '../../models/instr.model';
-import { InstrNarrativeArgs } from 'src/models/inputs/instr.input';
+import { InstrNarrativeInput } from '../../models/inputs/instr.input';
 
-import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
 
 import { instr_narrative as InstrNarrativeModel, Prisma } from '@prisma/client';
 
@@ -51,23 +39,49 @@ import { instr_narrative as InstrNarrativeModel, Prisma } from '@prisma/client';
     });
   }
 
-  @Mutation((returns) => InstrNarrative)
-  async updateNarrative(params: {
-    where: Prisma.instr_narrativeWhereUniqueInput;
-    data: Prisma.instr_narrativeUpdateInput;
-  }): Promise<InstrNarrativeModel> {
-    const { data, where } = params;
-    return this.prisma.instr_narrative.update({
-      data,
-      where,
-    });
-  }
+      // Create
+      @Mutation((returns) => InstrNarrative)
+      async createInstrNarrative(@Args('data', { type: () => InstrNarrativeInput }) newClassData: Prisma.instr_narrativeCreateInput) {
+        return this.prisma.instr_narrative.create({
+          data: newClassData,
+        });
+      }
+    
+      // Update
+      @Mutation((returns) => InstrNarrative)
+      async updateInstrNarrative(
+        @Args('instr_ref', { type: () => String }) instr_ref?: string,
+        @Args('narr_type', { type: () => String }) narr_type?: string,
+        @Args('data', { type: () => InstrNarrativeInput }) newData?: InstrNarrativeModel,) {
+        return this.prisma.instr_narrative.update(
+          {
+            where: {
+              instr_ref_narr_type: {
+                instr_ref: instr_ref,
+                narr_type: narr_type,
+              },
+            },
+            data: newData,
+    
+          });
+      }
+    
+      // Delete
+      @Mutation((returns) => InstrNarrative)
+      async deleteInstrNarrative(
+        @Args('instr_ref', { type: () => String }) instr_ref?: string,
+        @Args('narr_type', { type: () => String }) narr_type?: string){
+        return this.prisma.instr_narrative.delete(
+          {
+            where: {
+              instr_ref_narr_type: {
+                instr_ref: instr_ref,
+                narr_type: narr_type,
+              },
+            },
+          });
+      }
+
   
-  @Mutation((returns) => InstrNarrative)
-  async deleteNarrative(where: Prisma.instr_narrativeWhereUniqueInput): Promise<InstrNarrativeModel> {
-    return this.prisma.instr_narrative.delete({
-      where,
-    });
-  }
 }
 

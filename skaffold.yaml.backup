@@ -1,0 +1,28 @@
+apiVersion: skaffold/v1
+kind: Config
+metadata:
+  name: dev-nestjs-kubernetes
+build:
+  # local:
+  # push: false
+  artifacts:
+    - image: registery.github.gloss-api-backend_nest-api:latest
+      context: .
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.*'
+            dest: .
+deploy:
+  # kubeContext: docker-desktop
+  kubectl:
+    flags:
+      global: [--namespace=nestjs-kubernetes-namespace]
+    manifests:
+      - ./k8s/03-secrets.yaml
+      - ./k8s/04-postgres.yaml
+      - ./k8s/05-redis.yaml
+      - ./k8/06-minio.yaml
+      - ./k8s/07-data.yaml
+      - ./k8s/08-nestjs.yaml

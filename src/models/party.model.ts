@@ -1,19 +1,36 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from './user.model';
+import { Field,Int,ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Party {
-  party_ref:             string;    
-  party_type:            string;  
-  party_short_name:      string;
-  party_long_name:       string;
-  party_extra_long_name: string;
-  active_ind:            string;
-  version_date:          Date;
-  version_no:            number;
-  version_user:          string;
-  @Field(type => [PartyClassification])
-  classes: PartyClassification[];
+   @Field({ nullable: true }) party_ref:             string;    
+   @Field({ nullable: true }) party_type:            string;  
+   @Field({ nullable: true }) party_short_name:      string;
+   @Field({ nullable: true }) party_long_name:       string;
+   @Field({ nullable: true }) party_extra_long_name: string;
+   @Field({ nullable: true }) active_ind:            string;
+   @Field({ nullable: true }) version_date:          Date;
+   @Field(type => Int) version_no:                   number;
+   @Field({ nullable: true }) version_user:          string;
+   @Field(type => [PartyAssoc], { nullable: 'items'})  
+   party_assoc: PartyAssoc[];
+}
+
+ObjectType()
+export class ParentParty {
+   @Field({ nullable: true }) party_ref:             string;    
+   @Field({ nullable: true }) party_type:            string;  
+   @Field({ nullable: true }) party_short_name:      string;
+   @Field({ nullable: true }) party_long_name:       string;
+   @Field({ nullable: true }) party_extra_long_name: string;
+   @Field({ nullable: true }) active_ind:            string;
+   @Field({ nullable: true }) version_date:          Date;
+}
+
+@ObjectType()
+export class SimpleParty{
+  @Field(type => [ParentParty]) party: ParentParty[];
+  @Field(type => [PartyExtRef]) party_ext_ref: PartyExtRef[];
+  @Field(type => [PartyAssoc])  party_assoc: PartyAssoc[];
 }
 
 
@@ -113,8 +130,13 @@ export class  PartySSI {
 }
 
 @ObjectType()
-export class Something {
-  description: string;       
+export class PartySwift {
+   party_ref:       string;    
+   bic_code:        string;  
+   logical_term_id: string;
+   version_date:    Date;
+   version_no:      number;
+   version_user:    string;
 }
 
 

@@ -1,24 +1,8 @@
 import { PrismaService } from '../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { InstrIdArgs} from '../../models/args/instr-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { InstrClassification } from '../../models/instr.model';
 import { InstrClassInput} from '../../models/inputs/instr.input';
-
-import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
-
 import { instr_classification as ClassModel, Prisma } from '@prisma/client';
-
 
 @Resolver((of) => InstrClassification)
 export class InstrClassificationResolver {
@@ -83,31 +67,47 @@ export class InstrClassificationResolver {
       },              
     });
   }
-
-  @Mutation((returns) => InstrClassification)
-  async createInstrClassification(@Args('data', { type: () => InstrClassInput })  newClassData: Prisma.instrCreateInput) {
-    return this.prisma.instr.create({
-      data: newClassData,
-    });
-  }
+    // Create
+    @Mutation((returns) => InstrClassification)
+    async createInstrClassification(@Args('data', { type: () => InstrClassInput }) newClassData: Prisma.instr_classificationCreateInput) {
+      return this.prisma.instr_classification.create({
+        data: newClassData,
+      });
+    }
   
-  @Mutation((returns) => InstrClassification)
-  async updateInstr(params: {
-    where: Prisma.instr_classificationWhereUniqueInput;
-    data: Prisma.instr_classificationUpdateInput;
-  }): Promise<ClassModel> {
-    const { data, where } = params;
-    return this.prisma.instr_classification.update({
-      data,
-      where,
-    });
-  }
+    // Update
+    @Mutation((returns) => InstrClassification)
+    async updateInstrClassification(
+      @Args('party_ref', { type: () => String }) party_ref?: string,
+      @Args('class_type', { type: () => String }) class_type?: string,
+      @Args('data', { type: () => InstrClassInput }) newData?: ClassModel,) {
+      return this.prisma.instr_classification.update(
+        {
+          where: {
+            instr_ref_class_type: {
+              instr_ref: party_ref,
+              class_type: class_type,
+            },
+          },
+          data: newData,
   
-  @Mutation((returns) => InstrClassification)
-  async deleteInstr(where: Prisma.instr_classificationWhereUniqueInput): Promise<ClassModel> {
-    return this.prisma.instr_classification.delete({
-      where,
-    });
-  }
+        });
+    }
+  
+    // Delete
+    @Mutation((returns) => InstrClassification)
+    async deleteInstrClassification(
+      @Args('party_ref', { type: () => String }) party_ref?: string,
+      @Args('class_type', { type: () => String }) class_type?: string,) {
+      return this.prisma.instr_classification.delete(
+        {
+          where: {
+            instr_ref_class_type: {
+              instr_ref: party_ref,
+              class_type: class_type,
+            },
+          },
+        });
+    }
 }
 

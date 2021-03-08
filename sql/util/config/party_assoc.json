@@ -1,0 +1,8 @@
+{
+    "SEGP": "Segregation Party,Y",
+    "PRCM": "Parent Company,Y",
+    "CCMP": "Custody Company,N",
+    "CCPT": "Custody Services Counterparty,Y",
+    "NBK":  "Netting Book,N",
+    "NCMP": "Netting Company,N"
+}

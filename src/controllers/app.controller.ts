@@ -18,7 +18,7 @@ export class AppController {
 
   @Post()
   public async postGlossXML(@Param('party_type') party_type: string){
-     this.httpPostService.updateGlossByPartyRef(party_type);
+     // this.httpPostService.updateGlossByPartyRef(party_type);
   }
 
   @Post()

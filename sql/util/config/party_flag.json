@@ -1,0 +1,9 @@
+{
+    "1102SEGP":			"Calc Segregration Party,N",
+    "1102SCPN":			"Supress BSB Cpn Events,Y",
+    "1102SCSL":			"Settlement Split CSD Limitiming by Amount,Y",
+    "1102TRPI":			"Tri-Party Instruction,N",
+    "2313ECBR":			"ClearStream / Euroclear Instr - Delivery without Match,Y",
+    "3047DMRR":			"Unknown,Y",
+    "5076IHLD":			"Hold Instrument for Validation,N"
+}

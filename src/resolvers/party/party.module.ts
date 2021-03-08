@@ -10,6 +10,7 @@ import { PartyAssocResolver} from './party-assoc.resolver';
 import { PartySSIResolver} from './party-ssi.resolver';
 import { EnvironmentResolver} from '../environment.resolver';
 import { HttpPostService } from 'src/services/http-post/http-post.service';
+import { PartySwiftResolver} from './party.swift.resolver'
 
 @Module({
   imports:[HttpModule],
@@ -23,6 +24,7 @@ import { HttpPostService } from 'src/services/http-post/http-post.service';
     PartyNarrativeResolver,
     PartyAssocResolver,
     PartySSIResolver,
+    PartySwiftResolver,
     HttpPostService,
     EnvironmentResolver,
  ]

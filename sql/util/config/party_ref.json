@@ -1,6 +1,23 @@
 {
-"BIC":		"BIC Code,Y",
-"FIID":		"BOJ Code (4 digits),Y",
-"JDEC":		"JASDEC Code (5 digits),Y",
-"BMBG":		"Bloomberg Ref,Y"
+"AEID":		"Company Code (Trade Feed),Y",
+"BOJ":		"BOJ Membership Code,Y",
+"BIC":		"BIC Code (11 digits),Y",
+"BIC8":     "BIC Code (8 digits),Y",
+"BMBG":		"Bloomberg Ref,Y",
+"CCAI":     "Cust Comp Alt ID,N",
+"JDEC":		"JASDEC Code EQ (5 digits),Y",
+"JDCB":		"JASDEC Membership Code (CB),Y",
+"JSD":		"JASDEC Reference,Y",
+"JPLC":		"Japanese Local Code (JSDC),Y",
+"IJSD":		"Inst Investor JASDEC,Y",
+"JSDA":		"JSDA Membership Code,Y",
+"CDJ1":		"Copy Data Rec1 JASDEC,Y",
+"CDJ2":		"Copy Data Rec2 JASDEC,Y",
+"CDJ3":		"Copy Data Rec3 JASDEC,Y",
+"PREF":		"Preferred Ref,Y",
+"GLDB":     "Sub-Ledger Database ID,Y",
+"ITID":     "Italian Tax ID,Y",
+"GPID":     "Company Source ID,N",
+"NURF":     "Non-Unique Source Sys Ref,Y",
+"ORCD":     "Spain Owner Registration BIC,Y"
 }

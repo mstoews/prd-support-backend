@@ -1,5 +1,5 @@
 # Modified by RJM - 18-Oct-2020 - Use v14 nodejs - fix to WSL2 issue
-FROM node:14 AS builder
+FROM node AS builder
 
 # Create app directory
 WORKDIR /app
@@ -12,17 +12,17 @@ COPY prisma ./prisma/
 RUN npm install
 
 # Added by RJM - 18-Oct-2020 - to fix WSL2 issue
-RUN npm rebuild
+# RUN npm rebuild
 
 # Required if not done in postinstall
-# RUN npx prisma generate
+RUN npx prisma generate
 
 COPY . .
 
-RUN npm run build
+RUN npm run build && npm prune --production
 
 # Modified by RJM - 18-Oct-2020 - use v14 nodejs - fix to WSL2 issue
-FROM node:14
+FROM node
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./

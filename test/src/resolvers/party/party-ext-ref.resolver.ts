@@ -1,21 +1,6 @@
 import { PrismaService } from './../../services/prisma.service';
-import { PaginationArgs } from '../../common/pagination/pagination.args';
-import { UserIdArgs } from '../../models/args/user-id.args';
-import { PartyIdArgs} from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
-import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyExtRef } from '../../models/party.model';
-
-import {
-    Controller,
-    Get,
-    Param,
-    Post,
-    Body,
-    Put,
-    Delete,
-  } from '@nestjs/common'
-
 import { party_ext_ref as PartyExtRefModel, Prisma } from '@prisma/client';
 import { PartyInstrInput, PartyExtRefInput } from 'src/models/inputs/party.input';
 

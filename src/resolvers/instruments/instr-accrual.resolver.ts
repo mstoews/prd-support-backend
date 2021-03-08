@@ -12,36 +12,46 @@ import { InstrAccrualArgs } from '../../models/args/instr-ref.args';
 import { instr_accrual as InstrAccrualModel, Prisma } from '@prisma/client';
 
 
-  @Resolver('InstrAccrual')
-  export class InstrAccrualResolver {
-      constructor(
-    private prisma: PrismaService) {}
-  
+@Resolver('InstrAccrual')
+export class InstrAccrualResolver {
+  constructor(
+    private prisma: PrismaService) { }
+
   @Query((returns) => [InstrAccrual])
-  async instrAccrual() { 
-      return this.prisma.instr_accrual.findMany();
+  async instrAccrual() {
+    return this.prisma.instr_accrual.findMany();
   }
-  
+
   @Query((returns) => [InstrAccrual])
-  async instrAccrualByRef(@Args('instr_ref',{ type: () => String}) ref: string) {
-   return this.prisma.instr_accrual.findMany({ where: {
-     instr_ref : ref,
-    },              
-  });
-  }
- 
-  @Query((returns) => [InstrAccrual])
-   async instrAccrualByRefAndSeq(
-    @Args('instr_ref',{ nullable: false}) instr_ref?: string, 
-    @Args('seq_no',{ nullable: false}) seq_no?: number,) 
-    {
-      return this.prisma.instr_accrual.findMany({ where: {
-       instr_ref : instr_ref, 
-       seq_no : seq_no,
-      },              
+  async instrAccrualByRef(@Args('instr_ref', { type: () => String }) ref: string) {
+    return this.prisma.instr_accrual.findMany({
+      where: {
+        instr_ref: ref,
+      },
     });
   }
 
+  @Query((returns) => [InstrAccrual])
+  async instrAccrualByRefAndSeq(
+    @Args('instr_ref', { nullable: false }) instr_ref?: string,
+    @Args('seq_no', { nullable: false }) seq_no?: number,) {
+    return this.prisma.instr_accrual.findMany({
+      where: {
+        instr_ref: instr_ref,
+        seq_no: seq_no,
+      },
+    });
+  }
+
+  // Create
+  @Mutation((returns) => InstrAccrual)
+  async createInstrAccrual(@Args('data', { type: () => InstrAccrualInput }) newClassData: Prisma.instr_accrualCreateInput) {
+    return this.prisma.instr_accrual.create({
+      data: newClassData,
+    });
+  }
+
+  // Mutation
   @Mutation((returns) => InstrAccrual)
   async updateInstrAccrual(
     @Args('instr_ref', { type: () => String }) party_ref?: string,
@@ -59,11 +69,11 @@ import { instr_accrual as InstrAccrualModel, Prisma } from '@prisma/client';
       });
   }
 
+  // Delete
   @Mutation((returns) => InstrAccrual)
   async deleteInstrAccrual(
     @Args('instr_ref', { type: () => String }) party_ref?: string,
-    @Args('seq_no', { type: () => Number }) depot_alias?: number,) 
-    {
+    @Args('seq_no', { type: () => Number }) depot_alias?: number,) {
     return this.prisma.instr_accrual.delete(
       {
         where: {
@@ -74,6 +84,6 @@ import { instr_accrual as InstrAccrualModel, Prisma } from '@prisma/client';
         },
       });
   }
-  
+
 }
 

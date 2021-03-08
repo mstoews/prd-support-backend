@@ -38,16 +38,9 @@ import {
 
   // Creation
   @Mutation((returns) => PartyFlag)
-  async createPartyFlagInput(@Args('data', { type: () => PartyFlagInput })  newFlagData: Prisma.party_flagCreateInput) {
+  async createPartyFlag(@Args('data', { type: () => PartyFlagInput }) newData?: Prisma.party_flagCreateInput,) {
     return this.prisma.party_flag.create({
-      data: newFlagData,
-    });
-  }
-
-  @Mutation((returns) => PartyFlag)
-  async createPartyFlag(data: Prisma.party_flagCreateInput): Promise<PartyFlagModel> {
-    return this.prisma.party_flag.create({
-      data,
+      data: newData
     });
   }
 
@@ -55,13 +48,13 @@ import {
   @Mutation((returns) => PartyFlag)
   async deletePartyFlag(
     @Args('party_ref',{ type: () => String }) ref?: string, 
-    @Args('party_type',{ type: () => Number }) type?: number,)
+    @Args('flag_code',{ type: () => String }) code?: string,)
   { 
     return this.prisma.party_flag.delete({
       where : { 
-        party_ref_flag_type: {
+        party_ref_flag_code: {
           party_ref: ref,
-          flag_type: type,
+          flag_code: code,
         }       
       }
     });
@@ -69,16 +62,16 @@ import {
 
   // Update
   @Mutation((returns) => PartyFlag)
-  async updatePartyInstr(
+  async updatePartyFlag(
     @Args('party_ref',{ type: () => String }) ref?: string, 
-    @Args('party_type',{ type: () => Number }) type?: number,
-    @Args('data', { type: () => PartyFlagInput }) newData?: PartyFlagModel,)
+    @Args('flag_code',{ type: () => String }) code?: string,
+    @Args('data', { type: () => PartyFlagInput }) newData?: Prisma.party_flagUpdateInput,)
     {
     return this.prisma.party_flag.update({
         where: {
-          party_ref_flag_type: {
+          party_ref_flag_code: {
             party_ref: ref,
-            flag_type: type,
+            flag_code: code,
           }       
         },
         data: newData

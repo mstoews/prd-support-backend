@@ -45,24 +45,47 @@ import { instr_date as InstrDateModel, Prisma } from '@prisma/client';
     });
   }
   
-  @Mutation((returns) => InstrDate)
-  async createInstrDateInput(@Args('data', { type: () => InstrDateInput })  newDateData: Prisma.instr_dateCreateInput) {
-    return this.prisma.instr_date.create({
-      data: newDateData,
-    });
-  }
 
-  @Mutation((returns) => InstrDate)
-  async createInstrDate(data: Prisma.instr_dateCreateInput): Promise<InstrDateModel> {
-    return this.prisma.instr_date.create({
-      data,
+// Create 
+@Mutation((returns) => InstrDate)
+async createInstrInput(@Args('data', { type: () => InstrDateInput })  newUserData: Prisma.instr_dateCreateInput) {
+  return this.prisma.instr_date.create({
+    data: newUserData,
+ });
+}
+
+// Update
+@Mutation((returns) => InstrDate)
+async updateInstrDate(
+  @Args('instr_ref', { type: () => String }) instr_ref?: string,
+  @Args('date_type', { type: () => String }) date_type?: string,
+  @Args('data', { type: () => InstrDateInput }) newData?: InstrDateModel,) {
+  return this.prisma.instr_date.update(
+    {
+      where: {
+        instr_ref_date_type: {
+          instr_ref: instr_ref,
+          date_type: date_type,
+        },
+      },
+      data: newData,
+
     });
-  }
-  
-  @Mutation((returns) => InstrDate)
-  async deleteInstr(where: Prisma.instr_dateWhereUniqueInput): Promise<InstrDateModel> {
-    return this.prisma.instr_date.delete({
-      where,
+}
+
+// Delete
+@Mutation((returns) => InstrDate)
+async deleteInstrDate(
+  @Args('party_ref', { type: () => String }) party_ref?: string,
+  @Args('class_type', { type: () => String }) class_type?: string,) {
+  return this.prisma.instr_classification.delete(
+    {
+      where: {
+        instr_ref_class_type: {
+          instr_ref: party_ref,
+          class_type: class_type,
+        },
+      },
     });
-  }
+}
 }
