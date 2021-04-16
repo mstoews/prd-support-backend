@@ -112,15 +112,65 @@ export class  PartyNarrativeInput {
 
   @InputType()
   export class  PartySwiftInput {
-    @Field({nullable: true })  party_ref:      string;
-    @Field({nullable: true })  bic_code:      string;
-    @Field({nullable: true })  logical_term_id:     string;
-    @Field({nullable: true })  version_date:   Date;
-    @Field({nullable: true })  version_no:     number;
-    @Field({nullable: true })  version_user:   string;
+    @Field({nullable: false })  party_ref:      string;
+    @Field({nullable: false })  company_name:   string;
+    @Field({nullable: false })   branch_code:   string;
+    @Field(() => [String])      logical_term_id: string[];
+    @Field({nullable: false })  queue_mgr: string;
+    @Field({nullable: false })  incoming_queue: string;
+    @Field({nullable: false })  outgoing_queue: string;
+    @Field({nullable: false })  channel: string;
+    @Field({nullable: false })  host: string;
+    @Field({nullable: false })  port_number: number;
+    @Field({nullable: false })  version_date:   Date;
+    @Field({nullable: false })  version_no:     number;
+    @Field({nullable: false })  version_user:   string;
     }
   
-  
+    @InputType()
+    export class  PartyTemplateInput {
+    @Field({nullable: false })  party_ref:      string;
+    @Field({nullable: false })  template_party_ref: string;
+    @Field({nullable: false })  version_date:   Date;
+    @Field({nullable: false })  version_no:     number;
+    @Field({nullable: false })  version_user:   string;
+    }
+
+  @InputType()
+    export class PartyDateInput {
+     @Field({nullable: false }) party_ref    :   string;   /* Stores the company ref e.g. CMP4 */
+     @Field({nullable: false }) date_type    :   string;   /* DAST - Default Settle Date etc */
+     @Field({nullable: true }) date         :   string;   /* 1900-01-01 */
+     @Field({nullable: true }) time         :   string;   /* 07:00:00 */
+     @Field({nullable: true }) version_date :   Date;
+     @Field({nullable: true }) version_no   :   number;
+     @Field({nullable: true }) version_user :   string;
+    }
+    
+    @InputType()
+    export class PartyAddressInput {
+     @Field({nullable: false })   party_ref      :   string;     /* Stores the company ref e.g. CMP4 */
+     @Field({nullable: false })   addr_type      :   string;     /* HEAD - Default Settle Date etc */
+     @Field({nullable: true })   contact_name   :   string; 
+     @Field({nullable: true })   contact_title  :   string; 
+     @Field({nullable: true })   addr_line1     :   string; 
+     @Field({nullable: true })   addr_line2     :   string; 
+     @Field({nullable: true })   addr_line3     :   string; 
+     @Field({nullable: true })   addr_line4     :   string; 
+     @Field({nullable: true })   addr_line5     :   string; 
+     @Field({nullable: true })   addr_line6     :   string; 
+     @Field({nullable: true })   post_code      :   string; 
+     @Field({nullable: true })   int_dial_code  :   string; 
+     @Field({nullable: true })   phone_no       :   string; 
+     @Field({nullable: true })   fax_no         :   string; 
+     @Field({nullable: true })   email          :   string; 
+     @Field({nullable: true })   version_date   :   Date;
+     @Field({nullable: true })   version_no     :   number;
+     @Field({nullable: true })   version_user   :   string;
+    }
+      
+
+
 
 @ArgsType()
 export class  PartyNarrativeArgs {

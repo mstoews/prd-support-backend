@@ -1,33 +1,39 @@
 import { PrismaService } from '../../services/prisma.service';
 import { Module, HttpModule } from '@nestjs/common';
+import { PartyDateResolver } from './party-date.resolver';
+import { PartyAddressResolver } from './party-address.resolver';
 import { PartyResolver } from './party.resolver';
 import { PartyExtRefResolver } from './party-ext-ref.resolver';
 import { PartyClassificationResolver } from './party-classification.resolver';
 import { PartyFlagResolver } from './party-flag.resolver';
 import { PartyInstrResolver } from './party-instr.resolver';
 import { PartyNarrativeResolver } from './party-narrative.resolver';
-import { PartyAssocResolver} from './party-assoc.resolver';
-import { PartySSIResolver} from './party-ssi.resolver';
-import { EnvironmentResolver} from '../environment.resolver';
+import { PartyAssocResolver } from './party-assoc.resolver';
+import { PartySSIResolver } from './party-ssi.resolver';
+import { EnvironmentResolver } from '../environment.resolver';
 import { HttpPostService } from 'src/services/http-post/http-post.service';
-import { PartySwiftResolver} from './party.swift.resolver'
+import { PartySwiftResolver } from './party.swift.resolver'
+import { PartyTemplateResolver } from './party.template.resolver'
 
 @Module({
-  imports:[HttpModule],
+  imports: [HttpModule],
   providers: [
-    PrismaService, 
-    PartyResolver, 
-    PartyExtRefResolver, 
-    PartyClassificationResolver, 
-    PartyFlagResolver, 
-    PartyInstrResolver, 
+    PrismaService,
+    PartyResolver,
+    PartyExtRefResolver,
+    PartyClassificationResolver,
+    PartyFlagResolver,
+    PartyInstrResolver,
     PartyNarrativeResolver,
     PartyAssocResolver,
     PartySSIResolver,
     PartySwiftResolver,
+    PartyTemplateResolver,
+    PartyDateResolver,
+    PartyAddressResolver,
     HttpPostService,
     EnvironmentResolver,
- ]
+  ]
 
 })
-export class PartyModule {}
+export class PartyModule { }

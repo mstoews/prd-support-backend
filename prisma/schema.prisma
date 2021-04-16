@@ -68,7 +68,7 @@ model party_flag {
   version_no   Int?
   version_user String?
 
-  @@id([party_ref, flag_code])
+  @@id([party_ref, flag_type, flag_code])
 }
 
 model party_instr {
@@ -292,12 +292,78 @@ model kb_status {
 }
 
 model party_swift_router {
-  party_ref       String   @id
-  bic_code        String
-  logical_term_id String
+  party_ref       String     @id
+  company_name    String
+  branch_code     String
+  logical_term_id String[]
+  queue_mgr       String
+  incoming_queue  String
+  outgoing_queue  String
+  channel         String
+  host            String
+  port_number     Int
   version_date    DateTime
   version_no      Int
   version_user    String
+}
+
+model template_party {
+  party_ref             String     @id
+  template_party_ref    String  
+  version_date          DateTime
+  version_no            Int
+  version_user          String
+}
+
+model party_addr {
+  party_ref     String
+  addr_type     String
+  contact_name  String
+  contact_title String
+  addr_line1    String
+  addr_line2    String
+  addr_line3    String
+  addr_line4    String
+  addr_line5    String
+  addr_line6    String
+  post_code     String
+  int_dial_code String
+  phone_no      String
+  fax_no        String
+  email         String
+  version_date  DateTime
+  version_no    Int
+  version_user  String
+
+  @@id([party_ref, addr_type])
+}
+
+model party_date {
+  party_ref    String
+  date_type    String
+  date         String
+  time         String
+  version_date DateTime
+  version_no   Int
+  version_user String
+
+  @@id([party_ref, date_type])
+}
+
+model party_class_assoc {
+  party_ref            String
+  class_assoc_code_wil String
+  main_class_wil       Int
+  main_code_wil        String
+  sub_class_wil        Int
+  sub_code_wil         String
+  description          String
+  user_def             String
+  version_date         DateTime
+  version_no           Int
+  version_user         String
+
+  @@id([party_ref, class_assoc_code_wil, main_class_wil, main_code_wil, sub_class_wil, sub_code_wil])
 }
 
 enum Role {

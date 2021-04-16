@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   nest-api:
-    image: docker pull mstoews/gloss-api-backend_nest-api:latest
-    container_name: gloss-api
+    image: mstoews/gloss-api-backend_nest-api:v1.8.5
+    container_name: gloss-api-backend
     ports:
       - 3010:3010
     depends_on:

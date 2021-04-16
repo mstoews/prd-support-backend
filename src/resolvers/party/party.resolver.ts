@@ -9,7 +9,6 @@ import { HttpPostService } from '../../services/http-post/http-post.service';
 import {
   Prisma,
   party as PartyModel,
-  party_classification as PartyClassificationModel
 } from '@prisma/client';
 
 @Resolver((of) => Party)
@@ -24,13 +23,6 @@ export class PartyResolver {
   @Subscription((returns) => Party)
   partyChanged() {
       return this.pubSub.asyncIterator('partyChanged')
-  }
-
-
-  @Query((returns) => [PartySwift])
-  async partySwift() {
-    this.logger.log('party_swift => findMany');
-    return this.prisma.party_swift_router.findMany();
   }
 
   @Query((returns) => [Party])
@@ -108,8 +100,13 @@ export class PartyResolver {
         party_ref: party_ref,
       },
     });
+    let partyTemplate = await this.prisma.template_party.findUnique({
+      where: {
+        party_ref: party_ref,
+      },
+    });
     this.logger.log('createPartyGlossXLM : ', party_ref);
-      this.postService.updateGlossByPartyRef(party_ref);{
+      this.postService.updateGlossByPartyRef(party_ref,partyTemplate);{
       return oldParty;  
     }
   }
@@ -130,7 +127,7 @@ export class PartyResolver {
     @Args('party_ref',{ type: () => String }) party_ref?: string, 
     @Args('data',{ nullable: false}) data?: PartyInput,) 
   {
-    this.logger.log('createPartyByRef', data.party_ref);
+    this.logger.log('updatePartyByRef', data.party_ref);
     return this.prisma.party.update({
       data: data,
       where: {
@@ -327,4 +324,18 @@ export class PartyResolver {
       await this.prisma.party_instr.create({ data: instrUpdate });
     });
   }
+
+  @Mutation((returns) => PartySwift)
+  async sendSwiftStaticToGloss(@Args('party_ref', { type: () => String }) party_ref: string) {
+    let swiftData = await this.prisma.party_swift_router.findUnique({
+      where: {
+        party_ref: party_ref,
+      },
+    });
+    this.logger.log('sendSwiftStaticToGloss : ', party_ref);
+      this.postService.updateGlossSwiftRouter(swiftData);{
+      return swiftData;  
+    }
+  }
+
 }

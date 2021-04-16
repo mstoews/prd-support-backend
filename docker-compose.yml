@@ -2,7 +2,7 @@ version: '3.7'
 services:
   nest-api:
     container_name: gloss-api-backend
-    # image: mstoews/gloss-api-backend_nest-api:latest
+    image: mstoews/gloss-api-backend_nest-api:v1.8.5
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,7 +19,7 @@ services:
     container_name: postgres
     restart: always
     ports:
-      - 5432:5432
+      - 3302:5432
     environment:
       POSTGRES_USER: ${POSTGRESQL_USER}
       POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}

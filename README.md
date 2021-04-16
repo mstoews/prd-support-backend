@@ -1,9 +1,3 @@
-# Change the container 
-in the Dockerfile 
-```bash
-FROM node:12 AS builder
-```
-
 # Start podman Postgres 
 ```bash
 podman run -d \
@@ -16,7 +10,112 @@ podman run -d \
 
 the first line above needs to be changed to linux other than alpine and then in the builder section of the docker file 
 nodejs needs to be installed. 
-Bit complicated actually 
+
+# Podman 
+## Installation and Setup
+```bash
+sudo yum install podman
+id -Gn
+userId wheel
+
+sysctl -ar max_user_namespaces
+
+$ cat /etc/subuid /etc/subgid
+userId:100000:65536
+userID:100000:65536
+```
+To allow for rootless containers user namespaces need to be
+configured which are by default in CentOS 8. New users to the system
+will be assigned their own unique mappings in the subuid and subgid
+files. Other distributions may or may not have these configurations
+made.
+
+## Testing Installation
+```bash
+podman version
+podman info
+```
+## Podman Command
+```bash
+podman image ls
+podman ps
+podman ps -a
+podman search httpd
+sed -E '/^(#|$)/d' /etc/containers/registries.conf
+```
+The search sub-command can be used to locate images. Images are
+located in registries that are configured within the file:
+/etc/containers/registries.conf
+
+Containers are created from filesystem bundles called images. By
+default no images are installed with podman. The ps sub-command is
+used to list running containers. Use the option -a to list all containers
+including stopped containers. There are no containers by default
+either.
+
+## Run Podman shell container
+```bash
+podman run -it rhscl/httpd-24-rhel7 /bin/bash
+exit
+podman ps
+podman ps -a
+```
+
+## Managing Containers
+```bash
+podman stop mstoews/gloss-api-client:v1.1.1
+podman restart mstoews/gloss-api-client:v1.1.1
+podman kill mstoews/gloss-api-client:v1.1.1
+podman restart -l
+podman stop -a
+
+podman rm gloss-api-client
+podman rm -f gloss-api-client
+podman rm -a -f 
+
+podman rmi mstoews/gloss-api-client:v1.1.1
+podman image rm mstoews/gloss-api-client:v1.1.1
+podman rmi -a
+```
+-a is all
+-f force
+-r remove
+-l list
+# rmi - remove images for example:
+```bash
+podman rmi -a 
+```
+
+## Port mapping
+
+```bash
+$ podman run --name=gloss-api-client -d --publish-all rhscl/httpd-24-rhel7
+$ podman port -l
+80/tcp -> 0.0.0.0:4310
+443/tcp -> 0.0.0.0:35443
+$ sudo firewall-cmd --add-port 378138/tcp
+```
+
+```bash
+$ podman exec -it gloss-api-client /bin/bash
+$ curl localhost:4310
+```
+
+
+
+
+
+
+
+
+
+
+
+# Change the container 
+in the Dockerfile 
+```bash
+FROM node:12 AS builder
+```
 
 # Query
   ### Party

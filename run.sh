@@ -1,2 +1,4 @@
-docker build -t nest-prisma-server .
-docker run -d -t -p 3000:3000 nest-prisma-server
+#!/bin/bash
+echo "tagged versions: v$1"
+docker build -t gloss-api-backend:v$1 .
+docker push mstoews/gloss-api-backend:v$1  

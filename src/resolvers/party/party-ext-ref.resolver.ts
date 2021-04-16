@@ -6,14 +6,11 @@ import { party_ext_ref as PartyExtRefModel,
 } from '@prisma/client';
 import { PartyExtRefInput, PartyExtRefArgs } from 'src/models/inputs/party.input';
 
-
-
 @Resolver('PartyExtRef')
 export class PartyExtRefResolver {
 
   constructor(
     private prisma: PrismaService) { }
-
   
     @Query((returns) => [PartyExtRef])
   partyExtRef() {
@@ -51,7 +48,6 @@ export class PartyExtRefResolver {
   }
 
   // Update ExtRef party_ext_refWhereUniqueInput
-
   @Mutation((returns) => PartyExtRef)
   async updatePartyExtRef(
     @Args('party_ref', { nullable: false }) party_ref?: string,
@@ -79,6 +75,19 @@ export class PartyExtRefResolver {
         party_ref_party_ext_ref_type: {
           party_ref: ref,
           party_ext_ref_type: ref_type,
+        }
+      },
+    });
+  }
+
+  @Query((returns) => PartyExtRef)
+  async getBicCodeByRef(
+    @Args('party_ref', { nullable: false }) ref?: string,) {
+    return this.prisma.party_ext_ref.delete({
+      where: {
+        party_ref_party_ext_ref_type: {
+          party_ref: ref,
+          party_ext_ref_type: 'BIC',
         }
       },
     });

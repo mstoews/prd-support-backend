@@ -27,3 +27,17 @@ export class User extends Model {
   @HideField()
   password: string;
 }
+
+/*
+{
+"createdAt": "2021-04-01",
+"email": "joe@hotmail.com"
+"firstname": "TONY"
+"id": "1"
+"lastname": "SMITH"
+"role": "Admin"
+"updatedAt: "2021-04-01"
+"password": "pwd"
+}
+*/
+
