@@ -1,15 +1,15 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { PasswordService } from './password.service';
-import { PrismaService } from './prisma.service';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ChangePasswordInput } from '../resolvers/user/dto/change-password.input';
 import { UpdateUserInput } from '../resolvers/user/dto/update-user.input';
+import { PasswordService } from './password.service';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private prisma: PrismaService,
     private passwordService: PasswordService
-  ) {}
+  ) { }
 
   updateUser(userId: string, newUserData: UpdateUserInput) {
     return this.prisma.user.update({

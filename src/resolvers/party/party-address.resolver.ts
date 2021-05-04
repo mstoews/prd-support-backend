@@ -42,7 +42,7 @@ export class PartyAddressResolver {
     return this.prisma.party_addr.update({
       data: data,
       where: {
-        party_ref_addr_type :{
+        party_ref_addr_type: {
           party_ref: party_ref,
           addr_type: addr_type,
         },
@@ -58,7 +58,7 @@ export class PartyAddressResolver {
     console.log(" Delete " + party_ref);
     return this.prisma.party_addr.delete({
       where: {
-        party_ref_addr_type :{
+        party_ref_addr_type: {
           party_ref: party_ref,
           addr_type: addr_type,
         },

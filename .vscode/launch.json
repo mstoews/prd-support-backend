@@ -5,17 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name":    "Python: Genr Insert SQL",
-            "type":    "python",
+            "type": "pwa-chrome",
             "request": "launch",
-            "cwd":     "${workspaceFolder}\\sql\\util",
-            "program": "import_party_xml.py",
-            "console": "integratedTerminal",
-            "args": [
-                "c025_cmp0.xml",
-                "c:\\temp\\pcfeedxml\\",
-                "c:\\temp\\sql"
-            ]
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3010/graphql",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

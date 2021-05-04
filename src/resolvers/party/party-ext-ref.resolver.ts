@@ -4,28 +4,13 @@ import { PartyExtRef } from '../../models/party.model';
 import { party_ext_ref as PartyExtRefModel, 
   Prisma 
 } from '@prisma/client';
-import { PartyExtRefInput, PartyExtRefArgs } from 'src/models/inputs/party.input';
+import { PartyExtRefInput } from 'src/models/inputs/party.input';
 
 @Resolver('PartyExtRef')
 export class PartyExtRefResolver {
 
   constructor(
     private prisma: PrismaService) { }
-  
-    @Query((returns) => [PartyExtRef])
-  partyExtRef() {
-    return this.prisma.party_ext_ref.findMany();
-  }
-
-  @Query((returns) => [PartyExtRef])
-  async party_ext_refByRef(
-    @Args('party_ref', { nullable: false }) ref?: string) {
-    return this.prisma.party_ext_ref.findMany({
-      where: {
-        party_ref: ref,
-      },
-    });
-  }
 
   @Query((returns) => [PartyExtRef])
   async partyExtRefByRef(
@@ -36,7 +21,6 @@ export class PartyExtRefResolver {
       },
     });
   }
-
 
   // Create ExtRef
   @Mutation((returns) => PartyExtRef)

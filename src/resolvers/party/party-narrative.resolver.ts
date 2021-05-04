@@ -6,7 +6,7 @@ import { PartyIdArgs } from '../../models/args/party-ref.args';
 import { Resolver, Query, Parent, Args, ResolveField, Mutation } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PartyNarrative } from '../../models/party.model';
-import { PartyNarrativeArgs, PartyNarrativeInput } from 'src/models/inputs/party.input';
+import {  PartyNarrativeInput } from 'src/models/inputs/party.input';
 
 import {
     Controller,

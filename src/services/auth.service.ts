@@ -20,15 +20,16 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly passwordService: PasswordService,
     private readonly configService: ConfigService
-  ) {}
+  ) { }
 
   async createUser(payload: SignupInput): Promise<Token> {
+    
     const hashedPassword = await this.passwordService.hashPassword(
       payload.password
     );
 
     // type '{ password: string; role: "USER"; email: string; firstname?: string; lastname?: string; updatedAt: string; id: string; }' is not assignable to type 'UserCreateInput'.
-    
+
     try {
       const user = await this.prisma.user.create({
         data: {
@@ -47,9 +48,11 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<Token> {
-    const user = await this.prisma.user.findUnique({ where: { 
-      
-    } });
+    const user = await this.prisma.user.findUnique({
+      where: {
+
+      }
+    });
 
     if (!user) {
       throw new NotFoundException(`No user found for email: ${email}`);

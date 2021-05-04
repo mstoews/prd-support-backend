@@ -14,6 +14,8 @@ import { EnvironmentResolver } from '../environment.resolver';
 import { HttpPostService } from 'src/services/http-post/http-post.service';
 import { PartySwiftResolver } from './party.swift.resolver'
 import { PartyTemplateResolver } from './party.template.resolver'
+import { ClassAssocResolver } from './class-assoc.resolver';
+import { GlossCodesResolver } from './glosscodes.resolver';
 
 @Module({
   imports: [HttpModule],
@@ -28,6 +30,8 @@ import { PartyTemplateResolver } from './party.template.resolver'
     PartyAssocResolver,
     PartySSIResolver,
     PartySwiftResolver,
+    ClassAssocResolver,
+    GlossCodesResolver,
     PartyTemplateResolver,
     PartyDateResolver,
     PartyAddressResolver,

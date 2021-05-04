@@ -9,15 +9,15 @@ async function main() {
 
   const party = await prisma.party.create({
     data: {
-        party_ref: "TRAD23",
-        party_type: "BOOK",
-        party_short_name: "TRADING",
-        party_long_name: "TRADING",
-        party_extra_long_name: "TRADING",
-        active_ind: "A",
-        version_date: null,
-        version_no: 1,
-        version_user: "JMARSDEN"
+      party_ref: "TRAD23",
+      party_type: "BOOK",
+      party_short_name: "TRADING",
+      party_long_name: "TRADING",
+      party_extra_long_name: "TRADING",
+      active_ind: "A",
+      version_date: null,
+      version_no: 1,
+      version_user: "JMARSDEN"
     },
   });
 

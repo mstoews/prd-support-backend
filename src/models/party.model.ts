@@ -147,16 +147,6 @@ export class PartySwift {
 }
 
 @ObjectType()
-export class PartyTemplate {
-  party_ref: string;
-  template_party_ref: string;  
-  version_date: Date;
-  version_no: number;
-  version_user: string;
-}
-
-
-@ObjectType()
 export class PartyDate {
   party_ref: string;   /* Stores the company ref e.g. CMP4 */
   date_type: string;   /* DAST - Default Settle Date etc */
@@ -190,3 +180,56 @@ export class PartyAddress {
 }
 
 
+@ObjectType()
+export class PartyTemplate {
+  party_ref: string;
+  template_party_ref: string;
+  version_date: Date;
+  version_no: number;
+  version_user: string;
+}
+
+@ObjectType()
+export class PartyAudit {
+  party_ref: string;
+  party_data: string;
+  party_ext_ref_data: string;
+  party_classification_data: string;
+  party_flag_data: string;
+  party_narrative_data: string;
+  party_assoc_data: string;
+  party_instr_data: string;
+  party_ssi_data: string;
+  party_date_data: string;
+  party_address_data: string;
+  party_template_data: string;
+  version_date: Date;
+  version_no: number;
+  version_user: string;
+}
+
+@ObjectType()
+export class ClassAssoc {
+  party_ref: string;     /* Stores the company ref e.g. CMP4 */
+  class_assoc_code: string;
+  assoc_code_description: string;
+  main_class: number;
+  main_code: string;
+  sub_class: number;
+  sub_code: string;
+  description: string;
+  user_def: string;
+  applied: boolean;
+  version_date: Date;
+  version_no: number;
+  version_user: string;
+}
+
+@ObjectType()
+export class GlossCodes {
+  class_value: number;
+  code_value: string;
+  code_short_desc: string;
+  code_long_desc: string;
+  active_ind: string;
+}

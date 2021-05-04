@@ -1,9 +1,5 @@
-
-create table if not exists instr
-(
-	instr_ref varchar(12) not null
-		constraint instr_pkey
-			primary key,
+create table if not exists instr (
+	instr_ref varchar(12) not null constraint instr_pkey primary key,
 	instr_type varchar(4),
 	template_ref varchar(12),
 	instr_short_name varchar(50),
@@ -28,10 +24,10 @@ create table if not exists instr
 	version_user varchar(12)
 );
 
-alter table instr owner to admin;
+alter table
+	instr owner to admin;
 
-create table if not exists instr_classification
-(
+create table if not exists instr_classification (
 	instr_ref varchar(12) not null,
 	class_type varchar(4) not null,
 	class_code varchar(4),
@@ -40,14 +36,13 @@ create table if not exists instr_classification
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_classification_pkey
-		primary key (instr_ref, class_type)
+	constraint instr_classification_pkey primary key (instr_ref, class_type)
 );
 
-alter table instr_classification owner to admin;
+alter table
+	instr_classification owner to admin;
 
-create table if not exists instr_ext_ref
-(
+create table if not exists instr_ext_ref (
 	instr_ref varchar(12) not null,
 	instr_ext_ref_type varchar(4) not null,
 	instr_ext_ref varchar(20),
@@ -56,14 +51,13 @@ create table if not exists instr_ext_ref
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_ext_ref_pkey
-		primary key (instr_ref, instr_ext_ref_type)
+	constraint instr_ext_ref_pkey primary key (instr_ref, instr_ext_ref_type)
 );
 
-alter table instr_ext_ref owner to admin;
+alter table
+	instr_ext_ref owner to admin;
 
-create table if not exists instr_flag
-(
+create table if not exists instr_flag (
 	instr_ref varchar(12) not null,
 	flag_type integer not null,
 	flag_code varchar(4) not null,
@@ -72,14 +66,13 @@ create table if not exists instr_flag
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_flag_pkey
-		primary key (instr_ref, flag_type, flag_code)
+	constraint instr_flag_pkey primary key (instr_ref, flag_type, flag_code)
 );
 
-alter table instr_flag owner to admin;
+alter table
+	instr_flag owner to admin;
 
-create table if not exists instr_narrative
-(
+create table if not exists instr_narrative (
 	instr_ref varchar(12) not null,
 	narr_type varchar(4) not null,
 	narrative varchar(255),
@@ -88,14 +81,13 @@ create table if not exists instr_narrative
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_narrative_pkey
-		primary key (instr_ref, narr_type)
+	constraint instr_narrative_pkey primary key (instr_ref, narr_type)
 );
 
-alter table instr_narrative owner to admin;
+alter table
+	instr_narrative owner to admin;
 
-create table if not exists instr_date
-(
+create table if not exists instr_date (
 	instr_ref varchar(12) not null,
 	date_type varchar(4) not null,
 	date date,
@@ -104,14 +96,13 @@ create table if not exists instr_date
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_date_pkey
-		primary key (instr_ref, date_type)
+	constraint instr_date_pkey primary key (instr_ref, date_type)
 );
 
-alter table instr_date owner to admin;
+alter table
+	instr_date owner to admin;
 
-create table if not exists instr_accrual
-(
+create table if not exists instr_accrual (
 	instr_ref varchar(12) not null,
 	seq_no integer not null,
 	accr_basis varchar(4),
@@ -136,30 +127,25 @@ create table if not exists instr_accrual
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint instr_accrual_pkey
-		primary key (instr_ref, seq_no)
+	constraint instr_accrual_pkey primary key (instr_ref, seq_no)
 );
 
-alter table instr_accrual owner to admin;
+alter table
+	instr_accrual owner to admin;
 
-create table if not exists environment
-(
-	environment varchar(10) not null
-		constraint environment_pkey
-			primary key,
+create table if not exists environment (
+	environment varchar(10) not null constraint environment_pkey primary key,
 	image varchar(255),
 	description varchar(30),
 	usr varchar(15),
 	active char
 );
 
-alter table environment owner to admin;
+alter table
+	environment owner to admin;
 
-create table if not exists kanbantask
-(
-	id varchar(8) not null
-		constraint kanban_pkey
-			primary key,
+create table if not exists kanbantask (
+	id varchar(8) not null constraint kanban_pkey primary key,
 	title varchar(40),
 	status varchar(10),
 	summary varchar(60),
@@ -173,46 +159,38 @@ create table if not exists kanbantask
 	classname varchar(50)
 );
 
-alter table kanbantask owner to admin;
+alter table
+	kanbantask owner to admin;
 
-create table if not exists kb_status
-(
-	status varchar(10) not null
-		constraint kb_status_pkey
-			primary key,
+create table if not exists kb_status (
+	status varchar(10) not null constraint kb_status_pkey primary key,
 	updatedte date,
 	updateusr varchar(10)
 );
 
-alter table kb_status owner to admin;
+alter table
+	kb_status owner to admin;
 
-create table if not exists kb_type
-(
-	type varchar(10) not null
-		constraint kb_type_pkey
-			primary key,
+create table if not exists kb_type (
+	type varchar(10) not null constraint kb_type_pkey primary key,
 	updatedte date,
 	updateusr varchar(10)
 );
 
-alter table kb_type owner to admin;
+alter table
+	kb_type owner to admin;
 
-create table if not exists kb_priority
-(
-	priority varchar(6) not null
-		constraint kb_priority_key
-			primary key,
+create table if not exists kb_priority (
+	priority varchar(6) not null constraint kb_priority_key primary key,
 	updatedte date,
 	updateusr varchar(10)
 );
 
-alter table kb_priority owner to admin;
+alter table
+	kb_priority owner to admin;
 
-create table if not exists party
-(
-	party_ref varchar(12) not null
-		constraint party_pkey
-			primary key,
+create table if not exists party (
+	party_ref varchar(12) not null constraint party_pkey primary key,
 	party_type varchar(4),
 	party_short_name varchar(20),
 	party_long_name varchar(40),
@@ -223,10 +201,10 @@ create table if not exists party
 	version_user varchar(12)
 );
 
-alter table party owner to postgres;
+alter table
+	party owner to postgres;
 
-create table if not exists party_assoc
-(
+create table if not exists party_assoc (
 	party_ref varchar(12) not null,
 	assoc_type varchar(4) not null,
 	assoc_party_ref varchar(12),
@@ -235,14 +213,13 @@ create table if not exists party_assoc
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint party_assoc_pkey
-		primary key (party_ref, assoc_type)
+	constraint party_assoc_pkey primary key (party_ref, assoc_type)
 );
 
-alter table party_assoc owner to admin;
+alter table
+	party_assoc owner to admin;
 
-create table if not exists party_classification
-(
+create table if not exists party_classification (
 	party_ref varchar(12) not null,
 	class_type varchar(4) not null,
 	class_code varchar(4),
@@ -251,14 +228,13 @@ create table if not exists party_classification
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint party_classification_pkey
-		primary key (party_ref, class_type)
+	constraint party_classification_pkey primary key (party_ref, class_type)
 );
 
-alter table party_classification owner to admin;
+alter table
+	party_classification owner to admin;
 
-create table if not exists party_ext_ref
-(
+create table if not exists party_ext_ref (
 	party_ref varchar(12) not null,
 	party_ext_ref_type varchar(4) not null,
 	party_ext_ref varchar(20),
@@ -267,14 +243,13 @@ create table if not exists party_ext_ref
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint party_ext_ref_pkey
-		primary key (party_ref, party_ext_ref_type)
+	constraint party_ext_ref_pkey primary key (party_ref, party_ext_ref_type)
 );
 
-alter table party_ext_ref owner to admin;
+alter table
+	party_ext_ref owner to admin;
 
-create table if not exists party_instr
-(
+create table if not exists party_instr (
 	party_ref varchar(12) not null,
 	instr_type varchar(4) not null,
 	instr_ref_type varchar(4),
@@ -284,14 +259,13 @@ create table if not exists party_instr
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint party_instr_pkey
-		primary key (party_ref, instr_type)
+	constraint party_instr_pkey primary key (party_ref, instr_type)
 );
 
-alter table party_instr owner to admin;
+alter table
+	party_instr owner to admin;
 
-create table if not exists party_narrative
-(
+create table if not exists party_narrative (
 	party_ref varchar(12) not null,
 	narr_type varchar(4) not null,
 	narrative varchar(255),
@@ -300,14 +274,13 @@ create table if not exists party_narrative
 	version_date date default now(),
 	version_no integer default 1,
 	version_user varchar(12) default USER,
-	constraint party_narrative_pkey
-		primary key (party_ref, narr_type)
+	constraint party_narrative_pkey primary key (party_ref, narr_type)
 );
 
-alter table party_narrative owner to admin;
+alter table
+	party_narrative owner to admin;
 
-create table if not exists party_ssi
-(
+create table if not exists party_ssi (
 	party_ref varchar(12) not null,
 	depot_alias varchar(12) not null,
 	depot_descr varchar(35),
@@ -323,17 +296,14 @@ create table if not exists party_ssi
 	version_date date,
 	version_no integer,
 	version_user varchar(12),
-	constraint party_ssi_pkey
-		primary key (party_ref, depot_alias)
+	constraint party_ssi_pkey primary key (party_ref, depot_alias)
 );
 
-alter table party_ssi owner to admin;
+alter table
+	party_ssi owner to admin;
 
-create table if not exists "User"
-(
-	id text not null
-		constraint "User_pkey"
-			primary key,
+create table if not exists "User" (
+	id text not null constraint "User_pkey" primary key,
 	"createdAt" timestamp(3) default CURRENT_TIMESTAMP not null,
 	"updatedAt" timestamp(3) not null,
 	email text not null,
@@ -343,10 +313,10 @@ create table if not exists "User"
 	role "Role" not null
 );
 
-alter table "User" owner to admin;
+alter table
+	"User" owner to admin;
 
-create table if not exists party_flag
-(
+create table if not exists party_flag (
 	party_ref varchar(12) not null,
 	flag_type integer not null,
 	flag_code varchar(4) not null,
@@ -355,14 +325,13 @@ create table if not exists party_flag
 	version_date date default now(),
 	version_no integer,
 	version_user varchar(12),
-	constraint party_flag_pkey
-		primary key (party_ref, flag_code)
+	constraint party_flag_pkey primary key (party_ref, flag_code)
 );
 
-alter table party_flag owner to admin;
+alter table
+	party_flag owner to admin;
 
-create table if not exists party_addr
-(
+create table if not exists party_addr (
 	party_ref char(12) not null,
 	addr_type char(4) not null,
 	contact_name varchar(35) not null,
@@ -381,14 +350,13 @@ create table if not exists party_addr
 	version_date date not null,
 	version_no integer not null,
 	version_user varchar(12) not null,
-	constraint party_addr_pkey
-		primary key (party_ref, addr_type)
+	constraint party_addr_pkey primary key (party_ref, addr_type)
 );
 
-alter table party_addr owner to admin;
+alter table
+	party_addr owner to admin;
 
-create table if not exists party_date
-(
+create table if not exists party_date (
 	party_ref char(12) not null,
 	date_type char(4) not null,
 	date char(10) not null,
@@ -396,33 +364,50 @@ create table if not exists party_date
 	version_date date not null,
 	version_no integer not null,
 	version_user varchar(12) not null,
-	constraint party_date_pkey
-		primary key (party_ref, date_type)
+	constraint party_date_pkey primary key (party_ref, date_type)
 );
 
-alter table party_date owner to admin;
+alter table
+	party_date owner to admin;
 
-create table if not exists party_class_assoc
-(
-	party_ref char(12) not null,
-	class_assoc_code_wil char(4) not null,
-	main_class_wil integer not null,
-	main_code_wil char(4) not null,
-	sub_class_wil integer not null,
-	sub_code_wil char(4) not null,
-	description varchar(50) not null,
-	user_def char not null,
-	version_date date not null,
-	version_no integer not null,
-	version_user varchar(12) not null,
-	constraint party_class_assoc_pkey
-		primary key (party_ref, class_assoc_code_wil, main_class_wil, main_code_wil, sub_class_wil, sub_code_wil)
-);
+CREATE TABLE IF NOT EXISTS class_assoc (
+	party_ref character(12) NOT NULL,
+	class_assoc_code character(4) NOT NULL,
+	assoc_code_description character varying(50) NOT NULL,
+	main_class integer NOT NULL,
+	main_code character(4) NOT NULL,
+	sub_class integer NOT NULL,
+	sub_code character(4) NOT NULL,
+	description character varying(50) NOT NULL,
+	user_def character(1) NOT NULL,
+	applied character(1) NOT NULL,
+	version_date date NOT NULL,
+	version_no integer NOT NULL,
+	version_user character varying(12) NOT NULL,
+	PRIMARY KEY (
+		party_ref,
+		class_assoc_code,
+		main_class,
+		main_code,
+		sub_class,
+		sub_code
+	)
+)
+alter table
+	class_assoc owner to admin;
 
-alter table party_class_assoc owner to admin;
+CREATE TABLE public.gloss_codes (
+	class_value integer NOT NULL,
+	code_value character varying(50) NOT NULL,
+	code_short_desc character varying(50) NOT NULL,
+	code_long_desc character varying(50) NOT NULL,
+	active_ind character NOT NULL,
+	PRIMARY KEY (class_value, code_value)
+)
+ALTER TABLE
+	public.gloss_codes OWNER to admin;
 
-create table if not exists party_swift_router
-(
+create table if not exists party_swift_router (
 	party_ref varchar(12) not null,
 	company_name varchar(8) not null,
 	branch_code varchar(3) not null,
@@ -436,9 +421,8 @@ create table if not exists party_swift_router
 	version_date date not null,
 	version_no integer not null,
 	version_user varchar(12) not null,
-	constraint party_swift_pkey
-		primary key (party_ref, company_name, branch_code)
+	constraint party_swift_pkey primary key (party_ref, company_name, branch_code)
 );
 
-alter table party_swift_router owner to admin;
-
+alter table
+	party_swift_router owner to admin;

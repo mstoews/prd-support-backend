@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { hash, compare } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { hash, compare } from 'bcryptjs';
 
 @Injectable()
 export class PasswordService {
@@ -14,7 +14,7 @@ export class PasswordService {
       : saltOrRounds;
   }
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) { }
 
   validatePassword(password: string, hashedPassword: string): Promise<boolean> {
     return compare(password, hashedPassword);
@@ -23,4 +23,5 @@ export class PasswordService {
   hashPassword(password: string): Promise<string> {
     return hash(password, this.bcryptSaltRounds);
   }
+
 }
