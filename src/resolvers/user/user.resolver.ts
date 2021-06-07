@@ -1,52 +1,66 @@
-import { PrismaService } from './../../services/prisma.service';
-import { GqlAuthGuard } from '../../guards/gql-auth.guard';
+import { InternalServerErrorException, Logger, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import {
-  Resolver,
-  Query,
-  Parent,
-  Mutation,
-  Args,
-  ResolveField,
+  Args, Mutation, Query, Resolver
 } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { UserService } from 'src/services/user.service';
 import { UserEntity } from '../../decorators/user.decorator';
 import { User } from '../../models/user.model';
-import { ChangePasswordInput } from './dto/change-password.input';
-import { UserService } from 'src/services/user.service';
-import { UpdateUserInput } from './dto/update-user.input';
+import { LoginInput } from '../auth/dto/login.input';
+import { SignupInput } from '../auth/dto/signup.input';
 
 @Resolver((of) => User)
-@UseGuards(GqlAuthGuard)
 export class UserResolver {
   constructor(
-    private userService: UserService,
-    private prisma: PrismaService
-  ) {}
+    private userService: UserService
+  ) { }
+
+  private readonly logger = new Logger('UserResolver');
 
   @Query((returns) => User)
   async me(@UserEntity() user: User): Promise<User> {
     return user;
   }
 
-  @UseGuards(GqlAuthGuard)
   @Mutation((returns) => User)
-  async updateUser(
-    @UserEntity() user: User,
-    @Args('data') newUserData: UpdateUserInput
-  ) {
-    return this.userService.updateUser(user.id, newUserData);
+  async signup(@Args('data') data: SignupInput) {
+    data.email = data.email.toLowerCase();
+    this.logger.log(`Creating user : ${data.userid}`);
+    try {
+      const user = await this.userService.createUser(data);
+      this.logger.log(`Created user : ${data.userid}`);
+      return user;
+    }
+    catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          this.logger.error(
+            `There is a unique constraint violation, a new user cannot be created with this user ${data.userid}`
+          );
+          throw new UnprocessableEntityException(`User already exists with this user ${data.userid}.Please select a different name`);
+        }
+      }
+      throw new InternalServerErrorException(e);
+    }
   }
 
-  @UseGuards(GqlAuthGuard)
   @Mutation((returns) => User)
-  async changePassword(
-    @UserEntity() user: User,
-    @Args('data') changePassword: ChangePasswordInput
-  ) {
-    return this.userService.changePassword(
-      user.id,
-      user.password,
-      changePassword
-    );
+  async resetPassword(@Args('data') { userid, password }: LoginInput) {
+    this.logger.log(`Resetting password for : ${userid}`);
+    try {
+      const user = await this.userService.resetPassword(userid, password);;
+      this.logger.log(`Resetted password for : ${userid}`);
+      return user;
+    }
+    catch (e) {
+      this.logger.error(`Unable to reset password for : ${userid}`);
+      if (!(e instanceof NotFoundException)) {
+        throw new InternalServerErrorException(e);
+      }
+      else {
+        throw e;
+      }
+    }
   }
+
 }

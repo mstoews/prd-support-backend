@@ -17,16 +17,6 @@ export class PartyInstrResolver {
   constructor(private prisma: PrismaService) { }
 
   @Query((returns) => [PartyInstr])
-  party_instr() {
-    return this.prisma.party_instr.findMany();
-  }
-
-  @Query((returns) => [PartyInstr])
-  partyInstr() {
-    return this.prisma.party_instr.findMany();
-  }
-
-  @Query((returns) => [PartyInstr])
   async partyInstrByRef(
     @Args('party_ref', { nullable: false }) ref?: string) {
     return this.prisma.party_instr.findMany({

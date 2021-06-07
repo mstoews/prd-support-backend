@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id
+  userid    String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime
   email     String
@@ -49,8 +49,7 @@ model gloss_codes {
   code_value      String
   code_short_desc String?
   code_long_desc  String?
-  // This type is currently not supported.
-  // active_ind   char?
+  active_ind      String?
 
   @@id([class_value, code_value])
 }
@@ -401,5 +400,6 @@ model template_party {
 
 enum Role {
   ADMIN
-  USER
+  TEAMOPERATOR
+  TEAMSUPERVISOR
 }

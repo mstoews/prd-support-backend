@@ -18,7 +18,6 @@ export class InstrResolver {
   
   @Query((returns) => [Instr])
   async instr() { 
-      console.log('Instr Query');
       return this.prisma.instr.findMany();
   }  
 
@@ -33,7 +32,6 @@ export class InstrResolver {
 
   @Query((returns) => [Instr])
   async instrByType(@Args('instr_type',{ type: () => String}) type: string) {
-    console.log('instrByType :', type );
      return this.prisma.instr.findMany({ where: {
        instr_type : type,
       },              

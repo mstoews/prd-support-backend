@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 async function main() {
   dotenv.config();
-  console.log('Seeding...');
 
   const party = await prisma.party.create({
     data: {

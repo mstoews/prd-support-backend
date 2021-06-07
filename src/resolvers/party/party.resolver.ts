@@ -1,5 +1,5 @@
 import { PrismaService } from './../../services/prisma.service';
-import { Logger } from '@nestjs/common';
+import { InternalServerErrorException, Logger, UnprocessableEntityException } from '@nestjs/common';
 import { Resolver, Query, Args, Mutation, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { Party, PartyAudit } from '../../models/party.model';
@@ -130,10 +130,26 @@ export class PartyResolver {
   }
 
   @Mutation((returns) => Party)
-  async createParty(@Args('data', { type: () => PartyInput }) newUserData: Prisma.partyCreateInput) {
-    return this.prisma.party.create({
-      data: newUserData,
-    });
+  async createParty(@Args('data', { type: () => PartyInput }) partyData: Prisma.partyCreateInput) {
+    this.logger.log(`Creating party : ${partyData.party_ref}`);
+    try {
+      const party = await this.prisma.party.create({
+        data: partyData,
+      });
+      this.logger.log(`Created party : ${partyData.party_ref}`);
+      return party;
+    }
+    catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          this.logger.error(
+            `There is a unique constraint violation, a new party cannot be created with this party ${partyData.party_ref}`
+          );
+          throw new UnprocessableEntityException(`Party already exists with this partyref: ${partyData.party_ref}.Please select a different reference`);
+        }
+      }
+      throw new InternalServerErrorException(e);
+    }
   }
 
   @Mutation((returns) => Party)
@@ -472,9 +488,7 @@ export class PartyResolver {
       maxVersionNo = maxVersionData.max.version_no;
 
     } catch (e) {
-      console.log(
-        'Unable to find exisitng records for the current user'
-      )
+      throw e;
     }
 
     const versionNo = maxVersionNo + 1;

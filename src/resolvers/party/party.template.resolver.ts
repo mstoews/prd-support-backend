@@ -14,7 +14,6 @@ export class PartyTemplateResolver {
   @Query(returns => [PartyTemplate])
   async partyTemplateByRef(
     @Args('party_ref', { type: () => String }) party_ref: string) {
-    console.log(" Query " + party_ref);
     return this.prisma.template_party.findMany({
       where: {
         party_ref: party_ref,
@@ -26,7 +25,6 @@ export class PartyTemplateResolver {
   @Mutation(returns => PartyTemplate)
   async createPartyTemplate(
     @Args('data', { nullable: false }) input?: PartyTemplateInput,) {
-    console.log(" Create " + input);
     return this.prisma.template_party.create({
       data: input,
     });
@@ -37,7 +35,6 @@ export class PartyTemplateResolver {
   async updatePartyTemplate(
     @Args({ name: 'party_ref', type: () => String }) party_ref: string,
     @Args({ name: 'data',  nullable: false }) input: PartyTemplateInput,) {
-    console.log(" Update " + input);
     return this.prisma.template_party.update({
       data: input,
       where: {
@@ -50,7 +47,6 @@ export class PartyTemplateResolver {
   @Mutation(returns => PartyTemplate)
   async deletePartyTemplateByRef(
     @Args('party_ref', { type: () => String }) party_ref?: string,) {
-    console.log(" Delete " + party_ref);
     return this.prisma.template_party.delete({
       where: {
         party_ref: party_ref,

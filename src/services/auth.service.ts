@@ -1,108 +1,71 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-  ConflictException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { PasswordService } from './password.service';
-import { SignupInput } from '../resolvers/auth/dto/signup.input';
-import { PrismaService } from './prisma.service';
-import { User } from '@prisma/client';
-import { Token } from '../models/token.model';
+
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { Auth } from 'src/models/auth.model';
+import { Token } from 'src/models/token.model';
+import { PasswordService } from 'src/services/password.service';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
+    private readonly userService: UserService,
     private readonly passwordService: PasswordService,
     private readonly configService: ConfigService
   ) { }
 
-  async createUser(payload: SignupInput): Promise<Token> {
-    
-    const hashedPassword = await this.passwordService.hashPassword(
-      payload.password
-    );
+  async login(userid: string, password: string): Promise<Auth> {
 
-    // type '{ password: string; role: "USER"; email: string; firstname?: string; lastname?: string; updatedAt: string; id: string; }' is not assignable to type 'UserCreateInput'.
-
-    try {
-      const user = await this.prisma.user.create({
-        data: {
-          ...payload,
-          password: hashedPassword,
-          role: 'USER',
-        },
-      });
-
-      return this.generateToken({
-        userId: user.id,
-      });
-    } catch (error) {
-      throw new ConflictException(`Email ${payload.email} already used.`);
-    }
-  }
-
-  async login(email: string, password: string): Promise<Token> {
-    const user = await this.prisma.user.findUnique({
-      where: {
-
-      }
-    });
-
+    const user = await this.userService.validateUser(userid);
     if (!user) {
-      throw new NotFoundException(`No user found for email: ${email}`);
+      throw new NotFoundException(`No user found for userid: ${userid}`);
     }
 
     const passwordValid = await this.passwordService.validatePassword(
       password,
       user.password
     );
-
     if (!passwordValid) {
       throw new BadRequestException('Invalid password');
     }
 
-    return this.generateToken({
-      userId: user.id,
+    const token = this.generateToken({
+      userId: user.userid,
     });
-  }
 
-  validateUser(userId: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id: userId } });
-  }
+    let auth = new Auth;
+    auth.user = user;
+    auth.accessToken = token.accessToken;
+    auth.refreshToken = token.refreshToken;
 
-  getUserFromToken(token: string): Promise<User> {
-    const id = this.jwtService.decode(token)['userId'];
-    return this.prisma.user.findUnique({ where: { id } });
+    return auth;
   }
 
   generateToken(payload: object): Token {
-    const accessToken = this.jwtService.sign(payload);
 
-    const refreshToken = this.jwtService.sign(payload, {
+    const accessToken = this.jwtService.sign(payload, {
       expiresIn: this.configService.get('JWT_REFRESH_IN'),
     });
+    const refreshToken = this.jwtService.sign(payload);
 
-    return {
-      accessToken,
-      refreshToken,
-    };
+    let token = new Token;
+    token.accessToken = accessToken;
+    token.refreshToken = refreshToken;
+
+    return token;
   }
 
   refreshToken(token: string) {
     try {
       const { userId } = this.jwtService.verify(token);
-
-      return this.generateToken({
-        userId,
+      return this.jwtService.sign(userId, {
+        expiresIn: this.configService.get('JWT_REFRESH_IN'),
       });
     } catch (e) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(e);
     }
   }
+
 }

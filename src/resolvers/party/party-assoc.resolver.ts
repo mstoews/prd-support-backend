@@ -14,16 +14,6 @@ import {
   constructor(private prisma: PrismaService) {}
   
   @Query((returns) => [PartyAssoc])
-    party_assoc() { 
-        return this.prisma.party_assoc.findMany();
-    }  
-
-  @Query((returns) => [PartyAssoc])
-    partyAssoc() { 
-        return this.prisma.party_assoc.findMany();
-    }  
-
-  @Query((returns) => [PartyAssoc])
   async partyAssocByRef( 
   @Args('party_ref',{ nullable: false}) ref?: string) 
   {
@@ -44,7 +34,6 @@ import {
       },              
     });
   }
-
   // Create Associaton
   @Mutation((returns) => PartyAssoc)
   async createPartyAssoc(@Args('data', { type: () => PartyAssocInput }) newUserData: Prisma.party_assocCreateInput) {

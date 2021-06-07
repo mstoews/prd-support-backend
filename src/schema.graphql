@@ -11,11 +11,6 @@ type Auth {
   user: User!
 }
 
-input ChangePasswordInput {
-  newPassword: String!
-  oldPassword: String!
-}
-
 type ClassAssoc {
   applied: Boolean!
   assoc_code_description: String!
@@ -285,13 +280,12 @@ input InstrNarrativeInput {
 }
 
 input LoginInput {
-  email: String!
   password: String!
+  userid: String!
 }
 
 type Mutation {
   backUpPartyData(party_ref: String!): PartyAudit!
-  changePassword(data: ChangePasswordInput!): User!
   cloneParty(new_party_ref: String!, old_party_ref: String!): Party!
   cloneSwiftParty(new_party_ref: String!, old_party_ref: String!): PartySwift!
   createClassAssoc(data: ClassAssocInput!): ClassAssoc!
@@ -337,11 +331,12 @@ type Mutation {
   deletePartyTree(party_ref: String!): Party!
   deleteSSI(depot_alias: String!, party_ref: String!): PartySSI!
   login(data: LoginInput!): Auth!
-  refreshToken(token: String!): Token!
+  refreshToken(refreshtoken: String!): Token!
+  resetPassword(data: LoginInput!): User!
   restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
   sendClassAssocStaticToGloss(party_ref: String!): ClassAssoc!
   sendSwiftStaticToGloss(party_ref: String!): PartySwift!
-  signup(data: SignupInput!): Auth!
+  signup(data: SignupInput!): User!
   updateClassAssoc(class_assoc_code: String!, data: ClassAssocInput!, main_class: Int!, main_code: String!, party_ref: String!, sub_class: Int!, sub_code: String!): ClassAssoc!
   updateInstrAccrual(data: InstrAccrualInput!, instr_ref: String!, seq_no: Int!): InstrAccrual!
   updateInstrByRef(data: InstrInput!, instr_ref: String!): Instr!
@@ -362,7 +357,6 @@ type Mutation {
   updatePartySwift(data: PartySwiftInput!, party_ref: String!): PartySwift!
   updatePartyTemplate(data: PartyTemplateInput!, party_ref: String!): PartyTemplate!
   updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
-  updateUser(data: UpdateUserInput!): User!
 }
 
 type Party {
@@ -688,16 +682,6 @@ input PartyTemplateInput {
   version_user: String!
 }
 
-type Post {
-  author: User!
-  content: String!
-  createdAt: Date!
-  id: ID!
-  published: Boolean!
-  title: String!
-  updatedAt: Date!
-}
-
 type Query {
   createInstrGlossXML(Type: String!): String!
   environement: [Environment!]!
@@ -735,11 +719,7 @@ type Query {
   instrNarrativeByRefAndType(instr_ref: String!, narrative_type: String!): [InstrNarrative!]!
   me: User!
   party: [Party!]!
-  party_assoc: [PartyAssoc!]!
-  party_instr: [PartyInstr!]!
-  party_ssi: [PartySSI!]!
   partyAddressByRef(party_ref: String!): [PartyAddress!]!
-  partyAssoc: [PartyAssoc!]!
   partyAssocByRef(party_ref: String!): [PartyAssoc!]!
   partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
   partyAuditByRef(party_ref: String!): [PartyAudit!]!
@@ -751,31 +731,24 @@ type Query {
   partyDateByRef(party_ref: String!): [PartyDate!]!
   partyExtRefByRef(party_ref: String!): [PartyExtRef!]!
   partyFlagByRef(party_ref: String!): [PartyFlag!]!
-  partyInstr: [PartyInstr!]!
   partyInstrByRef(party_ref: String!): [PartyInstr!]!
-  partyNarrative: [PartyNarrative!]!
   partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
   partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
-  partySSI: [PartySSI!]!
   partySSIByRef(party_ref: String!): [PartySSI!]!
   partySwiftByRef(party_ref: String!): [PartySwift!]!
   partyTemplateByRef(party_ref: String!): [PartyTemplate!]!
   PartyTreeByRef(party_ref: String!): Party!
 }
 
-"""User role"""
-enum Role {
-  ADMIN
-  USER
-}
-
 input SignupInput {
+  createdAt: String!
   email: String!
   firstname: String
-  id: String!
   lastname: String
   password: String!
+  role: String!
   updatedAt: String!
+  userid: String!
 }
 
 type Subscription {
@@ -790,18 +763,12 @@ type Token {
   refreshToken: String!
 }
 
-input UpdateUserInput {
-  firstname: String
-  lastname: String
-}
-
 type User {
   createdAt: Date!
   email: String!
   firstname: String
-  id: ID!
   lastname: String
-  posts: [Post!]!
-  role: Role!
+  role: String!
   updatedAt: Date!
+  userid: ID!
 }

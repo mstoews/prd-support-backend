@@ -14,7 +14,6 @@ export class PartyAddressResolver {
   @Query((returns) => [PartyAddress])
   async partyAddressByRef(
     @Args('party_ref', { nullable: false }) party_ref: string,) {
-    console.log(" Query " + party_ref);
     return this.prisma.party_addr.findMany({
       where: {
         party_ref: party_ref,
@@ -26,7 +25,6 @@ export class PartyAddressResolver {
   @Mutation((returns) => PartyAddress)
   async createPartyAddress(
     @Args('data', { nullable: false }) data?: PartyAddressInput,) {
-    console.log(" Create " + data);
     return this.prisma.party_addr.create({
       data: data,
     });
@@ -38,7 +36,6 @@ export class PartyAddressResolver {
     @Args('party_ref', { nullable: false }) party_ref?: string,
     @Args('addr_type', { nullable: false }) addr_type?: string,
     @Args('data', { nullable: false }) data?: PartyAddressInput,) {
-    console.log(" Update " + data);
     return this.prisma.party_addr.update({
       data: data,
       where: {
@@ -55,7 +52,6 @@ export class PartyAddressResolver {
   async deletePartyAddressByRef(
     @Args('party_ref', { nullable: false }) party_ref?: string,
     @Args('addr_type', { nullable: false }) addr_type?: string,) {
-    console.log(" Delete " + party_ref);
     return this.prisma.party_addr.delete({
       where: {
         party_ref_addr_type: {

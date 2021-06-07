@@ -27,11 +27,6 @@ import { party_narrative as PartyNarrativeModel, Prisma } from '@prisma/client';
     private prisma: PrismaService) {}
   
   @Query((returns) => [PartyNarrative])
-  async partyNarrative() { 
-      return this.prisma.party_narrative.findMany();
-  }
-  
-  @Query((returns) => [PartyNarrative])
   async partyNarrativeByRef(@Args('party_ref',{ type: () => String}) ref: string) {
    return this.prisma.party_narrative.findMany({ where: {
      party_ref : ref,
@@ -50,7 +45,6 @@ import { party_narrative as PartyNarrativeModel, Prisma } from '@prisma/client';
      },              
    });
  }
-
  // Create
   @Mutation((returns) => PartyNarrative)
   async createPartyNarrative(@Args('data', { type: () => PartyNarrativeInput }) newUserData: Prisma.party_narrativeCreateInput) {

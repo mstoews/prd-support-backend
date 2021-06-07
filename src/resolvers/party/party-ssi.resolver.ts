@@ -14,16 +14,6 @@ export class PartySSIResolver {
   constructor(private prisma: PrismaService) { }
 
   @Query((returns) => [PartySSI])
-  party_ssi() {
-    return this.prisma.party_ssi.findMany();
-  }
-
-  @Query((returns) => [PartySSI])
-  partySSI() {
-    return this.prisma.party_ssi.findMany();
-  }
-
-  @Query((returns) => [PartySSI])
   async partySSIByRef(
     @Args('party_ref', { nullable: false }) ref?: string) {
     return this.prisma.party_ssi.findMany({

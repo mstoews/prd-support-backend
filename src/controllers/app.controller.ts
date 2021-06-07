@@ -11,6 +11,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  getHelloName(name: string): any {
+    throw new Error('Method not implemented.');
+  }
+
   @Post()
   public async postGlossXML(@Param('party_type') party_type: string){
      // this.httpPostService.updateGlossByPartyRef(party_type);

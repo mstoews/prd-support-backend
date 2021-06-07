@@ -25,7 +25,6 @@ export class PartyExtRefResolver {
   // Create ExtRef
   @Mutation((returns) => PartyExtRef)
   async createExtRefParty(@Args('data', { type: () => PartyExtRefInput }) newUserData: Prisma.party_ext_refCreateInput) {
-    console.log('createPartyByRef : ', newUserData);
     return this.prisma.party_ext_ref.create({
       data: newUserData,
     });
