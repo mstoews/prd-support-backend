@@ -43,6 +43,22 @@ input ClassAssocInput {
   version_user: String!
 }
 
+input ClassAssocSubCodeArrayInput {
+  applied: Boolean!
+  assoc_code_description: String!
+  class_assoc_code: String!
+  description: String!
+  main_class: Int!
+  main_code: String!
+  party_ref: String!
+  sub_class: Int!
+  sub_code: [String!]!
+  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
 """Date custom scalar type"""
 scalar Date
 
@@ -60,6 +76,62 @@ type GlossCodes {
   code_long_desc: String!
   code_short_desc: String!
   code_value: String!
+}
+
+type GlossScheduler {
+  active_ind_p2k: String!
+  batch_size: Int!
+  bus_day: String!
+  database_code: String!
+  database_type: String!
+  dst_region_code: String!
+  due_date_time: Date!
+  end_by_interval: Int!
+  end_by_time: Date!
+  event_ref: String!
+  frequency_end_time: Date!
+  frequency_interval: Int!
+  frequency_start_time: Date!
+  frequency_unit: String!
+  holiday_id: String!
+  msg_type: Int!
+  sql_db_code: String!
+  start_by_interval: Int!
+  start_by_time: Date!
+  start_by_unit: String!
+  supercede: String!
+  use_current_date: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input GlossSchedulerInput {
+  active_ind_p2k: String
+  batch_size: Int!
+  bus_day: String!
+  database_code: String!
+  database_type: String!
+  dst_region_code: String
+  due_date_time: Date
+  end_by_interval: Int!
+  end_by_time: Date!
+  event_ref: String!
+  frequency_end_time: Date!
+  frequency_interval: Int!
+  frequency_start_time: Date!
+  frequency_unit: String!
+  holiday_id: String!
+  msg_type: Int!
+  sql_db_code: String!
+  start_by_interval: Int!
+  start_by_time: Date!
+  start_by_unit: String!
+  supercede: String!
+  use_current_date: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
 }
 
 type Instr {
@@ -290,6 +362,7 @@ type Mutation {
   cloneSwiftParty(new_party_ref: String!, old_party_ref: String!): PartySwift!
   createClassAssoc(data: ClassAssocInput!): ClassAssoc!
   createExtRefParty(data: PartyExtRefInput!): PartyExtRef!
+  createglossScheduler(data: GlossSchedulerInput!): GlossScheduler!
   createInstrAccrual(data: InstrAccrualInput!): InstrAccrual!
   createInstrClassification(data: InstrClassInput!): InstrClassification!
   createInstrExtRef(data: InstrExtRefInput!): InstrExtRef!
@@ -307,9 +380,12 @@ type Mutation {
   createPartyInstrument(data: PartyInstrInput!): PartyInstr!
   createPartyNarrative(data: PartyNarrativeInput!): PartyNarrative!
   createPartySSI(data: PartySSIInput!): PartySSI!
+  createPartySSIGlossXML(party_ref: String!): Party!
   createPartySwift(data: PartySwiftInput!): PartySwift!
   createPartyTemplate(data: PartyTemplateInput!): PartyTemplate!
+  deletebySubClassandInsertClassAssoc(data: ClassAssocSubCodeArrayInput!): ClassAssoc!
   deleteClassAssoc(class_assoc_code: String!, main_class: Int!, main_code: String!, party_ref: String!, sub_class: Int!, sub_code: String!): ClassAssoc!
+  deleteglossScheduler(database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
   deleteInstrAccrual(instr_ref: String!, seq_no: Int!): InstrAccrual!
   deleteInstrByRef(instr_ref: String!): Instr!
   deleteInstrClassification(class_type: String!, party_ref: String!): InstrClassification!
@@ -335,9 +411,11 @@ type Mutation {
   resetPassword(data: LoginInput!): User!
   restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
   sendClassAssocStaticToGloss(party_ref: String!): ClassAssoc!
+  sendSchedulerStaticToGloss: GlossScheduler!
   sendSwiftStaticToGloss(party_ref: String!): PartySwift!
   signup(data: SignupInput!): User!
   updateClassAssoc(class_assoc_code: String!, data: ClassAssocInput!, main_class: Int!, main_code: String!, party_ref: String!, sub_class: Int!, sub_code: String!): ClassAssoc!
+  updateglossScheduler(data: GlossSchedulerInput!, database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
   updateInstrAccrual(data: InstrAccrualInput!, instr_ref: String!, seq_no: Int!): InstrAccrual!
   updateInstrByRef(data: InstrInput!, instr_ref: String!): Instr!
   updateInstrClassification(class_type: String!, data: InstrClassInput!, party_ref: String!): InstrClassification!
@@ -439,6 +517,7 @@ input PartyAssocInput {
 type PartyAudit {
   party_address_data: String!
   party_assoc_data: String!
+  party_class_assoc_data: String!
   party_classification_data: String!
   party_data: String!
   party_date_data: String!
@@ -667,7 +746,9 @@ input PartySwiftInput {
 }
 
 type PartyTemplate {
+  party_long_name: String!
   party_ref: String!
+  party_short_name: String!
   template_party_ref: String!
   version_date: Date!
   version_no: Int!
@@ -675,7 +756,9 @@ type PartyTemplate {
 }
 
 input PartyTemplateInput {
+  party_long_name: String!
   party_ref: String!
+  party_short_name: String!
   template_party_ref: String!
   version_date: Date!
   version_no: Int!
@@ -691,19 +774,16 @@ type Query {
   getFirstPartyByType(party_type: String!): Party!
   GIB: String!
   glossCodesByClass(class_value: Int!): [GlossCodes!]!
+  glossScheduler: [GlossScheduler!]!
   instr: [Instr!]!
   instr_classification: [InstrClassification!]!
-  instr_classificationByRef(instr_ref: String!): [InstrClassification!]!
-  instr_classificationByRefAndClass(class_type: String!, instr_ref: String!): [InstrClassification!]!
   instr_date: [InstrDate!]!
   instr_ext_ref: [InstrExtRef!]!
-  instr_ext_refByRef(instr_ref: String!): [InstrExtRef!]!
   instr_flag: [InstrFlag!]!
   instrAccrual: [InstrAccrual!]!
   instrAccrualByRef(instr_ref: String!): [InstrAccrual!]!
   instrAccrualByRefAndSeq(instr_ref: String!, seq_no: Int!): [InstrAccrual!]!
   instrByRef(instr_ref: String!): Instr!
-  instrByRefNo(ref: String!): Instr!
   instrByType(instr_type: String!): [Instr!]!
   instrClassification: [InstrClassification!]!
   instrClassificationByRef(instr_ref: String!): [InstrClassification!]!
@@ -724,7 +804,6 @@ type Query {
   partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
   partyAuditByRef(party_ref: String!): [PartyAudit!]!
   partyByRef(party_ref: String!): Party!
-  partyByRefNo(ref: String!): Party!
   partyByType(party_type: String!): [Party!]!
   partyClassAssocByRef(party_ref: String!): [ClassAssoc!]!
   partyClassificationByRef(party_ref: String!): [PartyClassification!]!
@@ -738,6 +817,7 @@ type Query {
   partySwiftByRef(party_ref: String!): [PartySwift!]!
   partyTemplateByRef(party_ref: String!): [PartyTemplate!]!
   PartyTreeByRef(party_ref: String!): Party!
+  users: [User!]!
 }
 
 input SignupInput {

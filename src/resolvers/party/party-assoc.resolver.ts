@@ -24,7 +24,7 @@ import {
   }
 
   @Query((returns) => [PartyAssoc])
-  partyAssocByRefAndType(
+  async partyAssocByRefAndType(
     @Args('party_ref',{ nullable: false}) party_ref?: string, 
     @Args('assoc_type',{ nullable: false}) assoc_type?: string,) 
     {

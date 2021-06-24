@@ -15,6 +15,7 @@ export class GlossCodesResolver {
     @Query((returns) => [GlossCodes])
     async glossCodesByClass(
         @Args('class_value', { nullable: false }) class_value?: number) {
+            this.logger.log("Codes for " + class_value + " queried");
         return this.prisma.gloss_codes.findMany({
             where: {
                 class_value: class_value,

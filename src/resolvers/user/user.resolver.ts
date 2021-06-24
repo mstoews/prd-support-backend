@@ -3,6 +3,7 @@ import {
   Args, Mutation, Query, Resolver
 } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/services/prisma.service';
 import { UserService } from 'src/services/user.service';
 import { UserEntity } from '../../decorators/user.decorator';
 import { User } from '../../models/user.model';
@@ -12,6 +13,7 @@ import { SignupInput } from '../auth/dto/signup.input';
 @Resolver((of) => User)
 export class UserResolver {
   constructor(
+    private prisma: PrismaService,
     private userService: UserService
   ) { }
 
@@ -20,6 +22,12 @@ export class UserResolver {
   @Query((returns) => User)
   async me(@UserEntity() user: User): Promise<User> {
     return user;
+  }
+
+  @Query((returns) => [User])
+  async users() {
+    this.logger.log('prisma.User => FindMany');
+    return this.prisma.user.findMany();
   }
 
   @Mutation((returns) => User)
@@ -48,7 +56,7 @@ export class UserResolver {
   async resetPassword(@Args('data') { userid, password }: LoginInput) {
     this.logger.log(`Resetting password for : ${userid}`);
     try {
-      const user = await this.userService.resetPassword(userid, password);;
+      const user = await this.userService.resetPassword(userid, password);
       this.logger.log(`Resetted password for : ${userid}`);
       return user;
     }

@@ -11,7 +11,7 @@ export class PartyClassificationResolver {
   {}
   
   @Query((returns) => [PartyClassification])
-  partyClassificationByRef(
+  async partyClassificationByRef(
     @Args('party_ref',{ nullable: false}) party_ref?: string) 
     {
       return this.prisma.party_classification.findMany({ where: {

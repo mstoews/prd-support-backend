@@ -29,11 +29,22 @@ model class_assoc {
   description            String
   user_def               String
   applied                Boolean
-  version_date           DateTime
+  version_date           DateTime?
   version_no             Int
   version_user           String
 
   @@id([party_ref, class_assoc_code, main_class, main_code, sub_class, sub_code])
+}
+
+model party_data_pushed {
+  party_ref                 String
+  party_template_data       String?
+  party_class_assoc_data    String?
+  party_swift_data          String?
+  version_date              DateTime?
+  version_user              String
+
+  @@id([party_ref])
 }
 
 model environment {
@@ -235,7 +246,7 @@ model party_addr {
   phone_no      String
   fax_no        String
   email         String
-  version_date  DateTime
+  version_date  DateTime?
   version_no    Int
   version_user  String
 
@@ -268,7 +279,8 @@ model party_audit {
   party_date_data           String?
   party_address_data        String?
   party_template_data       String?
-  version_date              DateTime
+  party_class_assoc_data    String?
+  version_date              DateTime?
   version_no                Int
   version_user              String?
 
@@ -390,12 +402,43 @@ model party_swift_router {
   branch_code     String?
 }
 
-model template_party {
+model party_template {
   party_ref          String    @id
   template_party_ref String
+  party_short_name   String
+  party_long_name    String
   version_date       DateTime?
   version_no         Int?
   version_user       String?
+}
+
+model gloss_scheduler{
+   msg_type             Int
+   event_ref            String
+   database_type        String?
+   database_code        String
+   sql_db_code          String?
+   bus_day              String?
+   holiday_id           String?
+   frequency_unit       String?
+   frequency_interval   Int?
+   frequency_start_time DateTime?
+   frequency_end_time   DateTime?
+   due_date_time        DateTime
+   start_by_unit        String?
+   start_by_interval    Int?
+   end_by_interval      Int?
+   use_current_date     String?
+   active_ind_p2k       String?
+   start_by_time        DateTime?
+   end_by_time          DateTime?
+   batch_size           Int?
+   supercede            String?
+   dst_region_code      String?
+   version_no           Int?
+   version_date         DateTime?
+   version_user         String?
+     @@id([msg_type, event_ref, due_date_time, database_code])
 }
 
 enum Role {

@@ -1,15 +1,14 @@
-import { PrismaService } from './../../services/prisma.service';
 import { InternalServerErrorException, Logger, UnprocessableEntityException } from '@nestjs/common';
-import { Resolver, Query, Args, Mutation, Subscription } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
-import { Party, PartyAudit } from '../../models/party.model';
-import { ClassAssocInput, PartyAddressInput, PartyAssocInput, PartyClassInput, PartyDateInput, PartyExtRefInput, PartyFlagInput, PartyInput, PartyInstrInput, PartyNarrativeInput, PartySSIInput, PartyTemplateInput } from '../../models/inputs/party.input';
-import { HttpPostService } from '../../services/http-post/http-post.service';
-
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import {
-  Prisma,
-  party as PartyModel,
+  Prisma
 } from '@prisma/client';
+import { PubSub } from 'graphql-subscriptions';
+import { ClassAssocInput, PartyAddressInput, PartyAssocInput, PartyClassInput, PartyDateInput, PartyExtRefInput, PartyFlagInput, PartyInput, PartyInstrInput, PartyNarrativeInput, PartySSIInput, PartyTemplateInput } from '../../models/inputs/party.input';
+import { Party, PartyAudit } from '../../models/party.model';
+import { HttpPostService } from '../../services/http-post/http-post.service';
+import { PrismaService } from './../../services/prisma.service';
+
 
 @Resolver((of) => Party)
 export class PartyResolver {
@@ -54,15 +53,6 @@ export class PartyResolver {
   @Query(returns => Party)
   async firstPartyType() {
     return this.prisma.party.findFirst();
-  }
-
-  @Query(returns => Party)
-  async partyByRefNo(@Args('ref', { type: () => String }) ref: string) {
-    return this.prisma.party.findUnique({
-      where: {
-        party_ref: ref,
-      },
-    });
   }
 
   @Query((returns) => [Party])
@@ -171,7 +161,7 @@ export class PartyResolver {
     await this.prisma.party_ssi.deleteMany({ where: { party_ref: party_ref } })
     await this.prisma.party_date.deleteMany({ where: { party_ref: party_ref } })
     await this.prisma.party_addr.deleteMany({ where: { party_ref: party_ref } })
-    await this.prisma.template_party.deleteMany({ where: { party_ref: party_ref } })
+    await this.prisma.party_template.deleteMany({ where: { party_ref: party_ref } })
     await this.prisma.class_assoc.deleteMany({ where: { party_ref: party_ref } })
 
     return oldParty;
@@ -360,7 +350,6 @@ export class PartyResolver {
     });
   }
 
-
   private async copyClassAssoc(old_party_ref: string, new_party_ref: string) {
     let oldClassAssocData: any[];
     oldClassAssocData = await this.prisma.class_assoc.findMany({
@@ -388,7 +377,7 @@ export class PartyResolver {
         party_ref: party_ref,
       },
     });
-    let partyTemplate = await this.prisma.template_party.findUnique({
+    let partyTemplate = await this.prisma.party_template.findUnique({
       where: {
         party_ref: party_ref,
       },
@@ -400,19 +389,61 @@ export class PartyResolver {
     });
     this.logger.log('createPartyGlossXLM : ', party_ref);
 
-
     if (oldParty.party_type === "COMP") {
-      await this.postService.updateGlossNonXMLByPartyRef(partyTemplate,'T');
-      await this.postService.updateGlossNonXMLByPartyRef(partyTemplate,'C');
+      if (partyTemplate != null) {
+        await this.prisma.party_data_pushed.upsert({
+          where: {
+            party_ref: party_ref
+          },
+          update: {
+            party_template_data: JSON.stringify(partyTemplate),
+            version_date: new Date()
+          },
+          create: {
+            party_ref: party_ref,
+            party_template_data: JSON.stringify(partyTemplate),
+            party_class_assoc_data: '',
+            party_swift_data: '',
+            version_date: new Date(),
+            version_user: 'ADMIN',
+          },
+        });
+        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate, 'T');
+        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate, 'C');
+      }
+      await this.prisma.party_data_pushed.upsert({
+        where: {
+          party_ref: party_ref
+        },
+        update: {
+          party_class_assoc_data: JSON.stringify(classAssocData),
+          version_date: new Date()
+        },
+        create: {
+          party_ref: party_ref,
+          party_template_data: '',
+          party_class_assoc_data: JSON.stringify(classAssocData),
+          party_swift_data: '',
+          version_date: new Date(),
+          version_user: 'ADMIN',
+        },
+      });
       await this.postService.updateClassAssocStatic(classAssocData);
     }
     await this.postService.updateGlossXMLByPartyRef(party_ref);
-    if (oldParty.party_type === "COMP") {
-    await this.postService.updatePartySSIByPartyRef(party_ref);
-    }
 
     return oldParty;
+  }
 
+  @Mutation((returns) => Party)
+  async createPartySSIGlossXML(@Args('party_ref', { type: () => String }) party_ref: string) {
+    let party_ssi = await this.prisma.party_ssi.findMany({
+      where: {
+        party_ref: party_ref,
+      },
+    });
+    await this.postService.updatePartySSIByPartyRef(party_ref);
+    return party_ssi;
   }
 
   // Party Audit
@@ -472,24 +503,23 @@ export class PartyResolver {
       where: { party_ref: party_ref, },
     });
 
-    let partyTemplate = await this.prisma.template_party.findMany({
+    let partyTemplate = await this.prisma.party_template.findMany({
+      where: { party_ref: party_ref, },
+    });
+
+    let classAssocData = await this.prisma.class_assoc.findMany({
       where: { party_ref: party_ref, },
     });
 
     let maxVersionNo = 0;
-    try {
-      const maxVersionData = await this.prisma.party_audit.aggregate({
-        max: {
-          version_no: true,
-        },
-        where: { party_ref: party_ref, },
-      });
+    const maxVersionData = await this.prisma.party_audit.aggregate({
+      max: {
+        version_no: true,
+      },
+      where: { party_ref: party_ref, },
+    });
 
-      maxVersionNo = maxVersionData.max.version_no;
-
-    } catch (e) {
-      throw e;
-    }
+    maxVersionNo = maxVersionData.max.version_no;
 
     const versionNo = maxVersionNo + 1;
 
@@ -508,6 +538,7 @@ export class PartyResolver {
     partyData.party_date_data = JSON.stringify(partyDate);
     partyData.party_address_data = JSON.stringify(partyAddress);
     partyData.party_template_data = JSON.stringify(partyTemplate);
+    partyData.party_class_assoc_data = JSON.stringify(classAssocData);
     partyData.version_date = new Date();
     partyData.version_no = versionNo;
     partyData.version_user = party.version_user;
@@ -544,6 +575,7 @@ export class PartyResolver {
     let dateData: any[];
     let addressData: any[];
     let templateData: any[];
+    let classAssocData: any[];
 
     extReferenceData = JSON.parse(party.party_ext_ref_data);
     extReferenceData.forEach(async (extReference: PartyExtRefInput) => {
@@ -581,7 +613,6 @@ export class PartyResolver {
       await this.prisma.party_ssi.create({ data: ssi });
     });
 
-
     dateData = JSON.parse(party.party_date_data);
     dateData.forEach(async (date: PartyDateInput) => {
       await this.prisma.party_date.create({ data: date });
@@ -594,7 +625,12 @@ export class PartyResolver {
 
     templateData = JSON.parse(party.party_template_data);
     templateData.forEach(async (template: PartyTemplateInput) => {
-      await this.prisma.template_party.create({ data: template });
+      await this.prisma.party_template.create({ data: template });
+    });
+
+    classAssocData = JSON.parse(party.party_class_assoc_data);
+    classAssocData.forEach(async (classAssoc: ClassAssocInput) => {
+      await this.prisma.class_assoc.create({ data: classAssoc });
     });
 
     return await this.prisma.party.create({ data: JSON.parse(party.party_data) });

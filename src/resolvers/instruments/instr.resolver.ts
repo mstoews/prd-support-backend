@@ -22,14 +22,6 @@ export class InstrResolver {
   }  
 
   
-  @Query(returns => Instr)
-  async instrByRefNo(@Args('ref', { type: () => String }) ref: string) {
-    return this.prisma.instr.findUnique({ where: {
-      instr_ref : ref,
-     },              
-   });
-  }
-
   @Query((returns) => [Instr])
   async instrByType(@Args('instr_type',{ type: () => String}) type: string) {
      return this.prisma.instr.findMany({ where: {

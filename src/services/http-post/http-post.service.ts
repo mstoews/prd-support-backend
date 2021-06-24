@@ -43,7 +43,7 @@ export class HttpPostService {
             ';myPostMsg=' + this.python_msg +
             ';myRtnMsg=' + this.python_return_msg + ';';
 
-        this.logger.log(': HTTPPostService', urlEndPoint);
+        this.logger.log(': HTTPPostService Party', urlEndPoint);
         return this.httpService.get(urlEndPoint).toPromise();
     }
 
@@ -67,18 +67,18 @@ export class HttpPostService {
             ';myPostMsg=' + this.python_msg +
             ';myRtnMsg=' + this.python_return_msg + ';';
 
-        this.logger.log(': HTTPPostService', partySSIEndPoint);
+        this.logger.log(': HTTPPostService SSI', partySSIEndPoint);
 
         return this.httpService.get(partySSIEndPoint).toPromise();
     }
 
-    updateGlossNonXMLByPartyRef(partyTemplate: PartyTemplate,db_type:string) {
+    updateGlossNonXMLByPartyRef(partyTemplate: PartyTemplate, db_type: string): Promise<AxiosResponse> {
         this.logger.log('Java Host', this.java_host);
         this.logger.log('Party Template Data', JSON.stringify(partyTemplate));
         const httpOptions = {
             headers: { 'Content-Type': 'application/json' }
         };
-        this.httpService.post(this.java_host + '/api/companystatic'+db_type, JSON.stringify(partyTemplate), httpOptions).toPromise();
+        return this.httpService.post(this.java_host + '/api/companystatic' + db_type, JSON.stringify(partyTemplate), httpOptions).toPromise();
     }
 
     updateSwiftStatic(swiftData: any): Promise<AxiosResponse> {
@@ -88,6 +88,15 @@ export class HttpPostService {
             headers: { 'Content-Type': 'application/json' }
         };
         return this.httpService.post(this.java_host + '/api/swiftstatic', JSON.stringify(swiftData), httpOptions).toPromise();
+    }
+
+    updateglossSchedulerData(schedulerData: any): Promise<AxiosResponse> {
+        this.logger.log('Java Host', this.java_host);
+        this.logger.log('Scheduler Data', JSON.stringify(schedulerData));
+        const httpOptions = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        return this.httpService.post(this.java_host + '/api/schedulerstatic', JSON.stringify(schedulerData), httpOptions).toPromise();
     }
 
     updateClassAssocStatic(classAssocData: any): Promise<AxiosResponse> {

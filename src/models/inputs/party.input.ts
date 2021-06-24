@@ -129,6 +129,8 @@ export class PartySwiftInput {
 export class PartyTemplateInput {
   @Field({ nullable: false }) party_ref: string;
   @Field({ nullable: false }) template_party_ref: string;
+  @Field({ nullable: false }) party_short_name: string;
+  @Field({ nullable: false }) party_long_name: string;
   @Field({ nullable: false }) version_date: Date;
   @Field({ nullable: false }) version_no: number;
   @Field({ nullable: false }) version_user: string;
@@ -185,8 +187,19 @@ export class ClassAssocInput {
   @Field({ nullable: false }) version_user: string;
 }
 
-
-
-
-
-
+@InputType()
+export class ClassAssocSubCodeArrayInput {
+  @Field({ nullable: false }) party_ref: string;     /* Stores the company ref e.g. CMP4 */
+  @Field({ nullable: false }) class_assoc_code: string;
+  @Field({ nullable: false }) assoc_code_description: string;
+  @Field({ nullable: false }) main_class: number;
+  @Field({ nullable: false }) main_code: string;
+  @Field({ nullable: false }) sub_class: number;
+  @Field(() => [String]) sub_code: string[];
+  @Field({ nullable: false }) description: string;
+  @Field({ nullable: false }) user_def: string;
+  @Field({ nullable: false }) applied: boolean;
+  @Field({ nullable: false }) version_date: Date;
+  @Field({ nullable: false }) version_no: number;
+  @Field({ nullable: false }) version_user: string;
+}

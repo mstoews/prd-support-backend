@@ -9,7 +9,7 @@ import { party_ssi as PartySSIModel, Prisma } from '@prisma/client';
 
 @Resolver((of) => PartySSI)
 export class PartySSIResolver {
-  private readonly logger = new Logger('PartyResolver');
+  private readonly logger = new Logger('PartySSIResolver');
 
   constructor(private prisma: PrismaService) { }
 

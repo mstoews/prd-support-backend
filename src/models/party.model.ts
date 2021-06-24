@@ -184,6 +184,8 @@ export class PartyAddress {
 export class PartyTemplate {
   party_ref: string;
   template_party_ref: string;
+  party_short_name: string;
+  party_long_name: string;
   version_date: Date;
   version_no: number;
   version_user: string;
@@ -203,6 +205,7 @@ export class PartyAudit {
   party_date_data: string;
   party_address_data: string;
   party_template_data: string;
+  party_class_assoc_data: string;
   version_date: Date;
   version_no: number;
   version_user: string;

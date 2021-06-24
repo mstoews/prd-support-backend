@@ -16,26 +16,11 @@ export class InstrClassificationResolver {
       return this.prisma.instr_classification.findMany();
   }  
   
-
-  @Query((returns) => [InstrClassification])
-  instr_classificationByRefAndClass(
-    @Args('instr_ref',{ nullable: false}) instr_ref?: string, 
-    @Args('class_type',{ nullable: false}) class_type?: string,) 
-    {
-      return this.prisma.instr_classification.findMany({ where: {
-       class_type : class_type,
-       instr_ref : instr_ref, 
-      },              
-    });
-  }
-
-
   @Query((returns) => [InstrClassification])
   instrClassification() { 
       return this.prisma.instr_classification.findMany();
   }  
   
-
   @Query((returns) => [InstrClassification])
   instrClassificationByRefAndClass(
     @Args('instr_ref',{ nullable: false}) instr_ref?: string, 
@@ -44,16 +29,6 @@ export class InstrClassificationResolver {
       return this.prisma.instr_classification.findMany({ where: {
        class_type : class_type,
        instr_ref : instr_ref, 
-      },              
-    });
-  }
-
-  @Query((returns) => [InstrClassification])
-  instr_classificationByRef(
-    @Args('instr_ref',{ nullable: false}) instr_ref?: string) 
-    {
-      return this.prisma.instr_classification.findMany({ where: {
-      instr_ref : instr_ref, 
       },              
     });
   }

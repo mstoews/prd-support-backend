@@ -35,17 +35,6 @@ import { InstrInput, InstrExtRefInput } from 'src/models/inputs/instr.input';
   @Query((returns) => [InstrExtRef])
   instrExtRef() { 
       return this.prisma.instr_ext_ref.findMany();
-  } 
-
-  
-  @Query((returns) => [InstrExtRef])
-  async instr_ext_refByRef( 
-  @Args('instr_ref',{ nullable: false}) ref?: string) 
-  {
-     return this.prisma.instr_ext_ref.findMany({ where: {
-       instr_ref : ref,
-      },              
-    });
   }
   
   @Query((returns) => [InstrExtRef])

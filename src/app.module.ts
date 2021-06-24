@@ -14,6 +14,7 @@ import { MessagesController } from './messages/messages.controller';
 import { KanbanModule} from './models/kanban/kanban.module';
 import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
+import { SchedulerModule } from './resolvers/scheduler/scheduler.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { GraphqlConfig } from './configs/config.interface';
     AuthModule,
     UserModule,
     PartyModule,
+    SchedulerModule,
     InstrumentsModule,
     KanbanModule,
     HttpModule.register({

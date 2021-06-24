@@ -94,7 +94,7 @@ SELECT 'TRADING',
 
 INSERT INTO party_flag
 SELECT 'TRADING',
-       '8068',
+       '8067',
        '2',
        'N',
        'Prin Off Market (Trading A/C)',
@@ -106,28 +106,6 @@ SELECT 'TRADING',
 DELETE FROM party_narrative
 WHERE party_ref = 'TRADING'
 ;
-
-SELECT * FROM party_narrative;
-
-drop table party_narrative;
-
-create table party_narrative
-(
-    party_ref    varchar(12) not null,
-    narr_type    varchar(4)  not null,
-    narrative    varchar(255),
-    user_def     varchar,
-    description  varchar(40),
-    version_date date     default now(),
-    version_no   integer  default 1,
-    version_user varchar(12) default USER,
-    constraint party_narrative_pkey
-        primary key (party_ref, narr_type)
-);
-
-alter table party_narrative
-    owner to postgres;
-
 
 INSERT INTO party_narrative
 SELECT 'TRADING',
@@ -154,4 +132,3 @@ SELECT 'TRADING',
 DELETE FROM party_assoc
 WHERE party_ref = 'TRADING'
 ;
-
