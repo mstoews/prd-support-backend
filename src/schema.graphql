@@ -64,6 +64,7 @@ scalar Date
 
 type Environment {
   active: String!
+  backend_url: String!
   description: String!
   environment: String!
   image: String!
@@ -767,7 +768,7 @@ input PartyTemplateInput {
 
 type Query {
   createInstrGlossXML(Type: String!): String!
-  environement: [Environment!]!
+  environment: [Environment!]!
   firstPartyByType(party_type: String!): Party!
   firstPartyType: Party!
   getBicCodeByRef(party_ref: String!): PartyExtRef!

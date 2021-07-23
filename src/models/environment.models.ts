@@ -5,6 +5,7 @@ export class Environment {
     @Field ({nullable:false}) image: string;
     @Field ({nullable:false}) description: string;
     @Field ({nullable:false}) usr: string;
+    @Field ({nullable:false}) backend_url: string;
     @Field ({nullable:false}) active: string;
 }
 

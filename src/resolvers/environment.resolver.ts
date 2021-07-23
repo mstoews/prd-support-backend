@@ -24,7 +24,7 @@ import { environment as EnvironmentModel, Prisma } from '@prisma/client';
     private prisma: PrismaService) {}
   
   @Query((returns) => [Environment])
-  async environement() { 
+  async environment() { 
       return this.prisma.environment.findMany();
   }  
 }

@@ -8,7 +8,6 @@ import { PartyInstrResolver } from './party-instr.resolver';
 import { PartyNarrativeResolver } from './party-narrative.resolver';
 import { PartyAssocResolver} from './party-assoc.resolver';
 import { PartySSIResolver} from './party-ssi.resolver';
-import { Environment} from '../'
 import { HttpPostService } from 'src/services/http-post/http-post.service';
 
 @Module({

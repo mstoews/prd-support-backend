@@ -14,8 +14,8 @@ create table environment (
 );
 
 delete from environment;
-insert into environment select 'UAT', 'hotel-1.jpg','SIT SMALL BUSINESS', 'TEST USER 1', '1';
-insert into environment select 'DEV', 'hotel-2.jpg','UAT SMALL BUSINESS', 'TEST USER 2', '0';
+insert into environment select 'UAT', 'hotel-1.jpg','SIT SMALL BUSINESS','TEST USER 1','http://localhost:3010/graphql', '1';
+insert into environment select 'DEV', 'hotel-2.jpg','UAT SMALL BUSINESS','TEST USER 2','http://localhost:3011/graphql', '0';
 update environment set active = '0' where environment = 'DEV';
 
 select * from environment;

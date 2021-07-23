@@ -52,6 +52,7 @@ model environment {
   image       String?
   description String?
   usr         String?
+  backend_url String?
   active      String?
 }
 

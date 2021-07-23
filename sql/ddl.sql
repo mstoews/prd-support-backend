@@ -133,16 +133,21 @@ CREATE TABLE IF NOT EXISTS instr_accrual (
 alter table
     instr_accrual owner to admin;
 
-CREATE TABLE IF NOT EXISTS environment (
-    environment varchar(10) not null constraint environment_pkey primary key,
-    image varchar(255),
-    description varchar(30),
-    usr varchar(15),
-    active char
-);
+CREATE TABLE IF NOT EXISTS public.environment
+(
+    environment character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    image character varying(255) COLLATE pg_catalog."default",
+    description character varying(30) COLLATE pg_catalog."default",
+    usr character varying(15) COLLATE pg_catalog."default",
+    backend_url character varying(30) COLLATE pg_catalog."default",
+    active character(1) COLLATE pg_catalog."default",
+    CONSTRAINT environment_pkey PRIMARY KEY (environment)
+)
 
-alter table
-    environment owner to admin;
+TABLESPACE pg_default;
+
+ALTER TABLE public.environment
+    OWNER to admin;
 
 CREATE TABLE IF NOT EXISTS kanbantask (
     id varchar(8) not null constraint kanban_pkey primary key,
