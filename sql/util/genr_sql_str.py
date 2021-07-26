@@ -32,6 +32,9 @@
 #  brtk04059      Added the lookup logic for types   James Marsden   09-Jan-2021
 #                                                    (RJM)
 #
+# jpti-729        Missing call for the narrative     James Marsden   26-Jul-2021
+#                 SQL statement generation           (RJM)
+#
 
 import os
 import json
@@ -71,6 +74,7 @@ class genr_sql_str:
         self.mySqlStr = self.mySqlStr + self.genr_sql_flag ()
         self.mySqlStr = self.mySqlStr + self.genr_sql_assoc ()
         self.mySqlStr = self.mySqlStr + self.genr_sql_instr ()
+        self.mySqlStr = self.mySqlStr + self.genr_sql_narr () # jpti-729
 
         return
 

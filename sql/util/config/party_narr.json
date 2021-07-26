@@ -1,4 +1,10 @@
 {
+    "CNAR":         "Confirm Narrative,Y",
     "INAM":			"Internal Name,Y",
-    "PJEX":			"Japanese Name,Y"
+    "LNAM":         "Long Name,Y",
+    "PAC":          "Party Account Code,Y",
+    "PJEX":			"Japanese Name,Y",
+    "PEEX":			"English Name,Y",
+    "SNAM":         "Short Name,Y",
+    "XNAM":         "Extra Long Name,Y"
 }
