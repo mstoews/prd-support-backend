@@ -29,13 +29,18 @@
 #  brtk04050      Created by                         James Marsden   24-Nov-2020
 #                                                    (RJM)
 #
+#  jpti-728       Updated for handling different     James Marsden   26-Jul-2021
+#                 qualifiers on the alias of Party
+#                 or Common blocks.  This was causing
+#                 problems on import.
+#
 
 import extract_xml_tag_value
 import process_xml_msg
 import genr_sql_str
 import sys
 
-def run_get_party (myXmlFileInput, myXmlFilePath, mySqlPath):
+def run_get_party (myXmlFileInput, myXmlFilePath, mySqlPath, myPartyQual, myCommQual):
     print ("Running to load party")
     myFileName = myXmlFilePath + myXmlFileInput
 
@@ -46,16 +51,8 @@ def run_get_party (myXmlFileInput, myXmlFilePath, mySqlPath):
         print ("Unable to open the file " + myFileName)
         return
 
-    #myPartyStr = myPartyStr.replace ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")
-    #myPartyStr = myPartyStr.replace ("<p:",   "<")
-    #myPartyStr = myPartyStr.replace ("</p:",   "</")
-    #myPartyStr = myPartyStr.replace ("xmlns:p=",  "xmlns=")
-    #myPartyStr = myPartyStr.replace ("<p1:",  "<")
-    #myPartyStr = myPartyStr.replace ("</p1:",  "</")
-    #myPartyStr = myPartyStr.replace ("xmlns:p1=", "xmlns=")
-
     # Read the XML msg and construct back into objects
-    myExtractXml = extract_xml_tag_value.Extract_Tag (myPartyStr, "Y", "p", "p1")
+    myExtractXml = extract_xml_tag_value.Extract_Tag (myPartyStr, "Y", myPartyQual, myCommQual)
     mySubMsg = myExtractXml.get_sub_msg_parent ("Party")
 
     # Mapping the XML objects back into lists
@@ -84,15 +81,17 @@ def run_get_party (myXmlFileInput, myXmlFilePath, mySqlPath):
 
 
 if __name__ == "__main__":
-    if (len (sys.argv) != 4):
+    if (len (sys.argv) != 6):
         print ("Insufficient parameters")
-        print (sys.argv[0] + " <input_XML_file> <input_XML_path> <output_SQL_path>")
+        print (sys.argv[0] + " <input_XML_file> <input_XML_path> <output_SQL_path> <myPartyQual> <myCommQual>")
         exit (1)
 
     myXmlFileInput = sys.argv[1]
     myXmlPath      = sys.argv[2]
     mySqlPath      = sys.argv[3]
+    myPartyQual    = sys.argv[4]
+    myCommQual     = sys.argv[5]
 
-    run_get_party (myXmlFileInput, myXmlPath, mySqlPath)
+    run_get_party (myXmlFileInput, myXmlPath, mySqlPath, myPartyQual, myCommQual)
 
     exit (0)

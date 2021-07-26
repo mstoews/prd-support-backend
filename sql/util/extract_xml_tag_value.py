@@ -28,6 +28,9 @@
 # brtk04050      Updated to add new methods and     James Marsden   26-Nov-2020
 #                better handing of sub-msgs.        (RJM)
 #
+# jpti-728       Added the "standalone" pattern     James Marsden   26-Jul-2021
+#                for substitution of the UTF8 str
+#
 
 from lxml import etree, objectify
 import xml.etree.ElementTree as ET
@@ -47,6 +50,7 @@ class Extract_Tag:
 
     def prep_xml_str (self, tmpXmlString, myUseShortTags, myQual1, myQual2):
         tmpXmlString = tmpXmlString.replace ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")
+        tmpXmlString = tmpXmlString.replace ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>", "")
 
         if (myUseShortTags == "Y" and myQual1 != ""):
             tmpXmlString = tmpXmlString.replace ("<"  + myQual1 + ":",  "<")
