@@ -311,12 +311,12 @@ ALTER TABLE public.party_classification
 CREATE TABLE IF NOT EXISTS public.party_data_pushed
 (
     party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    env_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
     party_template_data text COLLATE pg_catalog."default",
     party_class_assoc_data text COLLATE pg_catalog."default",
-    party_swift_data text COLLATE pg_catalog."default",
     version_date timestamp without time zone NOT NULL,
     version_user character varying(12) COLLATE pg_catalog."default",
-    CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref)
+    CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref,env_ref)
 )
 
 TABLESPACE pg_default;

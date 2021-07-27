@@ -38,13 +38,13 @@ model class_assoc {
 
 model party_data_pushed {
   party_ref                 String
+  env_ref                   String
   party_template_data       String?
   party_class_assoc_data    String?
-  party_swift_data          String?
   version_date              DateTime?
   version_user              String
 
-  @@id([party_ref])
+  @@id([party_ref,env_ref])
 }
 
 model environment {
