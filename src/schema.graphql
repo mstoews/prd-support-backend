@@ -64,11 +64,11 @@ scalar Date
 
 type Environment {
   active: String!
-  backend_url: String!
   description: String!
   environment: String!
-  image: String!
-  usr: String!
+  sst_nestjsserver_url: String!
+  sst_pythonserver_url: String!
+  sst_springserver_url: String!
 }
 
 type GlossCodes {
@@ -376,7 +376,7 @@ type Mutation {
   createPartyClassification(data: PartyClassInput!): PartyClassification!
   createPartyDate(data: PartyDateInput!): PartyDate!
   createPartyFlag(data: PartyFlagInput!): PartyFlag!
-  createPartyGlossXML(party_ref: String!): Party!
+  createPartyGlossXML(environment: String!, party_ref: String!): Party!
   createPartyInput(data: PartyInput!): Party!
   createPartyInstrument(data: PartyInstrInput!): PartyInstr!
   createPartyNarrative(data: PartyNarrativeInput!): PartyNarrative!
@@ -411,7 +411,7 @@ type Mutation {
   refreshToken(refreshtoken: String!): Token!
   resetPassword(data: LoginInput!): User!
   restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
-  sendClassAssocStaticToGloss(party_ref: String!): ClassAssoc!
+  sendClassAssocStaticToGloss(environment: String!, party_ref: String!): ClassAssoc!
   sendSchedulerStaticToGloss: GlossScheduler!
   sendSwiftStaticToGloss(party_ref: String!): PartySwift!
   signup(data: SignupInput!): User!

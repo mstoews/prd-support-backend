@@ -125,7 +125,9 @@ export class ClassAssocResolver {
   }
 
   @Mutation((returns) => ClassAssoc)
-  async sendClassAssocStaticToGloss(@Args('party_ref', { type: () => String }) party_ref: string) {
+  async sendClassAssocStaticToGloss(
+    @Args('party_ref', { type: () => String }) party_ref: string,
+    @Args('environment', { type: () => String }) environment: string) {
     let classAssocData = await this.prisma.class_assoc.findMany({
       where: {
         party_ref: party_ref,
@@ -134,7 +136,10 @@ export class ClassAssocResolver {
 
     await this.prisma.party_data_pushed.upsert({
       where: {
-        party_ref: party_ref
+        party_ref_environment: {
+          party_ref: party_ref,
+          environment: environment,
+        }
       },
       update: {
         party_class_assoc_data: JSON.stringify(classAssocData),
@@ -142,9 +147,9 @@ export class ClassAssocResolver {
       },
       create: {
         party_ref: party_ref,
+        environment: environment,
         party_template_data: '',
         party_class_assoc_data: JSON.stringify(classAssocData),
-        party_swift_data: '',
         version_date: new Date(),
         version_user: 'ADMIN',
       },

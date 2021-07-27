@@ -371,13 +371,15 @@ export class PartyResolver {
   }
 
   @Mutation((returns) => Party)
-  async createPartyGlossXML(@Args('party_ref', { type: () => String }) party_ref: string) {
+  async createPartyGlossXML(
+    @Args('party_ref', { type: () => String }) party_ref: string,
+    @Args('environment', { type: () => String }) environment: string) {
     let oldParty = await this.prisma.party.findUnique({
       where: {
         party_ref: party_ref,
       },
     });
-    let partyTemplate = await this.prisma.party_template.findUnique({
+    let partyTemplate = await this.prisma.party_template.findMany({
       where: {
         party_ref: party_ref,
       },
@@ -390,30 +392,37 @@ export class PartyResolver {
     this.logger.log('createPartyGlossXLM : ', party_ref);
 
     if (oldParty.party_type === "COMP") {
-      if (partyTemplate != null) {
+      this.logger.log(partyTemplate);
+      if (partyTemplate.length != 0) {
         await this.prisma.party_data_pushed.upsert({
           where: {
-            party_ref: party_ref
+            party_ref_environment: {
+              party_ref: party_ref,
+              environment: environment,
+            }
           },
           update: {
-            party_template_data: JSON.stringify(partyTemplate),
+            party_template_data: JSON.stringify(partyTemplate[0]),
             version_date: new Date()
           },
           create: {
             party_ref: party_ref,
-            party_template_data: JSON.stringify(partyTemplate),
+            environment: environment,
+            party_template_data: JSON.stringify(partyTemplate[0]),
             party_class_assoc_data: '',
-            party_swift_data: '',
             version_date: new Date(),
             version_user: 'ADMIN',
           },
         });
-        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate, 'T');
-        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate, 'C');
+        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate[0], 'T');
+        await this.postService.updateGlossNonXMLByPartyRef(partyTemplate[0], 'C');
       }
       await this.prisma.party_data_pushed.upsert({
         where: {
-          party_ref: party_ref
+          party_ref_environment: {
+            party_ref: party_ref,
+            environment: environment,
+          }
         },
         update: {
           party_class_assoc_data: JSON.stringify(classAssocData),
@@ -421,9 +430,9 @@ export class PartyResolver {
         },
         create: {
           party_ref: party_ref,
+          environment: environment,
           party_template_data: '',
           party_class_assoc_data: JSON.stringify(classAssocData),
-          party_swift_data: '',
           version_date: new Date(),
           version_user: 'ADMIN',
         },

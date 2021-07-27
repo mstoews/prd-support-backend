@@ -135,11 +135,11 @@ alter table
 
 CREATE TABLE IF NOT EXISTS public.environment
 (
-    environment character varying(10) COLLATE pg_catalog."default" NOT NULL,
-    image character varying(255) COLLATE pg_catalog."default",
+    environment character varying(15) COLLATE pg_catalog."default" NOT NULL,
     description character varying(30) COLLATE pg_catalog."default",
-    usr character varying(15) COLLATE pg_catalog."default",
-    backend_url character varying(30) COLLATE pg_catalog."default",
+    sst_nestjsserver_url character varying(30) COLLATE pg_catalog."default",
+    sst_pythonserver_url character varying(30) COLLATE pg_catalog."default",
+    sst_springserver_url character varying(30) COLLATE pg_catalog."default",
     active character(1) COLLATE pg_catalog."default",
     CONSTRAINT environment_pkey PRIMARY KEY (environment)
 )
@@ -311,12 +311,12 @@ ALTER TABLE public.party_classification
 CREATE TABLE IF NOT EXISTS public.party_data_pushed
 (
     party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    environment character varying(15) COLLATE pg_catalog."default" NOT NULL,
     party_template_data text COLLATE pg_catalog."default",
     party_class_assoc_data text COLLATE pg_catalog."default",
-    party_swift_data text COLLATE pg_catalog."default",
     version_date timestamp without time zone NOT NULL,
     version_user character varying(12) COLLATE pg_catalog."default",
-    CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref)
+    CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref,environment)
 )
 
 TABLESPACE pg_default;

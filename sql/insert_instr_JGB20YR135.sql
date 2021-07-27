@@ -1,25 +1,3 @@
-delete from party where party_ref in ('CMP6','CMP7','CMP8');
-
-
-
-select * from instr
-
-create table environment (
-    environment varchar(10) not null,
-    image varchar(255) null,
-    description varchar(30) null,
-    usr varchar(15) null,
-    active char(1) null,
-    PRIMARY KEY (environment)
-);
-
-delete from environment;
-insert into environment select 'UAT', 'hotel-1.jpg','SIT SMALL BUSINESS','TEST USER 1','http://localhost:3010/graphql', '1';
-insert into environment select 'DEV', 'hotel-2.jpg','UAT SMALL BUSINESS','TEST USER 2','http://localhost:3011/graphql', '0';
-update environment set active = '0' where environment = 'DEV';
-
-select * from environment;
-
 DELETE FROM instr
 WHERE instr_ref = 'JGB20YR135'
 \g

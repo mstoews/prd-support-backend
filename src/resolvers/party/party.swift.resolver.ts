@@ -99,23 +99,6 @@ export class PartySwiftResolver {
         party_ref: party_ref,
       },
     });
-    await this.prisma.party_data_pushed.upsert({
-      where: {
-        party_ref: party_ref
-      },
-      update: {
-        party_swift_data: JSON.stringify(swiftData),
-        version_date: new Date()
-      },
-      create: {
-        party_ref: party_ref,
-        party_template_data: '',
-        party_class_assoc_data: '',
-        party_swift_data: JSON.stringify(swiftData),
-        version_date: new Date(),
-        version_user: 'ADMIN',
-      },
-    });
     this.postService.updateSwiftStatic(swiftData); {
       return swiftData;
     }
