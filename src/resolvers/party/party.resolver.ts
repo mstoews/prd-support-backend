@@ -373,7 +373,7 @@ export class PartyResolver {
   @Mutation((returns) => Party)
   async createPartyGlossXML(
     @Args('party_ref', { type: () => String }) party_ref: string,
-    @Args('env_ref', { type: () => String }) env_ref: string) {
+    @Args('environment', { type: () => String }) environment: string) {
     let oldParty = await this.prisma.party.findUnique({
       where: {
         party_ref: party_ref,
@@ -396,9 +396,9 @@ export class PartyResolver {
       if (partyTemplate.length != 0) {
         await this.prisma.party_data_pushed.upsert({
           where: {
-            party_ref_env_ref: {
+            party_ref_environment: {
               party_ref: party_ref,
-              env_ref: env_ref,
+              environment: environment,
             }
           },
           update: {
@@ -407,7 +407,7 @@ export class PartyResolver {
           },
           create: {
             party_ref: party_ref,
-            env_ref: env_ref,
+            environment: environment,
             party_template_data: JSON.stringify(partyTemplate[0]),
             party_class_assoc_data: '',
             version_date: new Date(),
@@ -419,9 +419,9 @@ export class PartyResolver {
       }
       await this.prisma.party_data_pushed.upsert({
         where: {
-          party_ref_env_ref: {
+          party_ref_environment: {
             party_ref: party_ref,
-            env_ref: env_ref,
+            environment: environment,
           }
         },
         update: {
@@ -430,7 +430,7 @@ export class PartyResolver {
         },
         create: {
           party_ref: party_ref,
-          env_ref: env_ref,
+          environment: environment,
           party_template_data: '',
           party_class_assoc_data: JSON.stringify(classAssocData),
           version_date: new Date(),

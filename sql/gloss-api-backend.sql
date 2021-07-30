@@ -1,4 +1,4 @@
 delete from environment;
-insert into environment select 'QA13', 'hotel-1.jpg','QA13 SMALL BUSINESS','ADMIN','http://localhost:3010', '1';
-insert into environment select 'QA14', 'hotel-2.jpg','QA14 SMALL BUSINESS','ADMIN','http://localhost:3011', '1';
-insert into environment select 'QA15', 'hotel-2.jpg','QA15 SMALL BUSINESS','ADMIN','http://localhost:3012', '1';
+insert into environment select 'gls-demo','gls-demo SMALL BUSINESS','http://localhost:3010','http://localhost:5000','http://localhost:3050', '0';
+insert into environment select 'gls-smbc','gls-smbc SMALL BUSINESS','http://localhost:3010','http://localhost:5000','http://localhost:3050', '0';
+insert into environment select 'gls-barcdev','gls-barcdev SMALL BUSINESS','http://localhost:3010','http://localhost:5000','http://localhost:3050', '0';

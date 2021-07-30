@@ -38,21 +38,21 @@ model class_assoc {
 
 model party_data_pushed {
   party_ref                 String
-  env_ref                   String
+  environment                   String
   party_template_data       String?
   party_class_assoc_data    String?
   version_date              DateTime?
   version_user              String
 
-  @@id([party_ref,env_ref])
+  @@id([party_ref,environment])
 }
 
 model environment {
   environment String  @id
-  image       String?
   description String?
-  usr         String?
-  backend_url String?
+  sst_nestjsserver_url String?
+  sst_pythonserver_url String?
+  sst_springserver_url String?
   active      String?
 }
 
