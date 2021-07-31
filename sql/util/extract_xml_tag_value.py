@@ -29,7 +29,11 @@
 #                better handing of sub-msgs.        (RJM)
 #
 # jpti-728       Added the "standalone" pattern     James Marsden   26-Jul-2021
-#                for substitution of the UTF8 str
+#                for substitution of the UTF8 str   (RJM)
+#
+# jpti-739       Handling 3rd alais tag in msgs     James Marsden   31-Jul-2021
+#                so that we can process party       (RJM)
+#                account messages.
 #
 
 from lxml import etree, objectify
