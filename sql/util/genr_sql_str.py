@@ -35,24 +35,30 @@
 # jpti-729        Missing call for the narrative     James Marsden   26-Jul-2021
 #                 SQL statement generation           (RJM)
 #
+# jpti-739        Handling of party accounts         James Marsden   31-Jul-2021
+#                 SQL statement generation           (RJM)
+#
 
 import os
 import json
 
 class genr_sql_str:
 
-    def __init__ (self, myCurPartyRef, myPartyMain, myPartyClass, myPartyRef,
-                        myPartyFlag,   myPartyNarr, myPartyAssoc, myPartyInstr):
+    def __init__ (self, myCurrPartyRef,   myPartyMain, myPartyClass, myPartyRef,
+                        myPartyFlag,      myPartyNarr, myPartyAssoc, myPartyInstr,
+                        myCurrDepotAlias, myPartyAcc):
 
         # We use these variables to convert to SQL strings
-        self.myCurrPartyRef  = myCurPartyRef
-        self.myPartyMain     = myPartyMain
-        self.myPartyClass    = myPartyClass
-        self.myPartyRef      = myPartyRef
-        self.myPartyFlag     = myPartyFlag
-        self.myPartyNarr     = myPartyNarr
-        self.myPartyAssoc    = myPartyAssoc
-        self.myPartyInstr    = myPartyInstr
+        self.myCurrPartyRef   = myCurrPartyRef
+        self.myCurrDepotAlias = myCurrDepotAlias
+        self.myPartyMain      = myPartyMain
+        self.myPartyClass     = myPartyClass
+        self.myPartyRef       = myPartyRef
+        self.myPartyFlag      = myPartyFlag
+        self.myPartyNarr      = myPartyNarr
+        self.myPartyAssoc     = myPartyAssoc
+        self.myPartyInstr     = myPartyInstr
+        self.myPartyAcc       = myPartyAcc
 
         # brtk04059 - Storage for the descriptions of the items
         self.myClassLookJson = self.load_lookup_file ("party_classification.json")
@@ -75,6 +81,12 @@ class genr_sql_str:
         self.mySqlStr = self.mySqlStr + self.genr_sql_assoc ()
         self.mySqlStr = self.mySqlStr + self.genr_sql_instr ()
         self.mySqlStr = self.mySqlStr + self.genr_sql_narr () # jpti-729
+
+        return
+
+    # jpti-739 - added new SQL generated for Party SSI
+    def genr_sql_stmt_acc (self):
+        self.mySqlStr = self.mySqlStr + self.genr_sql_acc ()
 
         return
 
@@ -270,6 +282,41 @@ class genr_sql_str:
             tmpStr = tmpStr + "       '" + tmpDescr["user_def"] + "',\n"
             tmpStr = tmpStr + "       '" + tmpDescr["descr"] + "',\n"
 
+            tmpStr = tmpStr + "       current_timestamp,\n"
+            tmpStr = tmpStr + "       1,\n"
+            tmpStr = tmpStr + "       'SQL_UTIL'\n"
+            tmpStr = tmpStr + ";\n"
+            tmpStr = tmpStr + "\n"
+
+            myLoopCnt = myLoopCnt + 1
+
+        return tmpStr
+
+    def genr_sql_acc (self):
+        myLoopTot = len (self.myPartyAcc)
+        myLoopCnt = 0
+        tmpStr = ""
+
+        tmpStr = tmpStr + "DELETE FROM party_ssi "
+        tmpStr = tmpStr + "WHERE party_ref = '" + self.myCurrPartyRef + "' "
+        tmpStr = tmpStr + "AND   depot_alias = '" + self.myCurrDepotAlias + "'"
+        tmpStr = tmpStr + ";\n"
+        tmpStr = tmpStr + "\n"
+
+        while (myLoopCnt < myLoopTot):
+            tmpStr = tmpStr + "INSERT INTO party_ssi\n"
+            tmpStr = tmpStr + "SELECT '" + self.myPartyAcc[myLoopCnt]["party_ref"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["depot_alias"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["depot_descr"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["depot_type"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["comms_service"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["dacc_ref"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["account_no"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["account_name"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["depo_ref"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["active_ind"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["user_def"] + "',\n"
+            tmpStr = tmpStr + "       '" + self.myPartyAcc[myLoopCnt]["description"] + "',\n"
             tmpStr = tmpStr + "       current_timestamp,\n"
             tmpStr = tmpStr + "       1,\n"
             tmpStr = tmpStr + "       'SQL_UTIL'\n"
