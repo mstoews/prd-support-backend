@@ -36,9 +36,9 @@ from lxml import etree, objectify
 import xml.etree.ElementTree as ET
 
 class Extract_Tag:
-    def __init__(self, xmlstring, myUseShortTags, myQual1, myQual2): 
+    def __init__(self, xmlstring, myUseShortTags, myQual1, myQual2, myQual3): 
         # Replace the UTF-8 definition etc
-        self.myXmlstring = self.prep_xml_str (xmlstring, myUseShortTags, myQual1, myQual2)
+        self.myXmlstring = self.prep_xml_str (xmlstring, myUseShortTags, myQual1, myQual2, myQual3)
 
         # Processing other tables
         self.myParser    = etree.XMLParser(recover=True)
@@ -48,7 +48,7 @@ class Extract_Tag:
 
         return
 
-    def prep_xml_str (self, tmpXmlString, myUseShortTags, myQual1, myQual2):
+    def prep_xml_str (self, tmpXmlString, myUseShortTags, myQual1, myQual2, myQual3):
         tmpXmlString = tmpXmlString.replace ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")
         tmpXmlString = tmpXmlString.replace ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>", "")
 
@@ -59,6 +59,10 @@ class Extract_Tag:
         if (myUseShortTags == "Y" and myQual2 != ""):
             tmpXmlString = tmpXmlString.replace ("<"  + myQual2 + ":",  "<")
             tmpXmlString = tmpXmlString.replace ("</" + myQual2 + ":", "</")
+
+        if (myUseShortTags == "Y" and myQual3 != ""):
+            tmpXmlString = tmpXmlString.replace ("<"  + myQual3 + ":",  "<")
+            tmpXmlString = tmpXmlString.replace ("</" + myQual3 + ":", "</")
 
         return tmpXmlString
 
