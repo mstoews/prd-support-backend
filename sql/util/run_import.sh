@@ -1,7 +1,7 @@
 #! /bin/sh
 
 XML_PATH=/c/temp/pcfeedxml/
-XML_FILE="JPM_SEC.xml"
+XML_FILE="csandbsjl.xml"
 SQL_PATH=/c/temp/sql
 PARTY_QUAL="p"
 COMM_QUAL="c"

@@ -34,6 +34,10 @@
 #                 or Common blocks.  This was causing
 #                 problems on import.
 #
+#  jpti-739       Fixed problem with spaces on file  James Mrasden   31-Jul-2021
+#                 names.  If there is more than      (RJM)
+#                 1 string we generate many files
+#
 
 import extract_xml_tag_value
 import process_xml_msg
@@ -46,36 +50,50 @@ def run_get_party (myXmlFileInput, myXmlFilePath, mySqlPath, myPartyQual, myComm
 
     try:
         myFile = open (myFileName, "r", True, "utf8")
-        myPartyStr = myFile.read ()
+        myPartyStr = myFile.readline ()
     except FileNotFoundError:
         print ("Unable to open the file " + myFileName)
         return
 
-    # Read the XML msg and construct back into objects
-    myExtractXml = extract_xml_tag_value.Extract_Tag (myPartyStr, "Y", myPartyQual, myCommQual)
-    mySubMsg = myExtractXml.get_sub_msg_parent ("Party")
+    while (myPartyStr != ""):
+        # Read the XML msg and construct back into objects
+        myExtractXml = extract_xml_tag_value.Extract_Tag (myPartyStr, "Y", myPartyQual, myCommQual, "")
+        mySubMsg = myExtractXml.get_sub_msg_parent ("Party")
 
-    # Mapping the XML objects back into lists
-    myProcessXmlMsg = process_xml_msg.process_xml_msg (mySubMsg)
-    myProcessXmlMsg.process_xml_msg_main ()
+        # Mapping the XML objects back into lists
+        myProcessXmlMsg = process_xml_msg.process_xml_msg (mySubMsg)
+        myProcessXmlMsg.process_xml_msg_main ()
 
-    # Generate the SQL strings
-    myGenrSqlStr = genr_sql_str.genr_sql_str (myProcessXmlMsg.get_party_ref (),
-                                              myProcessXmlMsg.get_party_main (),
-                                              myProcessXmlMsg.get_party_class (),
-                                              myProcessXmlMsg.get_party_refs (),
-                                              myProcessXmlMsg.get_party_flag (),
-                                              myProcessXmlMsg.get_party_narr (),
-                                              myProcessXmlMsg.get_party_assoc (),
-                                              myProcessXmlMsg.get_party_instr ())
-    myGenrSqlStr.genr_sql_stmt ()
-    myTmpSql = myGenrSqlStr.get_sql_str ()
+        # Generate the SQL strings
+        myGenrSqlStr = genr_sql_str.genr_sql_str (myProcessXmlMsg.get_party_ref (),
+                                                  myProcessXmlMsg.get_party_main (),
+                                                  myProcessXmlMsg.get_party_class (),
+                                                  myProcessXmlMsg.get_party_refs (),
+                                                  myProcessXmlMsg.get_party_flag (),
+                                                  myProcessXmlMsg.get_party_narr (),
+                                                  myProcessXmlMsg.get_party_assoc (),
+                                                  myProcessXmlMsg.get_party_instr (),
+                                                  "",
+                                                  myProcessXmlMsg.get_party_acc ())
+        myGenrSqlStr.genr_sql_stmt ()
+        myTmpSql = myGenrSqlStr.get_sql_str ()
 
-    # Generate the SQL file
-    myFileName = mySqlPath + "/insert_party_" + myProcessXmlMsg.get_party_ref () + ".psql"
-    mySqlFile = open (myFileName, "w", True, "utf8")
-    mySqlFile.write (myTmpSql)
-    mySqlFile.close ()
+        # jpti-739 - Start
+        # Get the party ref and if it has spaces, replace with _ so that the file name
+        # doesn't end up with spaces
+        myTmpPartyRef = myProcessXmlMsg.get_party_ref ()
+        myTmpPartyRef = myTmpPartyRef.replace (" ", "_")
+        # jpti-739 - End
+
+        # Generate the SQL file
+        myFileName = mySqlPath + "/insert_party_" + myTmpPartyRef + ".psql" # jpti-739
+        mySqlFile = open (myFileName, "w", True, "utf8")
+        mySqlFile.write (myTmpSql)
+        mySqlFile.close ()
+
+        myPartyStr = myFile.readline ()
+
+    print ("Finished processing input file")
 
     return
 

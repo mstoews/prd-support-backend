@@ -29,6 +29,9 @@
 #  brtk04050      Created by                         James Marsden   26-Nov-2020
 #                                                    (RJM)
 #
+#  jpti-739       Handling of Party Account msgs     James Marsden   31-Jul-2021
+#                 is added for import of SSI info    (RJM)
+#
 
 import os
 
@@ -38,7 +41,8 @@ class process_xml_msg:
         # This is used to store the party ref as we need to know
         # for every row later, but it only appears in the beginning
         # of the XML string 
-        self.myCurrPartyRef = ""
+        self.myCurrPartyRef   = ""
+        self.myCurrDepotAlias = ""
 
         self.myMsgData    = myMsgData
         self.mySubMsgCnt  = len (self.myMsgData)
@@ -55,6 +59,7 @@ class process_xml_msg:
         self.myPartyAssocPrc = False
         self.myPartyInstr    = []
         self.myPartyInstrPrc = False
+        self.myPartyAccount  = []
 
         return
 
@@ -85,6 +90,16 @@ class process_xml_msg:
             self.process_assoc_sub_msg ()
         elif (self.myCurrMsg["subMsg"] == "Instrument"):
             self.process_instr_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "PartyAccount"):
+            self.process_party_acc_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "PartyReference"):
+            self.process_party_acc_ref_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "CommService"):
+            self.process_party_acc_comms_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "Location"):
+            self.process_party_acc_loc_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "AccountNumber"):
+            self.process_party_acc_no_sub_msg ()
         else:
             self.process_other_sub_msg ()
 
@@ -237,6 +252,96 @@ class process_xml_msg:
 
         return
 
+    # jpti-739 - Start
+    def process_party_acc_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # If the Origin tag is found we are at the beginning of the structure,
+        # so start again
+        if (myCurrTagName == "Origin"):
+            self.myPartyAccount.append (self.get_new_party_acc_sub ())
+
+        # Sometimes there is another "Type" tag in the SSI XML string which we need to ignore
+        if (myCurrTagName == "Type"):
+            if myCurrTagValue == "SECP" or myCurrTagValue == "COMP":
+                myCurrTagName = "PartyType"
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_map_tag (myCurrTagName)
+
+        if (myCurrFieldName == "depot_alias"):
+            self.myCurrDepotAlias = myCurrTagValue
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
+    def process_party_acc_ref_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_ref_map_tag (myCurrTagName)
+
+        # We need to capture the party ref that we are processing
+        if (myCurrFieldName == "party_ref"):
+            self.myCurrPartyRef = myCurrTagValue
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
+    def process_party_acc_comms_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_comms_map_tag (myCurrTagName)
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
+    def process_party_acc_loc_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_loc_map_tag (myCurrTagName)
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
+    def process_party_acc_no_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_no_map_tag (myCurrTagName)
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
+    # jpti-739 - End
+
     def process_other_sub_msg (self):
         return
 
@@ -296,6 +401,46 @@ class process_xml_msg:
         except KeyError:
             return ""
 
+    def party_acc_map_tag (self, myCurrTagName):
+        myTagMap = {"OriginReference": "party_ref", "Alias": "depot_alias", "Description": "depot_descr", "Type": "depot_type", "AccountName": "account_name"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
+    def party_acc_ref_map_tag (self, myCurrTagName):
+        myTagMap = {"Type": "", "Value": "party_ref"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
+    def party_acc_comms_map_tag (self, myCurrTagName):
+        myTagMap = {"Type": "", "Value": "comms_service"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
+    def party_acc_loc_map_tag (self, myCurrTagName):
+        myTagMap = {"Type": "", "Value": "depo_ref"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
+    def party_acc_no_map_tag (self, myCurrTagName):
+        myTagMap = {"Type": "", "Number": "account_no"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
     # Return a new structure for the class sub msg
     def get_new_party_class_sub (self):
         myNewClass = {"party_ref": self.myCurrPartyRef, "class_type": "", "class_code": ""}
@@ -332,8 +477,17 @@ class process_xml_msg:
 
         return myNewInstr
 
+    # Return a new structure for the party acc sub msg
+    def get_new_party_acc_sub (self):
+        myNewAcc = {"party_ref": self.myCurrPartyRef, "depot_alias": "", "depot_descr": "", "depot_type": "", "comms_service": "", "dacc_ref": "", "account_no": "", "account_name": "", "depo_ref": "", "active_ind": "A", "user_def": "Y", "description": "SSI Information"}
+
+        return myNewAcc
+
     def get_party_ref (self):
         return self.myCurrPartyRef
+    
+    def get_depot_alias (self):
+        return self.myCurrDepotAlias
     
     def get_party_main (self):
         return self.myPartyMain
@@ -355,5 +509,9 @@ class process_xml_msg:
 
     def get_party_instr (self):
         return self.myPartyInstr
+
+    # jpti-739 - added
+    def get_party_acc (self):
+        return self.myPartyAccount
 
     
