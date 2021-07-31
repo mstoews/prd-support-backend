@@ -32,6 +32,9 @@
 #  jpti-739       Handling of Party Account msgs     James Marsden   31-Jul-2021
 #                 is added for import of SSI info    (RJM)
 #
+#  jpti-740       Handling of Party Account msgs     James Marsden   31-Jul-2021
+#                 is added for import of SSI info    (RJM)
+#
 
 import os
 
@@ -96,6 +99,8 @@ class process_xml_msg:
             self.process_party_acc_ref_sub_msg ()
         elif (self.myCurrMsg["subMsg"] == "CommService"):
             self.process_party_acc_comms_sub_msg ()
+        elif (self.myCurrMsg["subMsg"] == "DepotAccount"):
+            self.process_party_acc_dacc_sub_msg ()
         elif (self.myCurrMsg["subMsg"] == "Location"):
             self.process_party_acc_loc_sub_msg ()
         elif (self.myCurrMsg["subMsg"] == "AccountNumber"):
@@ -312,6 +317,20 @@ class process_xml_msg:
 
         return
 
+    def process_party_acc_dacc_sub_msg (self):
+        myCurrTagName  = self.myCurrMsg["tagName"]
+        myCurrTagValue = self.myCurrMsg["tagValue"]
+
+        # Check how many instances we have currently
+        myCurrIdx      = len (self.myPartyAccount) - 1
+
+        myCurrFieldName = self.party_acc_dacc_map_tag (myCurrTagName)
+
+        if (myCurrFieldName != ""):
+            self.myPartyAccount[myCurrIdx][myCurrFieldName] = myCurrTagValue
+
+        return
+
     def process_party_acc_loc_sub_msg (self):
         myCurrTagName  = self.myCurrMsg["tagName"]
         myCurrTagValue = self.myCurrMsg["tagValue"]
@@ -419,6 +438,15 @@ class process_xml_msg:
 
     def party_acc_comms_map_tag (self, myCurrTagName):
         myTagMap = {"Type": "", "Value": "comms_service"}
+
+        try:
+            return myTagMap[myCurrTagName]
+        except KeyError:
+            return ""
+
+    # jpti-740 - added
+    def party_acc_dacc_map_tag (self, myCurrTagName):
+        myTagMap = {"Type": "", "Value": "dacc_ref"}
 
         try:
             return myTagMap[myCurrTagName]
