@@ -1,5 +1,5 @@
 {
-    "COBI":			"Base Ccy,N",
-    "HVQ1":			"TBC - Hold for Validation?,N",
-    "HVT1":			"TBC - Hold for Validation?,N"
+    "COBI":    "Base Ccy,N",
+    "HVQ1":    "High Value Threshold 1 Equity,N",
+    "HVT1":    "High Value Threshold 1 Currency,N"
 }
