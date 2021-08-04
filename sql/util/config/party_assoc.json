@@ -1,8 +1,9 @@
 {
-    "SEGP": "Segregation Party,Y",
-    "PRCM": "Parent Company,Y",
-    "CCMP": "Custody Company,N",
-    "CCPT": "Custody Services Counterparty,Y",
-    "NBK":  "Netting Book,N",
-    "NCMP": "Netting Company,N"
+    "SEGP":    "Segregation Party,Y",
+    "PRCM":    "Parent Company,Y",
+    "CCMP":    "Custody Company,N",
+    "CCPT":    "Custody Services Counterparty,Y",
+    "MCAS":    "Margin Company Association,N",
+    "NBK":     "Netting Book,N",
+    "NCMP":    "Netting Company,N"
 }
