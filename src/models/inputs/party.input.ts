@@ -188,16 +188,14 @@ export class ClassAssocInput {
 }
 
 @InputType()
-export class ClassAssocSubCodeArrayInput {
+export class ClassAssocStepperInput {
   @Field({ nullable: false }) party_ref: string;     /* Stores the company ref e.g. CMP4 */
   @Field({ nullable: false }) class_assoc_code: string;
-  @Field({ nullable: false }) assoc_code_description: string;
-  @Field({ nullable: false }) main_class: number;
-  @Field({ nullable: false }) main_code: string;
-  @Field({ nullable: false }) sub_class: number;
-  @Field(() => [String]) sub_code: string[];
-  @Field({ nullable: false }) description: string;
-  @Field({ nullable: false }) user_def: string;
+  @Field({ nullable: false }) code_type: string;
+  @Field({ nullable: false }) class_1: number;
+  @Field({ nullable: false }) code_1: string;
+  @Field({ nullable: false }) class_2: number;
+  @Field(() => [String]) code_2: string[];
   @Field({ nullable: false }) applied: boolean;
   @Field({ nullable: false }) version_date: Date;
   @Field({ nullable: false }) version_no: number;

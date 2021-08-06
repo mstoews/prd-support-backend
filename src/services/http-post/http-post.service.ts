@@ -39,9 +39,9 @@ export class HttpPostService {
         }
 
         const urlEndPoint = this.python_host +
-            '/genr_party_msg/myPartyRef=' + partyRef +
-            ';myPostMsg=' + this.python_msg +
-            ';myRtnMsg=' + this.python_return_msg + ';';
+            '/genr_party_msg/mypartyref=' + partyRef +
+            ';mypostmsg=' + this.python_msg +
+            ';myrtnmsg=' + this.python_return_msg + ';';
 
         this.logger.log(': HTTPPostService Party', urlEndPoint);
         return this.httpService.get(urlEndPoint).toPromise();
@@ -63,9 +63,9 @@ export class HttpPostService {
         }
 
         const partySSIEndPoint = this.python_host +
-            '/genr_party_ssi_msg/myPartyRef=' + partyRef +
-            ';myPostMsg=' + this.python_msg +
-            ';myRtnMsg=' + this.python_return_msg + ';';
+            '/genr_party_ssi_msg/mypartyref=' + partyRef +
+            ';mypostmsg=' + this.python_msg +
+            ';myrtnmsg=' + this.python_return_msg + ';';
 
         this.logger.log(': HTTPPostService SSI', partySSIEndPoint);
 
@@ -106,6 +106,7 @@ export class HttpPostService {
             headers: { 'Content-Type': 'application/json' }
         };
         return this.httpService.post(this.java_host + '/api/classassocstatic', JSON.stringify(classAssocData), httpOptions).toPromise();
+        /*return this.httpService.post(this.java_host + '/api/classassocstepperstatic', JSON.stringify(classAssocData), httpOptions).toPromise();*/
     }
 
 }

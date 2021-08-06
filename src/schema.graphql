@@ -43,17 +43,29 @@ input ClassAssocInput {
   version_user: String!
 }
 
-input ClassAssocSubCodeArrayInput {
+type ClassAssocStepper {
   applied: Boolean!
-  assoc_code_description: String!
+  class_1: Int!
+  class_2: Int!
   class_assoc_code: String!
-  description: String!
-  main_class: Int!
-  main_code: String!
+  code_1: String!
+  code_2: [String!]!
+  code_type: String!
   party_ref: String!
-  sub_class: Int!
-  sub_code: [String!]!
-  user_def: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input ClassAssocStepperInput {
+  applied: Boolean!
+  class_1: Int!
+  class_2: Int!
+  class_assoc_code: String!
+  code_1: String!
+  code_2: [String!]!
+  code_type: String!
+  party_ref: String!
   version_date: Date!
   version_no: Int!
   version_user: String!
@@ -362,6 +374,7 @@ type Mutation {
   cloneParty(new_party_ref: String!, old_party_ref: String!): Party!
   cloneSwiftParty(new_party_ref: String!, old_party_ref: String!): PartySwift!
   createClassAssoc(data: ClassAssocInput!): ClassAssoc!
+  createClassAssocStepper(data: ClassAssocStepperInput!): ClassAssocStepper!
   createExtRefParty(data: PartyExtRefInput!): PartyExtRef!
   createglossScheduler(data: GlossSchedulerInput!): GlossScheduler!
   createInstrAccrual(data: InstrAccrualInput!): InstrAccrual!
@@ -384,7 +397,6 @@ type Mutation {
   createPartySSIGlossXML(party_ref: String!): Party!
   createPartySwift(data: PartySwiftInput!): PartySwift!
   createPartyTemplate(data: PartyTemplateInput!): PartyTemplate!
-  deletebySubClassandInsertClassAssoc(data: ClassAssocSubCodeArrayInput!): ClassAssoc!
   deleteClassAssoc(class_assoc_code: String!, main_class: Int!, main_code: String!, party_ref: String!, sub_class: Int!, sub_code: String!): ClassAssoc!
   deleteglossScheduler(database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
   deleteInstrAccrual(instr_ref: String!, seq_no: Int!): InstrAccrual!
@@ -412,10 +424,12 @@ type Mutation {
   resetPassword(data: LoginInput!): User!
   restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
   sendClassAssocStaticToGloss(environment: String!, party_ref: String!): ClassAssoc!
+  sendClassAssocStepperStaticToGloss(environment: String!, party_ref: String!): ClassAssocStepper!
   sendSchedulerStaticToGloss: GlossScheduler!
   sendSwiftStaticToGloss(party_ref: String!): PartySwift!
   signup(data: SignupInput!): User!
   updateClassAssoc(class_assoc_code: String!, data: ClassAssocInput!, main_class: Int!, main_code: String!, party_ref: String!, sub_class: Int!, sub_code: String!): ClassAssoc!
+  updateClassAssocStepper(data: ClassAssocStepperInput!): ClassAssocStepper!
   updateglossScheduler(data: GlossSchedulerInput!, database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
   updateInstrAccrual(data: InstrAccrualInput!, instr_ref: String!, seq_no: Int!): InstrAccrual!
   updateInstrByRef(data: InstrInput!, instr_ref: String!): Instr!
@@ -807,6 +821,7 @@ type Query {
   partyByRef(party_ref: String!): Party!
   partyByType(party_type: String!): [Party!]!
   partyClassAssocByRef(party_ref: String!): [ClassAssoc!]!
+  partyClassAssocStepperByRef(party_ref: String!): [ClassAssocStepper!]!
   partyClassificationByRef(party_ref: String!): [PartyClassification!]!
   partyDateByRef(party_ref: String!): [PartyDate!]!
   partyExtRefByRef(party_ref: String!): [PartyExtRef!]!

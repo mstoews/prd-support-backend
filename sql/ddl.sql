@@ -520,6 +520,27 @@ TABLESPACE pg_default;
 ALTER TABLE public.class_assoc
     OWNER to admin;
 
+CREATE TABLE IF NOT EXISTS public.class_assoc_stepper
+(
+    party_ref character(4) COLLATE pg_catalog."default" NOT NULL,
+    class_assoc_code character(4) COLLATE pg_catalog."default" NOT NULL,
+    code_type character (1) COLLATE pg_catalog."default" NOT NULL,
+    class_1 integer NOT NULL,
+    code_1 character(4) COLLATE pg_catalog."default" NOT NULL,
+    class_2 integer NOT NULL,
+    code_2 character(4)[] COLLATE pg_catalog."default" NOT NULL,
+    applied boolean NOT NULL,
+    version_date date NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT class_assoc_stepper_pkey PRIMARY KEY (party_ref, class_assoc_code, class_1, code_1, class_2)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.class_assoc_stepper
+    OWNER to admin;
+
 CREATE TABLE IF NOT EXISTS public.gloss_codes
 (
     class_value integer NOT NULL,
