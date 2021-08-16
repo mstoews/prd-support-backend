@@ -19,9 +19,10 @@ CREATE TABLE IF NOT EXISTS instr (
     market_ref varchar(12),
     lot_size integer,
     qty_dec_places integer,
-    version_date date,
-    version_no integer,
-    version_user varchar(12)
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
+    constraint instr_pkey primary key (instr_ref)
 );
 
 alter table
@@ -33,9 +34,9 @@ CREATE TABLE IF NOT EXISTS instr_classification (
     class_code varchar(4),
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_classification_pkey primary key (instr_ref, class_type)
 );
 
@@ -48,9 +49,9 @@ CREATE TABLE IF NOT EXISTS instr_ext_ref (
     instr_ext_ref varchar(20),
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_ext_ref_pkey primary key (instr_ref, instr_ext_ref_type)
 );
 
@@ -63,9 +64,9 @@ CREATE TABLE IF NOT EXISTS instr_flag (
     flag_code varchar(4) not null,
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_flag_pkey primary key (instr_ref, flag_type, flag_code)
 );
 
@@ -78,9 +79,9 @@ CREATE TABLE IF NOT EXISTS instr_narrative (
     narrative varchar(255),
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_narrative_pkey primary key (instr_ref, narr_type)
 );
 
@@ -93,9 +94,9 @@ CREATE TABLE IF NOT EXISTS instr_date (
     date date,
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_date_pkey primary key (instr_ref, date_type)
 );
 
@@ -124,9 +125,9 @@ CREATE TABLE IF NOT EXISTS instr_accrual (
     rdat_offset integer,
     user_def varchar(1),
     description varchar(40),
-    version_date date,
-    version_no integer,
-    version_user varchar(12),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     constraint instr_accrual_pkey primary key (instr_ref, seq_no)
 );
 
@@ -135,12 +136,12 @@ alter table
 
 CREATE TABLE IF NOT EXISTS public.environment
 (
-    environment character varying(15) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(30) COLLATE pg_catalog."default",
-    sst_nestjsserver_url character varying(30) COLLATE pg_catalog."default",
-    sst_pythonserver_url character varying(30) COLLATE pg_catalog."default",
-    sst_springserver_url character varying(30) COLLATE pg_catalog."default",
-    active character(1) COLLATE pg_catalog."default",
+    environment character varying(15) NOT NULL,
+    description character varying(30),
+    sst_nestjsserver_url character varying(30),
+    sst_pythonserver_url character varying(30),
+    sst_springserver_url character varying(30),
+    active character(1),
     CONSTRAINT environment_pkey PRIMARY KEY (environment)
 )
 
@@ -196,15 +197,15 @@ alter table
 
 CREATE TABLE IF NOT EXISTS public.party
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    party_type character varying(4) COLLATE pg_catalog."default",
-    party_short_name character varying(20) COLLATE pg_catalog."default",
-    party_long_name character varying(40) COLLATE pg_catalog."default",
-    party_extra_long_name character varying(40) COLLATE pg_catalog."default",
-    active_ind character varying(1) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    party_type character varying(4),
+    party_short_name character varying(20),
+    party_long_name character varying(40),
+    party_extra_long_name character varying(40),
+    active_ind character varying(1),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_pkey PRIMARY KEY (party_ref)
 )
 
@@ -215,24 +216,24 @@ ALTER TABLE public.party
 
 CREATE TABLE IF NOT EXISTS public.party_addr
 (
-    party_ref character(12) COLLATE pg_catalog."default" NOT NULL,
-    addr_type character(4) COLLATE pg_catalog."default" NOT NULL,
-    contact_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    contact_title character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line1 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line2 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line3 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line4 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line5 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    addr_line6 character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    post_code character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    int_dial_code character varying(6) COLLATE pg_catalog."default" NOT NULL,
-    phone_no character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    fax_no character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    email character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    version_date date NOT NULL,
+    party_ref character(12) NOT NULL,
+    addr_type character(4) NOT NULL,
+    contact_name character varying(35) NOT NULL,
+    contact_title character varying(35) NOT NULL,
+    addr_line1 character varying(35) NOT NULL,
+    addr_line2 character varying(35) NOT NULL,
+    addr_line3 character varying(35) NOT NULL,
+    addr_line4 character varying(35) NOT NULL,
+    addr_line5 character varying(35) NOT NULL,
+    addr_line6 character varying(35) NOT NULL,
+    post_code character varying(12) NOT NULL,
+    int_dial_code character varying(6) NOT NULL,
+    phone_no character varying(20) NOT NULL,
+    fax_no character varying(20) NOT NULL,
+    email character varying(100) NOT NULL,
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_addr_pkey PRIMARY KEY (party_ref, addr_type)
 )
 
@@ -247,14 +248,14 @@ ALTER TABLE public.party_addr
 
 CREATE TABLE IF NOT EXISTS public.party_assoc
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    assoc_type character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    assoc_party_ref character varying(12) COLLATE pg_catalog."default",
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    assoc_type character varying(4) NOT NULL,
+    assoc_party_ref character varying(12),
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_assoc_pkey PRIMARY KEY (party_ref, assoc_type)
 )
 
@@ -265,22 +266,22 @@ ALTER TABLE public.party_assoc
 
 CREATE TABLE IF NOT EXISTS public.party_audit
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    party_data text COLLATE pg_catalog."default",
-    party_ext_ref_data text COLLATE pg_catalog."default",
-    party_classification_data text COLLATE pg_catalog."default",
-    party_flag_data text COLLATE pg_catalog."default",
-    party_narrative_data text COLLATE pg_catalog."default",
-    party_assoc_data text COLLATE pg_catalog."default",
-    party_instr_data text COLLATE pg_catalog."default",
-    party_ssi_data text COLLATE pg_catalog."default",
-    party_date_data text COLLATE pg_catalog."default",
-    party_address_data text COLLATE pg_catalog."default",
-    party_template_data text COLLATE pg_catalog."default",
-    party_class_assoc_data text COLLATE pg_catalog."default",
-    version_date timestamp without time zone NOT NULL,
+    party_ref character varying(12) NOT NULL,
+    party_data text,
+    party_ext_ref_data text,
+    party_classification_data text,
+    party_flag_data text,
+    party_narrative_data text,
+    party_assoc_data text,
+    party_instr_data text,
+    party_ssi_data text,
+    party_date_data text,
+    party_address_data text,
+    party_template_data text,
+    party_class_assoc_data text,
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    version_user character varying(12),
     CONSTRAINT party_data_pkey PRIMARY KEY (party_ref, version_no)
 )
 
@@ -291,14 +292,14 @@ ALTER TABLE public.party_audit
 
 CREATE TABLE IF NOT EXISTS public.party_classification
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    class_type character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    class_code character varying(4) COLLATE pg_catalog."default",
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    class_type character varying(4) NOT NULL,
+    class_code character varying(4),
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_classification_pkey PRIMARY KEY (party_ref, class_type)
 )
 
@@ -310,12 +311,12 @@ ALTER TABLE public.party_classification
 
 CREATE TABLE IF NOT EXISTS public.party_data_pushed
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    environment character varying(15) COLLATE pg_catalog."default" NOT NULL,
-    party_template_data text COLLATE pg_catalog."default",
-    party_class_assoc_data text COLLATE pg_catalog."default",
-    version_date timestamp without time zone NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    environment character varying(15) NOT NULL,
+    party_template_data text,
+    party_class_assoc_data text,
+    version_date timestamp NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref,environment)
 )
 
@@ -326,13 +327,13 @@ ALTER TABLE public.party_data_pushed
 
 CREATE TABLE IF NOT EXISTS public.party_date
 (
-    party_ref character(12) COLLATE pg_catalog."default" NOT NULL,
-    date_type character(4) COLLATE pg_catalog."default" NOT NULL,
-    date character(10) COLLATE pg_catalog."default" NOT NULL,
-    "time" character(8) COLLATE pg_catalog."default" NOT NULL,
-    version_date date NOT NULL,
+    party_ref character(12) NOT NULL,
+    date_type character(4) NOT NULL,
+    date character(10) NOT NULL,
+    "time" character(8) NOT NULL,
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_date_pkey PRIMARY KEY (party_ref, date_type)
 )
 
@@ -343,14 +344,14 @@ ALTER TABLE public.party_date
 
 CREATE TABLE IF NOT EXISTS public.party_ext_ref
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    party_ext_ref_type character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    party_ext_ref character varying(20) COLLATE pg_catalog."default",
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    party_ext_ref_type character varying(4) NOT NULL,
+    party_ext_ref character varying(20),
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_ext_ref_pkey PRIMARY KEY (party_ref, party_ext_ref_type)
 )
 
@@ -361,14 +362,14 @@ ALTER TABLE public.party_ext_ref
 
 CREATE TABLE IF NOT EXISTS public.party_flag
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
+    party_ref character varying(12) NOT NULL,
     flag_type integer NOT NULL,
-    flag_code character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date DEFAULT now(),
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    flag_code character varying(4) NOT NULL,
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_flag_pkey PRIMARY KEY (party_ref, flag_type, flag_code)
 )
 
@@ -379,15 +380,15 @@ ALTER TABLE public.party_flag
 
 CREATE TABLE IF NOT EXISTS public.party_instr
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    instr_type character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    instr_ref_type character varying(4) COLLATE pg_catalog."default",
-    instr_ref character varying(12) COLLATE pg_catalog."default",
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    instr_type character varying(4) NOT NULL,
+    instr_ref_type character varying(4),
+    instr_ref character varying(12),
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_instr_pkey PRIMARY KEY (party_ref, instr_type)
 )
 
@@ -398,14 +399,14 @@ ALTER TABLE public.party_instr
 
 CREATE TABLE IF NOT EXISTS public.party_narrative
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    narr_type character varying(4) COLLATE pg_catalog."default" NOT NULL,
-    narrative character varying(255) COLLATE pg_catalog."default",
-    user_def character varying COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date DEFAULT now(),
-    version_no integer DEFAULT 1,
-    version_user character varying(12) COLLATE pg_catalog."default" DEFAULT USER,
+    party_ref character varying(12) NOT NULL,
+    narr_type character varying(4) NOT NULL,
+    narrative character varying(255),
+    user_def character varying,
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_narrative_pkey PRIMARY KEY (party_ref, narr_type)
 )
 
@@ -416,21 +417,21 @@ ALTER TABLE public.party_narrative
 
 CREATE TABLE IF NOT EXISTS public.party_ssi
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    depot_alias character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    depot_descr character varying(35) COLLATE pg_catalog."default",
-    depot_type character varying(6) COLLATE pg_catalog."default",
-    comms_service character varying(12) COLLATE pg_catalog."default",
-    dacc_ref character varying(12) COLLATE pg_catalog."default",
-    account_no character varying(35) COLLATE pg_catalog."default",
-    account_name character varying(35) COLLATE pg_catalog."default",
-    depo_ref character varying(12) COLLATE pg_catalog."default",
-    active_ind character varying(1) COLLATE pg_catalog."default",
-    user_def character varying(1) COLLATE pg_catalog."default",
-    description character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    depot_alias character varying(12) NOT NULL,
+    depot_descr character varying(35),
+    depot_type character varying(6),
+    comms_service character varying(12),
+    dacc_ref character varying(12),
+    account_no character varying(35),
+    account_name character varying(35),
+    depo_ref character varying(12),
+    active_ind character varying(1),
+    user_def character varying(1),
+    description character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT party_ssi_pkey PRIMARY KEY (party_ref, depot_alias)
 )
 
@@ -441,19 +442,19 @@ ALTER TABLE public.party_ssi
 
 CREATE TABLE IF NOT EXISTS public.party_swift_router
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    company_name character(8) COLLATE pg_catalog."default" NOT NULL,
-    logical_term_id character varying(1)[] COLLATE pg_catalog."default",
-    queue_mgr character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    incoming_queue character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    outgoing_queue character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    channel character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    host character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    party_ref character varying(12) NOT NULL,
+    company_name character(8) NOT NULL,
+    logical_term_id character varying(1)[],
+    queue_mgr character varying(255) NOT NULL,
+    incoming_queue character varying(255) NOT NULL,
+    outgoing_queue character varying(255) NOT NULL,
+    channel character varying(255) NOT NULL,
+    host character varying(255) NOT NULL,
     port_number integer NOT NULL,
-    version_date date NOT NULL,
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    branch_code character varying(3) COLLATE pg_catalog."default",
+    version_user character varying(12),
+    branch_code character varying(3),
     CONSTRAINT party_swift_router_pkey PRIMARY KEY (party_ref)
 )
 
@@ -464,13 +465,13 @@ ALTER TABLE public.party_swift_router
 
 CREATE TABLE IF NOT EXISTS public.party_template
 (
-    party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    template_party_ref character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    party_short_name character varying(20) COLLATE pg_catalog."default",
-    party_long_name character varying(40) COLLATE pg_catalog."default",
-    version_date date,
-    version_no integer,
-    version_user character varying(12) COLLATE pg_catalog."default",
+    party_ref character varying(12) NOT NULL,
+    template_party_ref character varying(12) NOT NULL,
+    party_short_name character varying(20),
+    party_long_name character varying(40),
+    version_date timestamp NOT NULL,
+    version_no integer NOT NULL,
+    version_user character varying(12),
     CONSTRAINT template_partypkey PRIMARY KEY (party_ref)
 )
 
@@ -481,13 +482,13 @@ ALTER TABLE public.party_template
 
 CREATE TABLE IF NOT EXISTS public."User"
 (
-    userid text COLLATE pg_catalog."default" NOT NULL,
+    userid text NOT NULL,
     "createdAt" date,
     "updatedAt" date,
-    email text COLLATE pg_catalog."default" NOT NULL,
-    password text COLLATE pg_catalog."default" NOT NULL,
-    firstname text COLLATE pg_catalog."default",
-    lastname text COLLATE pg_catalog."default",
+    email text NOT NULL,
+    password text NOT NULL,
+    firstname text,
+    lastname text,
     role "Role" NOT NULL,
     CONSTRAINT "User_pkey" PRIMARY KEY (userid)
 )
@@ -499,20 +500,18 @@ ALTER TABLE public."User"
 
 CREATE TABLE IF NOT EXISTS public.class_assoc
 (
-    party_ref character(4) COLLATE pg_catalog."default" NOT NULL,
-    class_assoc_code character(4) COLLATE pg_catalog."default" NOT NULL,
-    assoc_code_description character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    main_class integer NOT NULL,
-    main_code character(4) COLLATE pg_catalog."default" NOT NULL,
-    sub_class integer NOT NULL,
-    sub_code character(4) COLLATE pg_catalog."default" NOT NULL,
-    description character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    user_def character(1) COLLATE pg_catalog."default" NOT NULL,
+    party_ref character(4) NOT NULL,
+    class_assoc_code character(4) NOT NULL,
+    code_type character (1) NOT NULL,
+    class_1 integer NOT NULL,
+    code_1 character(4) NOT NULL,
+    class_2 integer NOT NULL,
+    code_2 character(4)[] NOT NULL,
     applied boolean NOT NULL,
-    version_date date NOT NULL,
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT class_assoc_pkey PRIMARY KEY (party_ref, class_assoc_code, main_class, main_code, sub_class, sub_code)
+    version_user character varying(12),
+    CONSTRAINT class_assoc_pkey PRIMARY KEY (party_ref, class_assoc_code,code_type, class_1, code_1, class_2)
 )
 
 TABLESPACE pg_default;
@@ -520,33 +519,12 @@ TABLESPACE pg_default;
 ALTER TABLE public.class_assoc
     OWNER to admin;
 
-CREATE TABLE IF NOT EXISTS public.class_assoc_stepper
-(
-    party_ref character(4) COLLATE pg_catalog."default" NOT NULL,
-    class_assoc_code character(4) COLLATE pg_catalog."default" NOT NULL,
-    code_type character (1) COLLATE pg_catalog."default" NOT NULL,
-    class_1 integer NOT NULL,
-    code_1 character(4) COLLATE pg_catalog."default" NOT NULL,
-    class_2 integer NOT NULL,
-    code_2 character(4)[] COLLATE pg_catalog."default" NOT NULL,
-    applied boolean NOT NULL,
-    version_date date NOT NULL,
-    version_no integer NOT NULL,
-    version_user character varying(12) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT class_assoc_stepper_pkey PRIMARY KEY (party_ref, class_assoc_code, class_1, code_1, class_2)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE public.class_assoc_stepper
-    OWNER to admin;
-
 CREATE TABLE IF NOT EXISTS public.gloss_codes
 (
     class_value integer NOT NULL,
-    code_value character(4) COLLATE pg_catalog."default" NOT NULL,
-    code_short_desc character varying(100) COLLATE pg_catalog."default",
-    code_long_desc character varying(100) COLLATE pg_catalog."default",
+    code_value character(4) NOT NULL,
+    code_short_desc character varying(100),
+    code_long_desc character varying(100),
     active_ind "char",
     CONSTRAINT gloss_codes_pkey PRIMARY KEY (class_value, code_value)
 )
@@ -559,30 +537,30 @@ ALTER TABLE public.gloss_codes
 CREATE TABLE IF NOT EXISTS public.gloss_scheduler
 (
     msg_type integer NOT NULL,
-    event_ref character(12) COLLATE pg_catalog."default" NOT NULL,
-    database_type character(4) COLLATE pg_catalog."default" NOT NULL,
-    database_code character(4) COLLATE pg_catalog."default" NOT NULL,
-    sql_db_code character(12) COLLATE pg_catalog."default" NOT NULL,
-    bus_day character(1) COLLATE pg_catalog."default" NOT NULL,
-    holiday_id character(4) COLLATE pg_catalog."default" NOT NULL,
-    frequency_unit character(1) COLLATE pg_catalog."default" NOT NULL,
+    event_ref character(12) NOT NULL,
+    database_type character(4) NOT NULL,
+    database_code character(4) NOT NULL,
+    sql_db_code character(12) NOT NULL,
+    bus_day character(1) NOT NULL,
+    holiday_id character(4) NOT NULL,
+    frequency_unit character(1) NOT NULL,
     frequency_interval integer NOT NULL,
     frequency_start_time time NOT NULL,
     frequency_end_time time NOT NULL,
-    due_date_time time NOT NULL,
-    start_by_unit character(1) COLLATE pg_catalog."default" NOT NULL,
+    due_date_time timestamp NOT NULL,
+    start_by_unit character(1) NOT NULL,
     start_by_interval integer NOT NULL,
     end_by_interval integer NOT NULL,
-    use_current_date character(1) COLLATE pg_catalog."default" NOT NULL,
-    active_ind_p2k character(1) COLLATE pg_catalog."default",
+    use_current_date character(1) NOT NULL,
+    active_ind_p2k character(1),
     start_by_time time NOT NULL,
     end_by_time time NOT NULL,
     batch_size integer NOT NULL,
-    supercede character(1) COLLATE pg_catalog."default" NOT NULL,
-    dst_region_code character(4) COLLATE pg_catalog."default",
+    supercede character(1) NOT NULL,
+    dst_region_code character(4),
+    version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_date date NOT NULL,
-    version_user character(12) COLLATE pg_catalog."default" NOT NULL,
+    version_user character varying(12),
     CONSTRAINT scheduler PRIMARY KEY (msg_type, event_ref, due_date_time, database_code)
 )
 

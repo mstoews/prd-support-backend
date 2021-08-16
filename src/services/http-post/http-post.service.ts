@@ -106,7 +106,6 @@ export class HttpPostService {
             headers: { 'Content-Type': 'application/json' }
         };
         return this.httpService.post(this.java_host + '/api/classassocstatic', JSON.stringify(classAssocData), httpOptions).toPromise();
-        /*return this.httpService.post(this.java_host + '/api/classassocstepperstatic', JSON.stringify(classAssocData), httpOptions).toPromise();*/
     }
 
 }

@@ -21,24 +21,6 @@ model User {
 model class_assoc {
   party_ref              String
   class_assoc_code       String
-  assoc_code_description String
-  main_class             Int
-  main_code              String
-  sub_class              Int
-  sub_code               String
-  description            String
-  user_def               String
-  applied                Boolean
-  version_date           DateTime?
-  version_no             Int
-  version_user           String
-
-  @@id([party_ref, class_assoc_code, main_class, main_code, sub_class, sub_code])
-}
-
-model class_assoc_stepper {
-  party_ref              String
-  class_assoc_code       String
   code_type              String
   class_1                Int
   code_1                 String
@@ -49,7 +31,7 @@ model class_assoc_stepper {
   version_no             Int
   version_user           String
 
-  @@id([party_ref, class_assoc_code, class_1, code_1, class_2])
+  @@id([party_ref, class_assoc_code, code_type, class_1, code_1, class_2])
 }
 
 model party_data_pushed {

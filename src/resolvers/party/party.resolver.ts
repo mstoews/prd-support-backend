@@ -359,12 +359,7 @@ export class PartyResolver {
     });
 
     oldClassAssocData.forEach(async (classAssocData: ClassAssocInput) => {
-      if (classAssocData.main_code === classAssocData.party_ref.trim()) {
-        classAssocData.main_code = new_party_ref;
-      }
-      else {
-        classAssocData.sub_code = new_party_ref;
-      }
+      classAssocData.code_1 = new_party_ref;
       classAssocData.party_ref = new_party_ref;
       await this.prisma.class_assoc.create({ data: classAssocData });
     });

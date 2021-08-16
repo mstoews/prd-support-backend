@@ -215,23 +215,6 @@ export class PartyAudit {
 export class ClassAssoc {
   party_ref: string;     /* Stores the company ref e.g. CMP4 */
   class_assoc_code: string;
-  assoc_code_description: string;
-  main_class: number;
-  main_code: string;
-  sub_class: number;
-  sub_code: string;
-  description: string;
-  user_def: string;
-  applied: boolean;
-  version_date: Date;
-  version_no: number;
-  version_user: string;
-}
-
-@ObjectType()
-export class ClassAssocStepper {
-  party_ref: string;     /* Stores the company ref e.g. CMP4 */
-  class_assoc_code: string;
   code_type: string;
   class_1: number;
   code_1: string;
