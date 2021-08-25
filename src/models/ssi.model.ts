@@ -7,6 +7,7 @@ export class PartySSI {
     depot_alias:   string;
     depot_descr:   string;
     depot_type:    string;
+    ccy:           string;
     dacc_ref:      string;
     account_no:    string;
     account_name:  string;

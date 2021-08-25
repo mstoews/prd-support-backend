@@ -1,4 +1,4 @@
-import { InputType, Field, ArgsType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class PartyInput {
@@ -95,6 +95,7 @@ export class PartySSIInput {
   @Field({ nullable: null }) depot_alias: string;
   @Field({ nullable: null }) depot_descr: string;
   @Field({ nullable: null }) depot_type: string;
+  @Field({ nullable: null }) ccy: string;
   @Field({ nullable: null }) comms_service: string;
   @Field({ nullable: null }) dacc_ref: string;
   @Field({ nullable: null }) account_no: string;
@@ -179,6 +180,53 @@ export class ClassAssocInput {
   @Field({ nullable: false }) class_2: number;
   @Field(() => [String]) code_2: string[];
   @Field({ nullable: false }) applied: boolean;
+  @Field({ nullable: false }) version_date: Date;
+  @Field({ nullable: false }) version_no: number;
+  @Field({ nullable: false }) version_user: string;
+}
+
+@InputType()
+export class NettingInput {
+  @Field({ nullable: false }) party_ref: string;
+  @Field({ nullable: false }) net_driver: string;
+  @Field({ nullable: false }) settle_code: string;
+  @Field({ nullable: false }) transaction_type: string;
+  @Field({ nullable: false }) trade_group: number;
+  @Field({ nullable: false }) late_rule: string;
+  @Field({ nullable: false }) net_schedule_code: string;
+  @Field({ nullable: false }) date_type: string;
+  @Field({ nullable: false }) buy_and_sell_flag: string;
+  @Field({ nullable: false }) net_party_ref: string;
+  @Field({ nullable: false }) net_book: string;
+  @Field({ nullable: false }) override_net_book: string;
+  @Field({ nullable: false }) secondary_party: string;
+  @Field({ nullable: false }) settle_terms: string;
+  @Field({ nullable: false }) operation_type: string;
+  @Field({ nullable: false }) net_primary: string;
+  @Field({ nullable: false }) primary_comp_service: string;
+  @Field({ nullable: false }) primary_secp_service: string;
+  @Field({ nullable: false }) net_secondary: string;
+  @Field({ nullable: false }) secondary_comp_service: string;
+  @Field({ nullable: false }) secondary_secp_service: string;
+  @Field({ nullable: false }) primary_instr: string;
+  @Field({ nullable: false }) primary_comp_alias: string;
+  @Field({ nullable: false }) primary_depot_type: string;
+  @Field({ nullable: false }) primary_party_ref: string;
+  @Field({ nullable: false }) primary_secp_alias: string;
+  @Field({ nullable: false }) settle_instr: string;
+  @Field({ nullable: false }) secondary_comp_alias: string;
+  @Field({ nullable: false }) secondary_depot_type: string;
+  @Field({ nullable: false }) secondary_party_ref: string;
+  @Field({ nullable: false }) secondary_secp_alias: string;
+  @Field({ nullable: false }) market_party: string;
+  @Field({ nullable: false }) start_date_type: string;
+  @Field({ nullable: false }) start_offset_ind: string;
+  @Field({ nullable: false }) start_offset_code: string;
+  @Field({ nullable: false }) end_date_type: string;
+  @Field({ nullable: false }) end_offset_ind: string;
+  @Field({ nullable: false }) end_offset_code: string;
+  @Field({ nullable: false }) net_cash_when_zero_stock: string;
+  @Field({ nullable: false }) split_buy_sell: string;
   @Field({ nullable: false }) version_date: Date;
   @Field({ nullable: false }) version_no: number;
   @Field({ nullable: false }) version_user: string;

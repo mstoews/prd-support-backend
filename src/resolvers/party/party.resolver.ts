@@ -4,7 +4,7 @@ import {
   Prisma
 } from '@prisma/client';
 import { PubSub } from 'graphql-subscriptions';
-import { ClassAssocInput, PartyAddressInput, PartyAssocInput, PartyClassInput, PartyDateInput, PartyExtRefInput, PartyFlagInput, PartyInput, PartyInstrInput, PartyNarrativeInput, PartySSIInput, PartyTemplateInput } from '../../models/inputs/party.input';
+import { ClassAssocInput, NettingInput, PartyAddressInput, PartyAssocInput, PartyClassInput, PartyDateInput, PartyExtRefInput, PartyFlagInput, PartyInput, PartyInstrInput, PartyNarrativeInput, PartySSIInput, PartyTemplateInput } from '../../models/inputs/party.input';
 import { Party, PartyAudit } from '../../models/party.model';
 import { HttpPostService } from '../../services/http-post/http-post.service';
 import { PrismaService } from './../../services/prisma.service';
@@ -163,6 +163,7 @@ export class PartyResolver {
     await this.prisma.party_addr.deleteMany({ where: { party_ref: party_ref } })
     await this.prisma.party_template.deleteMany({ where: { party_ref: party_ref } })
     await this.prisma.class_assoc.deleteMany({ where: { party_ref: party_ref } })
+    await this.prisma.gloss_netting.deleteMany({ where: { party_ref: party_ref } })
 
     return oldParty;
   }
@@ -405,6 +406,7 @@ export class PartyResolver {
             environment: environment,
             party_template_data: JSON.stringify(partyTemplate[0]),
             party_class_assoc_data: '',
+            party_netting_data: '',
             version_date: new Date(),
             version_user: 'ADMIN',
           },
@@ -428,6 +430,7 @@ export class PartyResolver {
           environment: environment,
           party_template_data: '',
           party_class_assoc_data: JSON.stringify(classAssocData),
+          party_netting_data: '',
           version_date: new Date(),
           version_user: 'ADMIN',
         },
@@ -515,6 +518,10 @@ export class PartyResolver {
       where: { party_ref: party_ref, },
     });
 
+    let nettingData = await this.prisma.gloss_netting.findMany({
+      where: { party_ref: party_ref, },
+    });
+
     let maxVersionNo = 0;
     const maxVersionData = await this.prisma.party_audit.aggregate({
       max: {
@@ -543,6 +550,7 @@ export class PartyResolver {
     partyData.party_address_data = JSON.stringify(partyAddress);
     partyData.party_template_data = JSON.stringify(partyTemplate);
     partyData.party_class_assoc_data = JSON.stringify(classAssocData);
+    partyData.party_netting_data = JSON.stringify(nettingData);
     partyData.version_date = new Date();
     partyData.version_no = versionNo;
     partyData.version_user = party.version_user;
@@ -580,6 +588,7 @@ export class PartyResolver {
     let addressData: any[];
     let templateData: any[];
     let classAssocData: any[];
+    let nettingData: any[];
 
     extReferenceData = JSON.parse(party.party_ext_ref_data);
     extReferenceData.forEach(async (extReference: PartyExtRefInput) => {
@@ -635,6 +644,11 @@ export class PartyResolver {
     classAssocData = JSON.parse(party.party_class_assoc_data);
     classAssocData.forEach(async (classAssoc: ClassAssocInput) => {
       await this.prisma.class_assoc.create({ data: classAssoc });
+    });
+
+    nettingData = JSON.parse(party.party_netting_data);
+    nettingData.forEach(async (netting: NettingInput) => {
+      await this.prisma.gloss_netting.create({ data: netting });
     });
 
     return await this.prisma.party.create({ data: JSON.parse(party.party_data) });

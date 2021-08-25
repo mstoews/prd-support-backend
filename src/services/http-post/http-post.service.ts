@@ -108,4 +108,13 @@ export class HttpPostService {
         return this.httpService.post(this.java_host + '/api/classassocstatic', JSON.stringify(classAssocData), httpOptions).toPromise();
     }
 
+    updateNettingStatic(nettingData: any): Promise<AxiosResponse>{
+        this.logger.log('Java Host', this.java_host);
+        this.logger.log('Class Assoc Data', JSON.stringify(nettingData));
+        const httpOptions = {
+            headers: { 'Content-Type': 'application/json' }
+        };
+        return this.httpService.post(this.java_host + '/api/nettingstatic', JSON.stringify(nettingData), httpOptions).toPromise();
+    }
+
 }

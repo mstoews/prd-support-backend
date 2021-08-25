@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS instr (
     qty_dec_places integer,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_pkey primary key (instr_ref)
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS instr_classification (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_classification_pkey primary key (instr_ref, class_type)
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS instr_ext_ref (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_ext_ref_pkey primary key (instr_ref, instr_ext_ref_type)
 );
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS instr_flag (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_flag_pkey primary key (instr_ref, flag_type, flag_code)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS instr_narrative (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_narrative_pkey primary key (instr_ref, narr_type)
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS instr_date (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_date_pkey primary key (instr_ref, date_type)
 );
 
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS instr_accrual (
     description varchar(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     constraint instr_accrual_pkey primary key (instr_ref, seq_no)
 );
 
@@ -205,7 +205,7 @@ CREATE TABLE IF NOT EXISTS public.party
     active_ind character varying(1),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_pkey PRIMARY KEY (party_ref)
 )
 
@@ -233,7 +233,7 @@ CREATE TABLE IF NOT EXISTS public.party_addr
     email character varying(100) NOT NULL,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_addr_pkey PRIMARY KEY (party_ref, addr_type)
 )
 
@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS public.party_assoc
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_assoc_pkey PRIMARY KEY (party_ref, assoc_type)
 )
 
@@ -279,9 +279,10 @@ CREATE TABLE IF NOT EXISTS public.party_audit
     party_address_data text,
     party_template_data text,
     party_class_assoc_data text,
+    party_netting_data text,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_data_pkey PRIMARY KEY (party_ref, version_no)
 )
 
@@ -299,7 +300,7 @@ CREATE TABLE IF NOT EXISTS public.party_classification
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_classification_pkey PRIMARY KEY (party_ref, class_type)
 )
 
@@ -315,8 +316,9 @@ CREATE TABLE IF NOT EXISTS public.party_data_pushed
     environment character varying(15) NOT NULL,
     party_template_data text,
     party_class_assoc_data text,
+    party_netting_data text,
     version_date timestamp NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_data_pushed_pkey PRIMARY KEY (party_ref,environment)
 )
 
@@ -333,7 +335,7 @@ CREATE TABLE IF NOT EXISTS public.party_date
     "time" character(8) NOT NULL,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_date_pkey PRIMARY KEY (party_ref, date_type)
 )
 
@@ -351,7 +353,7 @@ CREATE TABLE IF NOT EXISTS public.party_ext_ref
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_ext_ref_pkey PRIMARY KEY (party_ref, party_ext_ref_type)
 )
 
@@ -369,7 +371,7 @@ CREATE TABLE IF NOT EXISTS public.party_flag
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_flag_pkey PRIMARY KEY (party_ref, flag_type, flag_code)
 )
 
@@ -388,7 +390,7 @@ CREATE TABLE IF NOT EXISTS public.party_instr
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_instr_pkey PRIMARY KEY (party_ref, instr_type)
 )
 
@@ -406,7 +408,7 @@ CREATE TABLE IF NOT EXISTS public.party_narrative
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_narrative_pkey PRIMARY KEY (party_ref, narr_type)
 )
 
@@ -421,6 +423,7 @@ CREATE TABLE IF NOT EXISTS public.party_ssi
     depot_alias character varying(12) NOT NULL,
     depot_descr character varying(35),
     depot_type character varying(6),
+    ccy character varying(12),
     comms_service character varying(12),
     dacc_ref character varying(12),
     account_no character varying(35),
@@ -431,7 +434,7 @@ CREATE TABLE IF NOT EXISTS public.party_ssi
     description character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT party_ssi_pkey PRIMARY KEY (party_ref, depot_alias)
 )
 
@@ -453,7 +456,7 @@ CREATE TABLE IF NOT EXISTS public.party_swift_router
     port_number integer NOT NULL,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     branch_code character varying(3),
     CONSTRAINT party_swift_router_pkey PRIMARY KEY (party_ref)
 )
@@ -471,7 +474,7 @@ CREATE TABLE IF NOT EXISTS public.party_template
     party_long_name character varying(40),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT template_partypkey PRIMARY KEY (party_ref)
 )
 
@@ -510,7 +513,7 @@ CREATE TABLE IF NOT EXISTS public.class_assoc
     applied boolean NOT NULL,
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT class_assoc_pkey PRIMARY KEY (party_ref, class_assoc_code,code_type, class_1, code_1, class_2)
 )
 
@@ -560,7 +563,7 @@ CREATE TABLE IF NOT EXISTS public.gloss_scheduler
     dst_region_code character(4),
     version_date timestamp NOT NULL,
     version_no integer NOT NULL,
-    version_user character varying(12),
+    version_user character varying(12) NOT NULL,
     CONSTRAINT scheduler PRIMARY KEY (msg_type, event_ref, due_date_time, database_code)
 )
 
@@ -568,3 +571,56 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.gloss_scheduler
     OWNER to admin;
+
+CREATE TABLE IF NOT EXISTS gloss_netting(
+   party_ref                    character(12)           NOT NULL,
+   net_driver                   character(4)            NOT NULL,
+   settle_code                  character(4)            NOT NULL,
+   transaction_type             character(4)            NOT NULL,
+   trade_group                  integer                 NOT NULL,
+   late_rule                    character(4)            NOT NULL,
+   net_schedule_code            character(4)            NOT NULL,
+   date_type                    character(4)            NOT NULL,
+   buy_and_sell_flag            character(1)            NOT NULL,
+   net_party_ref                character(12)           NOT NULL,
+   net_book                     character(12)           NOT NULL,
+   override_net_book            character(1)            NOT NULL,
+   secondary_party              character(12)           NOT NULL,
+   settle_terms                 character(4)            NOT NULL,
+   operation_type               character(4)            NOT NULL,
+   net_primary                  character(1)            NOT NULL,
+   primary_comp_service         character(12)           NOT NULL,
+   primary_secp_service         character(12)           NOT NULL,
+   net_secondary                character(1)            NOT NULL,
+   secondary_comp_service       character(12)           NOT NULL,
+   secondary_secp_service       character(12)           NOT NULL,
+   primary_instr                character(12)           NOT NULL,
+   primary_comp_alias           character(12)           NOT NULL,
+   primary_depot_type           character(4)            NOT NULL,
+   primary_party_ref            character(12)           NOT NULL,
+   primary_secp_alias           character(12)           NOT NULL,
+   settle_instr                 character(12)           NOT NULL,
+   secondary_comp_alias         character(12)           NOT NULL,
+   secondary_depot_type         character(4)            NOT NULL,
+   secondary_party_ref          character(12)           NOT NULL,
+   secondary_secp_alias         character(12)           NOT NULL,
+   market_party                 character(12)           NOT NULL,
+   start_date_type              character(4)            NOT NULL,
+   start_offset_ind             character(1)            NOT NULL,
+   start_offset_code            character(4)            NOT NULL,
+   end_date_type                character(4)            NOT NULL,
+   end_offset_ind               character(1)            NOT NULL,
+   end_offset_code              character(4)            NOT NULL,
+   net_cash_when_zero_stock     character(1)            NOT NULL,
+   split_buy_sell               character(1)            NOT NULL,
+   version_date timestamp NOT NULL,
+   version_no integer NOT NULL,
+   version_user character varying(12) NOT NULL,
+   CONSTRAINT gloss_netting_pkey PRIMARY KEY (party_ref, net_driver,settle_code, transaction_type)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.gloss_netting
+    OWNER to admin;
+

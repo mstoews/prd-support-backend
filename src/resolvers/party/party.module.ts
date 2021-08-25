@@ -16,6 +16,7 @@ import { PartySwiftResolver } from './party.swift.resolver'
 import { PartyTemplateResolver } from './party.template.resolver'
 import { ClassAssocResolver } from './class-assoc.resolver';
 import { GlossCodesResolver } from './glosscodes.resolver';
+import { NettingResolver } from './gloss-netting.resolver';
 
 @Module({
   imports: [HttpModule],
@@ -31,6 +32,7 @@ import { GlossCodesResolver } from './glosscodes.resolver';
     PartySSIResolver,
     PartySwiftResolver,
     ClassAssocResolver,
+    NettingResolver,
     GlossCodesResolver,
     PartyTemplateResolver,
     PartyDateResolver,

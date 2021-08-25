@@ -350,6 +350,7 @@ type Mutation {
   createInstrFlag(data: InstrFlagInput!): InstrFlag!
   createInstrInput(data: InstrDateInput!): InstrDate!
   createInstrNarrative(data: InstrNarrativeInput!): InstrNarrative!
+  createNetting(data: NettingInput!): Netting!
   createParty(data: PartyInput!): Party!
   createPartyAddress(data: PartyAddressInput!): PartyAddress!
   createPartyAssoc(data: PartyAssocInput!): PartyAssoc!
@@ -373,6 +374,7 @@ type Mutation {
   deleteInstrFlag(flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
   deleteInstrNarrative(instr_ref: String!, narr_type: String!): InstrNarrative!
   deleteNarrative(narr_type: String!, party_ref: String!): PartyNarrative!
+  deleteNetting(data: NettingInput!): Netting!
   deletePartyAddressByRef(addr_type: String!, party_ref: String!): PartyAddress!
   deletePartyAssoc(assoc_type: String!, party_ref: String!): PartyAssoc!
   deletePartyByRef(party_ref: String!): Party!
@@ -390,6 +392,7 @@ type Mutation {
   resetPassword(data: LoginInput!): User!
   restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
   sendClassAssocStaticToGloss(environment: String!, party_ref: String!): ClassAssoc!
+  sendNettingStaticToGloss(environment: String!, party_ref: String!): Netting!
   sendSchedulerStaticToGloss: GlossScheduler!
   sendSwiftStaticToGloss(party_ref: String!): PartySwift!
   signup(data: SignupInput!): User!
@@ -402,6 +405,7 @@ type Mutation {
   updateInstrExtRef(data: InstrExtRefInput!, instr_ext_ref_type: String!, instr_ref: String!): InstrExtRef!
   updateInstrFlag(data: InstrFlagInput!, flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
   updateInstrNarrative(data: InstrNarrativeInput!, instr_ref: String!, narr_type: String!): InstrNarrative!
+  updateNetting(data: NettingInput!): Netting!
   updatePartyAddress(addr_type: String!, data: PartyAddressInput!, party_ref: String!): PartyAddress!
   updatePartyAssoc(assoc_type: String!, data: PartyAssocInput!, party_ref: String!): PartyAssoc!
   updatePartyByRef(data: PartyInput!, party_ref: String!): Party!
@@ -414,6 +418,98 @@ type Mutation {
   updatePartySwift(data: PartySwiftInput!, party_ref: String!): PartySwift!
   updatePartyTemplate(data: PartyTemplateInput!, party_ref: String!): PartyTemplate!
   updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
+}
+
+type Netting {
+  buy_and_sell_flag: String!
+  date_type: String!
+  end_date_type: String!
+  end_offset_code: String!
+  end_offset_ind: String!
+  late_rule: String!
+  market_party: String!
+  net_book: String!
+  net_cash_when_zero_stock: String!
+  net_driver: String!
+  net_party_ref: String!
+  net_primary: String!
+  net_schedule_code: String!
+  net_secondary: String!
+  operation_type: String!
+  override_net_book: String!
+  party_ref: String!
+  primary_comp_alias: String!
+  primary_comp_service: String!
+  primary_depot_type: String!
+  primary_instr: String!
+  primary_party_ref: String!
+  primary_secp_alias: String!
+  primary_secp_service: String!
+  secondary_comp_alias: String!
+  secondary_comp_service: String!
+  secondary_depot_type: String!
+  secondary_party: String!
+  secondary_party_ref: String!
+  secondary_secp_alias: String!
+  secondary_secp_service: String!
+  settle_code: String!
+  settle_instr: String!
+  settle_terms: String!
+  split_buy_sell: String!
+  start_date_type: String!
+  start_offset_code: String!
+  start_offset_ind: String!
+  trade_group: Int!
+  transaction_type: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
+}
+
+input NettingInput {
+  buy_and_sell_flag: String!
+  date_type: String!
+  end_date_type: String!
+  end_offset_code: String!
+  end_offset_ind: String!
+  late_rule: String!
+  market_party: String!
+  net_book: String!
+  net_cash_when_zero_stock: String!
+  net_driver: String!
+  net_party_ref: String!
+  net_primary: String!
+  net_schedule_code: String!
+  net_secondary: String!
+  operation_type: String!
+  override_net_book: String!
+  party_ref: String!
+  primary_comp_alias: String!
+  primary_comp_service: String!
+  primary_depot_type: String!
+  primary_instr: String!
+  primary_party_ref: String!
+  primary_secp_alias: String!
+  primary_secp_service: String!
+  secondary_comp_alias: String!
+  secondary_comp_service: String!
+  secondary_depot_type: String!
+  secondary_party: String!
+  secondary_party_ref: String!
+  secondary_secp_alias: String!
+  secondary_secp_service: String!
+  settle_code: String!
+  settle_instr: String!
+  settle_terms: String!
+  split_buy_sell: String!
+  start_date_type: String!
+  start_offset_code: String!
+  start_offset_ind: String!
+  trade_group: Int!
+  transaction_type: String!
+  version_date: Date!
+  version_no: Int!
+  version_user: String!
 }
 
 type Party {
@@ -504,6 +600,7 @@ type PartyAudit {
   party_flag_data: String!
   party_instr_data: String!
   party_narrative_data: String!
+  party_netting_data: String!
   party_ref: String!
   party_ssi_data: String!
   party_template_data: String!
@@ -660,6 +757,7 @@ type PartySSI {
   account_name: String!
   account_no: String!
   active_ind: String!
+  ccy: String!
   comms_service: String!
   dacc_ref: String!
   depo_ref: String!
@@ -678,6 +776,7 @@ input PartySSIInput {
   account_name: String!
   account_no: String!
   active_ind: String!
+  ccy: String!
   comms_service: String!
   dacc_ref: String!
   depo_ref: String!
@@ -792,6 +891,7 @@ type Query {
   partyInstrByRef(party_ref: String!): [PartyInstr!]!
   partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
   partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
+  partyNettingByRef(party_ref: String!): [Netting!]!
   partySSIByRef(party_ref: String!): [PartySSI!]!
   partySwiftByRef(party_ref: String!): [PartySwift!]!
   partyTemplateByRef(party_ref: String!): [PartyTemplate!]!

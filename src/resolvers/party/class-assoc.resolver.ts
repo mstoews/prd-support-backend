@@ -5,7 +5,6 @@ import { ClassAssoc } from 'src/models/party.model';
 import { HttpPostService } from 'src/services/http-post/http-post.service';
 import { PrismaService } from '../../services/prisma.service';
 
-
 @Resolver('ClassAssoc')
 export class ClassAssocResolver {
 
@@ -80,6 +79,7 @@ export class ClassAssocResolver {
         environment: environment,
         party_template_data: '',
         party_class_assoc_data: JSON.stringify(classAssocData),
+        party_netting_data: '',
         version_date: new Date(),
         version_user: 'ADMIN',
       },

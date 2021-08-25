@@ -116,6 +116,7 @@ export class PartySSI {
   depot_alias: string;
   depot_descr: string;
   depot_type: string;
+  ccy: string;
   comms_service: string;
   dacc_ref: string;
   account_no: string;
@@ -206,6 +207,7 @@ export class PartyAudit {
   party_address_data: string;
   party_template_data: string;
   party_class_assoc_data: string;
+  party_netting_data: string;
   version_date: Date;
   version_no: number;
   version_user: string;
@@ -234,3 +236,51 @@ export class GlossCodes {
   code_long_desc: string;
   active_ind: string;
 }
+
+@ObjectType()
+export class Netting {
+  party_ref: string;
+  net_driver: string;
+  settle_code: string;
+  transaction_type: string;
+  trade_group: number;
+  late_rule: string;
+  net_schedule_code: string;
+  date_type: string;
+  buy_and_sell_flag: string;
+  net_party_ref: string;
+  net_book: string;
+  override_net_book: string;
+  secondary_party: string;
+  settle_terms: string;
+  operation_type: string;
+  net_primary: string;
+  primary_comp_service: string;
+  primary_secp_service: string;
+  net_secondary: string;
+  secondary_comp_service: string;
+  secondary_secp_service: string;
+  primary_instr: string;
+  primary_comp_alias: string;
+  primary_depot_type: string;
+  primary_party_ref: string;
+  primary_secp_alias: string;
+  settle_instr: string;
+  secondary_comp_alias: string;
+  secondary_depot_type: string;
+  secondary_party_ref: string;
+  secondary_secp_alias: string;
+  market_party: string;
+  start_date_type: string;
+  start_offset_ind: string;
+  start_offset_code: string;
+  end_date_type: string;
+  end_offset_ind: string;
+  end_offset_code: string;
+  net_cash_when_zero_stock: string;
+  split_buy_sell: string;
+  version_date: Date;
+  version_no: number;
+  version_user: string;
+}
+
