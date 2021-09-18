@@ -1,8 +1,17 @@
+-- select * from "User"
 
+-- select * from party;
+
+-- select * from party_ext_ref;
 INSERT INTO public.party (party_ref, party_type, party_short_name, party_long_name, party_extra_long_name, active_ind, version_date, version_no, version_user) 
 VALUES
 ('JPTC', 'COMP', 'Japan TC', 'Japan Template Co', 'Japan Template Company', 'A', current_timestamp, 0, 'ADMIN');
 
+
+-- select * from kb_task;
+-- update kb_task set title = 'Update Party Reference' where task_id = 'TASK_1';
+
+-- select * from kb_type;
 
 INSERT INTO public.party_ext_ref (party_ref, party_ext_ref_type, party_ext_ref, user_def, description, version_date, version_no, version_user)
 VALUES ('JPTC', 'AEID', 'C_42470059', 'Y', 'Company Code (Trade Feed)', current_timestamp, 0, 'ADMIN');
@@ -21,9 +30,9 @@ VALUES ('JPTC', 'NURF', '42470059', 'Y', 'Non-Unique Source Sys Ref', current_ti
 INSERT INTO public.party_ext_ref (party_ref, party_ext_ref_type, party_ext_ref, user_def, description, version_date, version_no, version_user)
 VALUES ('JPTC', 'PREF', 'C_42470059', 'Y', 'Preferred Ref', current_timestamp, 0, 'ADMIN');
 INSERT INTO public.party_ext_ref (party_ref, party_ext_ref_type, party_ext_ref, user_def, description, version_date, version_no, version_user)
-VALUES ('JPTC', 'CCAI', 'JPTC', 'N', 'Cust Comp Alt IDS',, current_timestamp, 0, 'ADMIN');
+VALUES ('JPTC', 'CCAI', 'JPTC', 'N', 'Cust Comp Alt IDS',current_timestamp, 0, 'ADMIN');
 
-
+-- select * from party;
 -- Party Classifications
 
 INSERT INTO public.party_classification (party_ref, class_type, class_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', 'LOCN', 'LON', 'N', 'Location', current_timestamp, 0, 'ADMIN');
@@ -48,69 +57,9 @@ INSERT INTO public.party_classification (party_ref, class_type, class_code, user
 INSERT INTO public.party_classification (party_ref, class_type, class_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', '2847', 'HSBS', 'Y', 'Business Line', current_timestamp, 0, 'ADMIN');
 
 INSERT INTO public.party_flag (party_ref, flag_type, flag_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', 1102, 'SCPN', 'Y', 'Supress BSB Cpn Events', current_timestamp, 0, 'ADMIN');
-INSERT INTO public.party_flag (party_ref, flag_type, flag_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', 1102, 'SCPN', 'Y', 'Supress BSB Cpn Events', current_timestamp, 0, 'ADMIN');
 INSERT INTO public.party_flag (party_ref, flag_type, flag_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', 1102, 'SCSL', 'Y', 'Supress BSB Cpn Events', current_timestamp, 0, 'ADMIN');
 INSERT INTO public.party_flag (party_ref, flag_type, flag_code, user_def, description, version_date, version_no, version_user) VALUES ('JPTC', 1102, 'SEGP', 'Y', 'Calculate Segregated Party', current_timestamp, 0, 'ADMIN');
 
-
-INSERT INTO public.gloss_scheduler(msg_type, event_ref, database_type, database_code, sql_db_code, bus_day, holiday_id, frequency_unit, frequency_interval, frequency_start_time, frequency_end_time, due_date_time, start_by_unit, start_by_interval, end_by_interval, use_current_date, active_ind_p2k, start_by_time, end_by_time, batch_size, supercede, dst_region_code, version_no, version_date, version_user)
-VALUES
-(3,'CLOSESETEVNT','T','JPTC','','N','JP  ','M',7,'12:00:00','12:00:00','2021-01-01 8:24:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD12  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 8:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC ACCI','T','JPTC','','N','JP  ','A',1,'12:00:00','12:00:00','2021-01-01 9:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(-1,'JPTC EOD10  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC STATIC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD6','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'INDEX RATIO ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(-1,'JPTC PRLO','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC FIN ','A','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'CCGENJPTC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(-1,'JPTC ACCT','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD2','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD8','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC MVMT','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'EFMBJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:40:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'EFJBJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD1','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'EFJTJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD7','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 11:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'SGU','C','CON ','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 11:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',7,now(),'ADMIN'),
-(3,'PERIODUPD','A','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 12:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC BOD ','T','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 12:10:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'EVENT EXPIRY','T','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 1:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD ','A','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'HUB','OPGS','OGS1','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:30:00','M',0,0,'N','A','12:00:00','12:00:00',2500,'N','XXX',7,now(),'ADMIN'), 
-(3,'MARGCANEW','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JLLTCGJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'JP EODC ED  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
-(3,'JP CMFI SD  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(3,'JP CMFI WO  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(3,'JP EODC SD  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
-(3,'MRNEGPRC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 1:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD7','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(-1,'JPTC EOD14  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPTC EOD15  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'MARGGRPJPTC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'MREODPRC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'NET GEN ALL ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'), 
-(3,'SGKKDUARGLS ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'SGKKDUARJRR ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'SGKKDUAR_GZ ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'FAILTRDEREP ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 8:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
-(3,'GENSOIFILEGZ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:46:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(3,'GENSOIFILEGZ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 7:10:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(101,'GENSOIFILE  ','T','JPTC','','Y','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(101,'GENSOIFILE  ','T','JPTC','','Y','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPPOSXJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JPPOSXJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 4:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 2:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 1:35:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
-(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 2:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN')
 
 INSERT INTO public.gloss_codes(class_value, code_value, code_short_desc, code_long_desc, active_ind)
 VALUES
@@ -4456,3 +4405,65 @@ C014,C015,C016,C017,C018,C019,C020,C021,C022,C023,C024,C025,C026,C027,C028,C029,
 ('JPTC','TFLG','S' ,2322,'JPTC',1200,'{CUCL,SECP}',                          true, current_timestamp, 0, 'ADMIN'),
 ('JPTC','TFLG','S' ,2524,'JPTC',1200,'{CUCL,SECP}',                          true, current_timestamp, 0, 'ADMIN'),
 ('JPTC','UPUI','M' ,2278,'JPTC',31  ,'{OPTN}',                               true, current_timestamp, 0, 'ADMIN')
+
+
+
+
+INSERT INTO public.gloss_scheduler(msg_type, event_ref, database_type, database_code, sql_db_code, bus_day, holiday_id, frequency_unit, frequency_interval, frequency_start_time, frequency_end_time, due_date_time, start_by_unit, start_by_interval, end_by_interval, use_current_date, active_ind_p2k, start_by_time, end_by_time, batch_size, supercede, dst_region_code, version_no, version_date, version_user)
+VALUES
+(3,'CLOSESETEVNT','T','JPTC','','N','JP  ','M',7,'12:00:00','12:00:00','2021-01-01 8:24:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD12  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 8:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC ACCI','T','JPTC','','N','JP  ','A',1,'12:00:00','12:00:00','2021-01-01 9:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD10  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC STATIC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD6','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'INDEX RATIO ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC PRLO','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC FIN ','A','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 9:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'CCGENJPTC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC ACCT','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD2','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD8','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC MVMT','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'EFMBJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:40:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'EFJBJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD1','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'EFJTJPTC GZ ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 10:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD7','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 11:50:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'SGU','C','CON ','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 11:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',7,now(),'ADMIN'),
+(3,'PERIODUPD','A','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 12:05:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC BOD ','T','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 12:10:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'EVENT EXPIRY','T','JPTC','','N','BURE','D',1,'12:00:00','12:00:00','2021-01-01 1:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD ','A','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'HUB','OPGS','OGS1','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:30:00','M',0,0,'N','A','12:00:00','12:00:00',2500,'N','XXX',7,now(),'ADMIN'),
+(3,'MARGCANEW','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JLLTCGJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'JP EODC ED  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
+(3,'JP CMFI SD  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'JP CMFI WO  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'JP EODC SD  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 12:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
+(3,'MRNEGPRC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 1:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD7','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD14  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPTC EOD15  ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'MARGGRPJPTC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'MREODPRC ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'NET GEN ALL ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'SGKKDUARGLS ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'SGKKDUARJRR ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'SGKKDUAR_GZ ','C','CON ','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 7:55:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'FAILTRDEREP ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 8:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','NULL',1,now(),'ADMIN'),
+(3,'GENSOIFILEGZ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:46:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(3,'GENSOIFILEGZ','T','JPTC','','N','BURE','B',1,'12:00:00','12:00:00','2021-01-01 7:10:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(101,'GENSOIFILE  ','T','JPTC','','Y','BURE','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(101,'GENSOIFILE  ','T','JPTC','','Y','BURE','B',1,'12:00:00','12:00:00','2021-01-01 5:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPPOSXJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 3:00:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JPPOSXJPTC  ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 4:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 2:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP INST SYNC','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 9:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 1:35:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:45:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 6:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN'),
+(-1,'JP PTY SYNC ','T','JPTC','','N','JP  ','B',1,'12:00:00','12:00:00','2021-01-01 2:30:00','M',0,0,'N','A','12:00:00','12:00:00',0,'N','XXX',1,now(),'ADMIN')

@@ -15,14 +15,15 @@ SELECT 'CMP4',
 DELETE FROM party_date WHERE party_ref = 'CMP4';
 
 INSERT INTO party_date
-SELECT 'CMP4',
-       'DAST',
+SELECT '',
+       'JPTC',
        '1900-01-01',
        '07:00:00',
        NOW (),
        1,
        'JMARSDEN'
 ;
+
 
 DELETE FROM party_classification WHERE party_ref = 'CMP4';
 

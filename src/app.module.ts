@@ -1,5 +1,5 @@
 import { GraphQLModule } from '@nestjs/graphql';
-import { HttpModule, Module } from '@nestjs/common';
+import { HttpModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
 import { AppService } from './services/app.service';
 import { AuthModule } from './resolvers/auth/auth.module';
@@ -11,7 +11,7 @@ import { PartyModule } from './resolvers/party/party.module';
 import { InstrumentsModule } from './resolvers/instruments/instruments.module';
 import { HttpPostService } from './services/http-post/http-post.service';
 import { MessagesController } from './messages/messages.controller';
-import { KanbanModule} from './models/kanban/kanban.module';
+import { KanbanModule} from './resolvers/kanban/kanban.module';
 import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { SchedulerModule } from './resolvers/scheduler/scheduler.module';

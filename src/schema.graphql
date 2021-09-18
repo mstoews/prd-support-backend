@@ -332,6 +332,71 @@ input InstrNarrativeInput {
   version_user: String
 }
 
+input KanbanInputs {
+  assignee: String
+  classname: String
+  color: String
+  dependencies: String
+  description: String
+  due_date: Date
+  estimate: Int
+  party_ref: String
+  priority: String
+  rankid: Int
+  start_date: Date
+  status: String
+  summary: String
+  tags: String
+  task_id: String!
+  title: String
+  type: String
+}
+
+type kb_priority {
+  description: String!
+  priority: String!
+  updatedte: Date!
+  updateusr: String!
+}
+
+type kb_status {
+  description: String!
+  status: String!
+  updatedte: Date!
+  updateusr: String!
+}
+
+type kb_task {
+  assignee: String
+  classname: String
+  color: String
+  dependencies: String
+  description: String
+  due_date: Date
+  estimate: Int
+  party_ref: String
+  priority: String
+  Priority: [kb_priority!]!
+  rankid: Int
+  start_date: Date
+  status: String
+  Status: [kb_status!]!
+  subtasks: [SubTasks!]!
+  summary: String
+  tags: String
+  task_id: String!
+  title: String
+  type: String
+  Type: [kb_type!]!
+}
+
+type kb_type {
+  description: String!
+  type: String!
+  updatedte: Date!
+  updateusr: String!
+}
+
 input LoginInput {
   password: String!
   userid: String!
@@ -350,6 +415,9 @@ type Mutation {
   createInstrFlag(data: InstrFlagInput!): InstrFlag!
   createInstrInput(data: InstrDateInput!): InstrDate!
   createInstrNarrative(data: InstrNarrativeInput!): InstrNarrative!
+  createKanbanPriority(kanbanData: TaskPriorityInputs!): kb_priority!
+  createKanbanStatus(data: TaskStatusInputs!): kb_status!
+  createKanbanType(data: TaskStatusInputs!): kb_type!
   createNetting(data: NettingInput!): Netting!
   createParty(data: PartyInput!): Party!
   createPartyAddress(data: PartyAddressInput!): PartyAddress!
@@ -365,6 +433,8 @@ type Mutation {
   createPartySSIGlossXML(party_ref: String!): Party!
   createPartySwift(data: PartySwiftInput!): PartySwift!
   createPartyTemplate(data: PartyTemplateInput!): PartyTemplate!
+  createSubTask(data: SubTaskInputs!): SubTasks!
+  createTask(data: KanbanInputs!): kb_task!
   deleteglossScheduler(database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
   deleteInstrAccrual(instr_ref: String!, seq_no: Int!): InstrAccrual!
   deleteInstrByRef(instr_ref: String!): Instr!
@@ -373,6 +443,9 @@ type Mutation {
   deleteInstrExtRef(instr_ext_ref_type: String!, instr_ref: String!): InstrExtRef!
   deleteInstrFlag(flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
   deleteInstrNarrative(instr_ref: String!, narr_type: String!): InstrNarrative!
+  deleteKanbanPriority(priority: String!): kb_priority!
+  deleteKanbanStatus(type: String!): kb_type!
+  deleteKanbanSubTask(subid: String!, task_id: String!): SubTasks!
   deleteNarrative(narr_type: String!, party_ref: String!): PartyNarrative!
   deleteNetting(data: NettingInput!): Netting!
   deletePartyAddressByRef(addr_type: String!, party_ref: String!): PartyAddress!
@@ -387,6 +460,7 @@ type Mutation {
   deletePartyTemplateByRef(party_ref: String!): PartyTemplate!
   deletePartyTree(party_ref: String!): Party!
   deleteSSI(depot_alias: String!, party_ref: String!): PartySSI!
+  deleteTask(task_id: String!): kb_task!
   login(data: LoginInput!): Auth!
   refreshToken(refreshtoken: String!): Token!
   resetPassword(data: LoginInput!): User!
@@ -405,6 +479,9 @@ type Mutation {
   updateInstrExtRef(data: InstrExtRefInput!, instr_ext_ref_type: String!, instr_ref: String!): InstrExtRef!
   updateInstrFlag(data: InstrFlagInput!, flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
   updateInstrNarrative(data: InstrNarrativeInput!, instr_ref: String!, narr_type: String!): InstrNarrative!
+  updateKanbanPriority(kanbanData: TaskPriorityInputs!, priority: String!): kb_priority!
+  updateKanbanStatus(id: String!, newData: TaskStatusInputs!): kb_status!
+  updateKanbanType(newData: TaskStatusInputs!, type: String!): kb_type!
   updateNetting(data: NettingInput!): Netting!
   updatePartyAddress(addr_type: String!, data: PartyAddressInput!, party_ref: String!): PartyAddress!
   updatePartyAssoc(assoc_type: String!, data: PartyAssocInput!, party_ref: String!): PartyAssoc!
@@ -418,6 +495,7 @@ type Mutation {
   updatePartySwift(data: PartySwiftInput!, party_ref: String!): PartySwift!
   updatePartyTemplate(data: PartyTemplateInput!, party_ref: String!): PartyTemplate!
   updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
+  updateTask(newData: KanbanInputs!, task_id: String!): kb_task!
 }
 
 type Netting {
@@ -875,6 +953,19 @@ type Query {
   instrNarrative: [InstrNarrative!]!
   instrNarrativeByRef(instr_ref: String!): [InstrNarrative!]!
   instrNarrativeByRefAndType(instr_ref: String!, narrative_type: String!): [InstrNarrative!]!
+  KanbanByTaskId(task_id: String!): [kb_task!]!
+  KanbanFirstTask(party_ref: String!): kb_task!
+  KanbanPriority: [kb_priority!]!
+  KanbanPriorityById(priority: String!): [kb_priority!]!
+  KanbanStatus: [kb_status!]!
+  KanbanStatusById(status: String!): [kb_status!]!
+  KanbanTask: [kb_task!]!
+  KanbanTaskByRef(partyRef: String!): [kb_task!]!
+  KanbanTaskByRefAndStatus(partyRef: String!, status: String!): [kb_task!]!
+  KanbanTaskByStatus(status: String!): [kb_task!]!
+  KanbanTaskByTaskId(task_id: String!): kb_task!
+  KanbanType: [kb_type!]!
+  KanbanTypeById(type: String!): [kb_type!]!
   me: User!
   party: [Party!]!
   partyAddressByRef(party_ref: String!): [PartyAddress!]!
@@ -896,6 +987,9 @@ type Query {
   partySwiftByRef(party_ref: String!): [PartySwift!]!
   partyTemplateByRef(party_ref: String!): [PartyTemplate!]!
   PartyTreeByRef(party_ref: String!): Party!
+  SubTaskById(subid: String!, task_id: String!): [SubTasks!]!
+  SubTasks: [SubTasks!]!
+  SubTasksByTaskId(task_id: String!): [SubTasks!]!
   users: [User!]!
 }
 
@@ -912,6 +1006,40 @@ input SignupInput {
 
 type Subscription {
   partyChanged: Party!
+}
+
+input SubTaskInputs {
+  desc: String
+  estimate: Int
+  status: String
+  subid: String!
+  summary: String
+  task_id: String!
+  type: String
+}
+
+type SubTasks {
+  desc: String
+  estimate: Int!
+  status: String
+  subid: String!
+  summary: String
+  task_id: String!
+  type: String
+}
+
+input TaskPriorityInputs {
+  description: String!
+  priority: String!
+  updatedte: Date!
+  updateusr: String!
+}
+
+input TaskStatusInputs {
+  description: String!
+  status: String!
+  updatedte: Date!
+  updateusr: String!
 }
 
 type Token {

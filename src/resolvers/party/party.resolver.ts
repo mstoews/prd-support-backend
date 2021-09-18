@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { InternalServerErrorException, Logger, UnprocessableEntityException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import {
@@ -145,7 +147,7 @@ export class PartyResolver {
   @Mutation((returns) => Party)
   async deletePartyTree(@Args('party_ref', { type: () => String }) party_ref?: string,) {
 
-    let oldParty = await this.prisma.party.findUnique({
+    const oldParty = await this.prisma.party.findUnique({
       where: {
         party_ref: party_ref,
       },
@@ -203,27 +205,31 @@ export class PartyResolver {
     // Class Assoc
     await this.copyClassAssoc(old_party_ref, new_party_ref);
     // return the original party updated to a new party
-    return oldParty;
+    return await this.prisma.party.findUnique({
+      where: {
+        party_ref: new_party_ref,
+      },
+    });
 
   }
 
 
   private async copyParty(old_party_ref: string, new_party_ref: string) {
-    let oldPartyRef: Prisma.partyCreateInput;
-    oldPartyRef = await this.prisma.party.findUnique({
+    // let oldPartyRef: Prisma.partyCreateInput;
+    const oldPartyRef = await this.prisma.party.findUnique({
       where: {
         party_ref: old_party_ref,
       },
     });
-    let newPartyRef = oldPartyRef;
+    const newPartyRef = oldPartyRef;
     newPartyRef.party_ref = new_party_ref;
     await this.prisma.party.create({ data: newPartyRef });
   }
 
   private async copyExtRef(old_party_ref: string, new_party_ref: string) {
-    let oldExtRef: any[];
+    // const oldExtRef: any[];
 
-    oldExtRef = await this.prisma.party_ext_ref.findMany({
+    const oldExtRef = await this.prisma.party_ext_ref.findMany({
       where: {
         party_ref: old_party_ref,
       },
