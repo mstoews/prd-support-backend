@@ -340,6 +340,8 @@ input KanbanInputs {
   description: String
   due_date: Date
   estimate: Int
+  Id: Int
+  parentId: Int
   party_ref: String
   priority: String
   rankid: Int
@@ -374,6 +376,8 @@ type kb_task {
   description: String
   due_date: Date
   estimate: Int
+  Id: Int
+  parentId: Int
   party_ref: String
   priority: String
   Priority: [kb_priority!]!
@@ -592,12 +596,22 @@ input NettingInput {
 
 type Party {
   active_ind: String
-  party_assoc: [PartyAssoc]!
+  ExtRef: [PartyExtRef!]!
   party_extra_long_name: String
   party_long_name: String
   party_ref: String
   party_short_name: String
   party_type: String
+  PartyAddress: [PartyAddress!]!
+  PartyAssoc: [PartyAssoc!]!
+  PartyClassification: [PartyClassification!]!
+  PartyDate: [PartyDate!]!
+  PartyFlag: [PartyFlag!]!
+  PartyInstr: [PartyInstr!]!
+  PartyNarrative: [PartyNarrative!]!
+  PartySSI: [PartySSI!]!
+  PartySwift: [PartySwift!]!
+  RefType: [PartyExtRef!]!
   version_date: Date
   version_no: Int!
   version_user: String

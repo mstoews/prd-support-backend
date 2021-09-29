@@ -199,10 +199,12 @@ model kb_task {
   rankid       Int?
   color        String?
   classname    String?
+  Id           Int?
+  dependencies String?   @default("")
   description  String?
   due_date     DateTime? @default(now()) @db.Date
+  parentId     Int?
   start_date   DateTime? @default(now()) @db.Date
-  dependencies String?   @default("")
 }
 
 model kb_subtask {

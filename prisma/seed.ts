@@ -17,17 +17,20 @@ async function main() {
   // await kanbanPriority('Medium','Medium criticality');
   // await kanbanPriority('Low','Low criticality');
 
-  await kanbanType('Amendment','Amend an existing documenation');
+  // await kanbanType('Amend','Amend an existing documenation');
+  // await kanbanType('Add','Add a documenation');
+  // await kanbanType('Delete','Delete a documenation');
+  // await kanbanType('Modify','Modify a documenation');
 
-  await kanbanSeed('TASK-1','Medium', 'Open', 'Amendment');
-  await kanbanSeed('TASK-2','Medium', 'InProgress', 'Amendment');
-  await kanbanSeed('TASK-3','High', 'InReview', 'Amendment');
-  await kanbanSeed('TASK-4','Medium', 'Open', 'Amendment');
-  await kanbanSeed('TASK-5','Medium', 'InProgress', 'Amendment');
-  await kanbanSeed('TASK-6','High', 'InReview', 'Amendment');
-  await kanbanSeed('TASK-7','Medium', 'Open', 'Amendment');
-  await kanbanSeed('TASK-8','Medium', 'InProgress', 'Amendment');
-  await kanbanSeed('TASK-9','High', 'InReview', 'Amendment');
+  await kanbanSeed('C029-1','Medium', 'Open', 'Amend');
+  await kanbanSeed('C029-2','Medium', 'InProgress', 'Amend');
+  await kanbanSeed('C029-3','High', 'InReview', 'Amend');
+  await kanbanSeed('C029-4','Medium', 'Open', 'Modify');
+  await kanbanSeed('C029-5','Medium', 'InProgress', 'Delete');
+  await kanbanSeed('C029-6','High', 'InReview', 'Amend');
+  await kanbanSeed('C029-7','Medium', 'Open', 'Amend');
+  await kanbanSeed('C029-8','Medium', 'InProgress', 'Amend');
+  await kanbanSeed('C029-9','High', 'InReview', 'Add');
 }
 
 async function kanbanSeed(task_id: string, priority: string, status: string, type: string) {
@@ -39,7 +42,7 @@ async function kanbanSeed(task_id: string, priority: string, status: string, typ
       classname: 'create',
       color: '#5B8B4F',
       estimate: 2,
-      party_ref: 'JPT2',
+      party_ref: 'C029',
       priority: priority,
       rankid: 1,
       status: status,

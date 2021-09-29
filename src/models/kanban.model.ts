@@ -3,7 +3,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class kb_task {
-   @Field({ nullable: false }) task_id: string;
+   @Field({ nullable: false })task_id: string;
    @Field({ nullable: true }) party_ref: string;
    @Field({ nullable: true }) title: string;
    @Field({ nullable: true }) status: string;
@@ -20,6 +20,8 @@ export class kb_task {
    @Field({ nullable: true }) due_date: Date;
    @Field({ nullable: true }) start_date: Date;
    @Field({ nullable: true }) dependencies: string;
+   @Field({ nullable: true }) parentId: number;
+   @Field({ nullable: true }) Id: number;
    
    @Field(type => [SubTasks]) 
    subtasks: SubTasks[];

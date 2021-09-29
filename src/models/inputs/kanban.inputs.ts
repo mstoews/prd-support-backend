@@ -19,7 +19,8 @@ export class KanbanInputs {
    @Field({ nullable: true }) due_date: Date;
    @Field({ nullable: true }) start_date: Date;
    @Field({ nullable: true }) dependencies: string;
-
+   @Field({ nullable: true }) parentId : number; 
+   @Field({ nullable: true }) Id : number; 
 }
 
 @InputType()

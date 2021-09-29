@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -11,8 +12,16 @@ export class Party {
   @Field({ nullable: true }) version_date: Date;
   @Field(type => Int) version_no: number;
   @Field({ nullable: true }) version_user: string;
-  @Field(type => [PartyAssoc], { nullable: 'items' })
-  party_assoc: PartyAssoc[];
+  @Field(type=>[PartyExtRef])     RefType: PartyExtRef[];
+  @Field(type=>[PartyFlag])       PartyFlag: PartyFlag[];
+  @Field(type=>[PartyAssoc])      PartyAssoc: PartyAssoc[];
+  @Field(type=>[PartyAddress])    PartyAddress: PartyAddress[];
+  @Field(type=>[PartyClassification]) PartyClassification: PartyClassification[];
+  @Field(type=>[PartyDate])       PartyDate: PartyDate[];
+  @Field(type=>[PartyInstr])      PartyInstr: PartyInstr[];
+  @Field(type=>[PartyNarrative])  PartyNarrative: PartyNarrative[];
+  @Field(type=>[PartySSI])        PartySSI: PartySSI[];
+  @Field(type=>[PartySwift])      PartySwift: PartySwift[];
 }
 
 ObjectType()
@@ -45,7 +54,6 @@ export class PartyClassification {
   version_no: number;
   version_user: string;
 }
-
 
 @ObjectType()
 export class PartyExtRef {

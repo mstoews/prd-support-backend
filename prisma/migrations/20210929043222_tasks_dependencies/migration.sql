@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "kb_task" ADD COLUMN     "Id" INTEGER,
+ADD COLUMN     "dependencies" TEXT DEFAULT E'',
+ADD COLUMN     "description" TEXT,
+ADD COLUMN     "due_date" DATE DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "parentId" INTEGER,
+ADD COLUMN     "start_date" DATE DEFAULT CURRENT_TIMESTAMP;
