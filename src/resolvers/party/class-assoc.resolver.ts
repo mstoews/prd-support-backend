@@ -8,7 +8,7 @@ import { PrismaService } from '../../services/prisma.service';
 @Resolver('ClassAssoc')
 export class ClassAssocResolver {
 
-  private readonly logger = new Logger('ClassAssocResolver');
+  private readonly logger = new Logger('ClassAssocResolver', true);
 
   constructor(
     private prisma: PrismaService,

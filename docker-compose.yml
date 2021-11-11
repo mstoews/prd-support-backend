@@ -2,7 +2,7 @@ version: '3.7'
 services:
   nest-api:
     container_name: gloss-api-backend
-    image: mstoews/gloss-api-backend_nest-api:v1.8.5
+    image: mstoews/gloss-api-backend_nest-api:v1.8.6
     build:
       context: .
       dockerfile: Dockerfile

@@ -6,7 +6,7 @@ import { PrismaService } from "src/services/prisma.service";
 @Resolver('GlossCodes')
 export class GlossCodesResolver {
 
-    private readonly logger = new Logger('GlossCodesResolver');
+    private readonly logger = new Logger('GlossCodesResolver', true);
 
     constructor(
         private prisma: PrismaService

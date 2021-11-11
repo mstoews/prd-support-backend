@@ -500,6 +500,7 @@ type Mutation {
   updatePartyTemplate(data: PartyTemplateInput!, party_ref: String!): PartyTemplate!
   updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
   updateTask(newData: KanbanInputs!, task_id: String!): kb_task!
+  updateTaskDependency(dependency: String!, task_id: String!): kb_task!
 }
 
 type Netting {
@@ -980,6 +981,7 @@ type Query {
   KanbanTaskByTaskId(task_id: String!): kb_task!
   KanbanType: [kb_type!]!
   KanbanTypeById(type: String!): [kb_type!]!
+  KanbanUniqueByTaskId(task_id: String!): kb_task!
   me: User!
   party: [Party!]!
   partyAddressByRef(party_ref: String!): [PartyAddress!]!

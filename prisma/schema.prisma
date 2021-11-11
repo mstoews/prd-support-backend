@@ -1,4 +1,4 @@
-generator client {
+ generator client {
   provider = "prisma-client-js"
 }
 
@@ -202,9 +202,9 @@ model kb_task {
   Id           Int?
   dependencies String?   @default("")
   description  String?
-  due_date     DateTime? @default(now()) @db.Date
+  due_date     DateTime? @default(now())
   parentId     Int?
-  start_date   DateTime? @default(now()) @db.Date
+  start_date   DateTime? @default(now()) 
 }
 
 model kb_subtask {

@@ -11,7 +11,7 @@ import { LoginInput } from './dto/login.input';
 export class AuthResolver {
   constructor(private readonly auth: AuthService) { }
 
-  private readonly logger = new Logger('AuthResolver');
+  private readonly logger = new Logger('AuthResolver', true);
 
   @Mutation((returns) => Auth)
   async login(@Args('data') { userid, password }: LoginInput) {

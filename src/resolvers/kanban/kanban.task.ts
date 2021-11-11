@@ -118,6 +118,18 @@ export class KanbanTaskResolver {
 
 
 
+  @Query((returns) => kb_task)
+  async KanbanUniqueByTaskId(@Args('task_id', { type: () => String }) task_id: string) {
+    return this.prisma.kb_task.findUnique({
+      where: {
+        task_id: task_id
+      },
+    });
+  }
+
+
+
+
   // Create
   @Mutation((returns) => kb_task)
   async createTask(@Args('data', { type: () => KanbanInputs }) newTaskData: Prisma.kb_taskCreateInput) {
@@ -137,6 +149,18 @@ export class KanbanTaskResolver {
       },
       data: newData
     });
+  }
+
+  // Update Dependencies
+
+  @Mutation((returns) => kb_task)
+  async updateTaskDependency(
+    @Args('task_id', { type: () => String }) task_id?: string,
+    @Args('dependency', { type: () => String }) dependency?: string)
+    {
+    const task = await this.KanbanUniqueByTaskId(task_id);
+    task.dependencies = dependency
+    return this.updateTask(task_id, task);
   }
 
   // Delete

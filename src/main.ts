@@ -15,7 +15,7 @@ import { HttpExceptionFilter } from './http.exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const logger = new Logger('bootstrap');
+  const logger = new Logger('bootstrap', true);
 
   // Validation
   app.useGlobalPipes(new ValidationPipe());
@@ -42,8 +42,8 @@ async function bootstrap() {
   if (corsConfig.enabled) {
     app.enableCors();
   }
-  var port = process.env.PORT || nestConfig.port || 3000
-  logger.log('gloss-api-backend port', port.toString());
+  const port = process.env.PORT || nestConfig.port || 3000
+  logger.log(`gloss-api-backend port: ${port.toString()}`);
   await app.listen(port);
 }
 bootstrap();

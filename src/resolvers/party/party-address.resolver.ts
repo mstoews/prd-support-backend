@@ -6,7 +6,7 @@ import { PartyAddressInput } from 'src/models/inputs/party.input';
 
 @Resolver((of) => PartyAddress)
 export class PartyAddressResolver {
-  private readonly logger = new Logger('PartyAddressResolver');
+  private readonly logger = new Logger('PartyAddressResolver', true);
 
   constructor(
     private prisma: PrismaService) { }

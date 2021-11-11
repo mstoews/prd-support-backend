@@ -30,7 +30,7 @@ import {
 
 @Resolver((of) => Party)
 export class PartyResolver {
-  private readonly logger = new Logger('PartyResolver');
+  private readonly logger = new Logger('PartyResolver', true);
   constructor(
     private prisma: PrismaService,
     private postService: HttpPostService
@@ -137,7 +137,7 @@ export class PartyResolver {
 
   @Query((returns) => [Party])
   async partyByType(@Args('party_type', { type: () => String }) pt: string) {
-    this.logger.log('partyByType', pt);
+    this.logger.log(`partyByType:  ${pt}`);
     return this.prisma.party.findMany({
       where: {
         party_type: pt,
@@ -608,18 +608,17 @@ export class PartyResolver {
 
     let maxVersionNo = 0;
     const maxVersionData = await this.prisma.party_audit.aggregate({
-      max: {
+      _max: {
         version_no: true,
       },
       where: { party_ref: party_ref, },
     });
 
-    maxVersionNo = maxVersionData.max.version_no;
+    maxVersionNo = maxVersionData._max.version_no;
 
     const versionNo = maxVersionNo + 1;
 
     const partyData: PartyAudit = new PartyAudit;
-
 
     partyData.party_ref = party.party_ref;
     partyData.party_data = JSON.stringify(party);

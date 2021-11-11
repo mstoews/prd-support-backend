@@ -8,7 +8,7 @@ import { PrismaService } from '../../services/prisma.service';
 @Resolver('Netting')
 export class NettingResolver {
 
-  private readonly logger = new Logger('NettingResolver');
+  private readonly logger = new Logger('NettingResolver', true);
 
   constructor(
     private prisma: PrismaService,
