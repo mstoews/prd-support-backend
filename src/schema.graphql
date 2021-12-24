@@ -501,6 +501,7 @@ type Mutation {
   updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
   updateTask(newData: KanbanInputs!, task_id: String!): kb_task!
   updateTaskDependency(dependency: String!, task_id: String!): kb_task!
+  updateTaskParentId(parentId: Int!, task_id: String!): kb_task!
 }
 
 type Netting {

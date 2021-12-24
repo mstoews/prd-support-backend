@@ -15,6 +15,8 @@ import { KanbanModule} from './resolvers/kanban/kanban.module';
 import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { SchedulerModule } from './resolvers/scheduler/scheduler.module';
+import { JiraModule } from './resolvers/jira/jira.module';
+import { GeneosModule } from './resolvers/geneos/geneos.module';
 
 @Module({
   imports: [
@@ -46,6 +48,8 @@ import { SchedulerModule } from './resolvers/scheduler/scheduler.module';
       timeout: 5000,
       maxRedirects: 5,
     }),
+    JiraModule,
+    GeneosModule,
     
   ],
   controllers: [AppController, MessagesController],

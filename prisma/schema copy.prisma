@@ -7,14 +7,6 @@ datasource db {
   url      = env("POSTGRESQL_URL")
 }
 
-model Jira {
-  jiraId String  @id
-  jiraDescription String
-  createAt DateTime @default(now())
-
-}
-
-
 model User {
   userid    String   @id
   createdAt DateTime @default(now())

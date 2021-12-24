@@ -21,37 +21,44 @@ async function main() {
   // await kanbanType('Add','Add a documenation');
   // await kanbanType('Delete','Delete a documenation');
   // await kanbanType('Modify','Modify a documenation');
+  // await kanbanType('Initial','Initial ');
 
-  await kanbanSeed('C029-1','Medium', 'Open', 'Amend');
-  await kanbanSeed('C029-2','Medium', 'InProgress', 'Amend');
-  await kanbanSeed('C029-3','High', 'InReview', 'Amend');
-  await kanbanSeed('C029-4','Medium', 'Open', 'Modify');
-  await kanbanSeed('C029-5','Medium', 'InProgress', 'Delete');
-  await kanbanSeed('C029-6','High', 'InReview', 'Amend');
-  await kanbanSeed('C029-7','Medium', 'Open', 'Amend');
-  await kanbanSeed('C029-8','Medium', 'InProgress', 'Amend');
-  await kanbanSeed('C029-9','High', 'InReview', 'Add');
+await kanbanSeed ('HK-1','Company','SWIFT BIC','High','Open','Config','Setup company BIC Code', '')
+
 }
 
-async function kanbanSeed(task_id: string, priority: string, status: string, type: string) {
-  console.log(`Running create task: ${task_id}` );
-  dotenv.config();
-  const kanban = await prisma.kb_task.create({
-    data: {
-      assignee: '@mst',
-      classname: 'create',
-      color: '#5B8B4F',
-      estimate: 2,
-      party_ref: 'C029',
-      priority: priority,
-      rankid: 1,
-      status: status,
-      summary: 'Create new party structure by cloning another',
-      tags: '#initialize',
+async function kanbanSeed(task_id: string, 
+  classname: string ,
+  title: string, 
+  priority: 
+  string, 
+  status: string, 
+  type: string, 
+  summary: string,
+  description: string) 
+  {
+    console.log(`Running create task: ${task_id}`);
+    dotenv.config();
+    const kanban = await prisma.kb_task.create({
+      data: {
       task_id: task_id,
-      title: 'Initialize',
-      type: type
-    },
+      party_ref: 'HKTC',
+      title: title,
+      status: status,
+      summary: summary,
+      type: type, 
+      priority: priority,
+      tags: '#initialize',
+      estimate: 1,
+      assignee: '@ashley',
+      rankid: 1,
+      color: '#5B8B4F',
+      classname: classname,
+      "Id": 1,
+      dependencies: '',
+      description: description,    
+      "parentId": 1
+      },
   });
 
   return kanban;

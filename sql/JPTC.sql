@@ -7,12 +7,6 @@ INSERT INTO public.party (party_ref, party_type, party_short_name, party_long_na
 VALUES
 ('JPTC', 'COMP', 'Japan TC', 'Japan Template Co', 'Japan Template Company', 'A', current_timestamp, 0, 'ADMIN');
 
-
--- select * from kb_task;
--- update kb_task set title = 'Update Party Reference' where task_id = 'TASK_1';
-
--- select * from kb_type;
-
 INSERT INTO public.party_ext_ref (party_ref, party_ext_ref_type, party_ext_ref, user_def, description, version_date, version_no, version_user)
 VALUES ('JPTC', 'AEID', 'C_42470059', 'Y', 'Company Code (Trade Feed)', current_timestamp, 0, 'ADMIN');
 INSERT INTO public.party_ext_ref (party_ref, party_ext_ref_type, party_ext_ref, user_def, description, version_date, version_no, version_user) 

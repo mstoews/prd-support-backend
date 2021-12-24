@@ -151,6 +151,18 @@ export class KanbanTaskResolver {
     });
   }
 
+  // Update parentId
+  @Mutation((returns) => kb_task)
+  async updateTaskParentId(
+    @Args('task_id', { type: () => String }) task_id?: string,
+    @Args('parentId', { type: () => Number }) parentId?: number)
+    {
+    const task = await this.KanbanUniqueByTaskId(task_id);
+    task.parentId = parentId;
+    return this.updateTask(task_id, task);
+  }
+
+
   // Update Dependencies
 
   @Mutation((returns) => kb_task)
