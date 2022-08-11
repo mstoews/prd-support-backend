@@ -48,7 +48,7 @@ export class KanbanTypeResolver {
 
     // Delete
     @Mutation((returns) => TypeModel)
-    async deleteKanbanStatus(
+    async deleteKanbanType(
         @Args('type', { type: () => String }) type?: string,) {
         return this.prisma.kb_type.delete(
             {

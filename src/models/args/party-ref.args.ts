@@ -2,8 +2,6 @@ import { Field, ArgsType } from '@nestjs/graphql';
 import { MinLength } from 'class-validator';
 import { MaxLength } from 'class-validator';
 import { IsNotEmpty } from 'class-validator';
-import { party_ext_ref as PartyExtRefModel, Prisma } from '@prisma/client';
-
 
 @ArgsType()
 export class PartyIdArgs {

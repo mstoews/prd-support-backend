@@ -1,4 +1,4 @@
- generator client {
+generator client {
   provider = "prisma-client-js"
 }
 
@@ -7,190 +7,56 @@ datasource db {
   url      = env("POSTGRESQL_URL")
 }
 
-model Jira {
-  jiraId String  @id
-  jiraDescription String
-  createAt DateTime @default(now())
-
+model prd_user {
+  userid     String   @id
+  createdAt  DateTime @db.Date
+  updatedAt  DateTime @db.Date
+  email      String
+  password   String
+  firstname  String?
+  lastname   String?
+  role       Role?
 }
 
-
-model User {
-  userid    String   @id
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-  email     String
-  password  String
-  firstname String?
-  lastname  String?
-  role      Role
+model prd_env {
+  environment      String  @id @db.VarChar(15)
+  description      String? @db.VarChar(30)
+  sst_glossapi_url String  @db.VarChar(30)
+  active           String  @db.VarChar(1)
+  client_id        String  @db.VarChar(12)
 }
 
-model class_assoc {
-  party_ref        String
-  class_assoc_code String
-  code_type        String
-  class_1          Int
-  code_1           String
-  class_2          Int
-  code_2           String[]
-  applied          Boolean
-  version_date     DateTime?
-  version_no       Int
-  version_user     String
-
-  @@id([party_ref, class_assoc_code, code_type, class_1, code_1, class_2])
+model ct_main {
+  client_id  String @id @db.VarChar(12)
+  name       String @db.VarChar(30)
+  active     String @db.VarChar(1)
+  createdAt  DateTime @db.Date
+  updatedAt  DateTime @db.Date
+  email      String
 }
 
-model party_data_pushed {
-  party_ref              String
-  environment            String
-  party_template_data    String?
-  party_class_assoc_data String?
-  party_netting_data     String?
-  version_date           DateTime?
-  version_user           String
+model ct_addr {
+  party_ref     String   @db.VarChar(12)
+  client_ref    String   @db.VarChar(12)
+  addr_type     String   @db.VarChar(4)
+  contact_name  String   @db.VarChar(35)
+  contact_title String   @db.VarChar(35)
+  addr_line1    String   @db.VarChar(35)
+  addr_line2    String   @db.VarChar(35)
+  addr_line3    String   @db.VarChar(35)
+  addr_line4    String   @db.VarChar(35)
+  addr_line5    String   @db.VarChar(35)
+  addr_line6    String   @db.VarChar(35)
+  post_code     String   @db.VarChar(12)
+  int_dial_code String   @db.VarChar(6)
+  phone_no      String   @db.VarChar(20)
+  fax_no        String   @db.VarChar(20)
+  email         String   @db.VarChar(100)
+  version_date  DateTime @db.Timestamp(6)
+  version_no    Int
+  version_user  String   @db.VarChar(12)
 
-  @@id([party_ref, environment])
-}
-
-model environment {
-  environment          String  @id
-  description          String?
-  sst_nestjsserver_url String?
-  sst_pythonserver_url String?
-  sst_springserver_url String?
-  active               String?
-}
-
-model gloss_codes {
-  class_value     Int
-  code_value      String
-  code_short_desc String?
-  code_long_desc  String?
-  active_ind      String?
-
-  @@id([class_value, code_value])
-}
-
-model instr {
-  instr_ref        String    @id
-  instr_type       String?
-  template_ref     String?
-  instr_short_name String?
-  instr_long_name  String?
-  active_ind       String?
-  issu_date        DateTime?
-  issu_price       Float?
-  matu_date        DateTime?
-  matu_price       Float?
-  denom_ccy        String?
-  price_dec        Float?
-  price_div        Float?
-  price_mul        Float?
-  price_type       String?
-  tick_value       Float?
-  book_ref         String?
-  market_ref       String?
-  lot_size         Int?
-  qty_dec_places   Int?
-  version_date     DateTime?
-  version_no       Int?
-  version_user     String?
-}
-
-model instr_accrual {
-  instr_ref       String
-  seq_no          Int
-  accr_basis      String?
-  amort_flag      String?
-  capi_flag       String?
-  paym_ccy        String?
-  start_accr_date DateTime?
-  first_paym_date DateTime?
-  last_paym_date  DateTime?
-  frn_flag        String?
-  neg_flag        String?
-  freq_rule       String?
-  freq_unit       Int?
-  cal_code        String?
-  date_rule       String?
-  eom_flag        String?
-  cpon_rate       Float?
-  rnd_rule        String?
-  rdat_offset     Int?
-  user_def        String?
-  description     String?
-  version_date    DateTime?
-  version_no      Int?
-  version_user    String?
-
-  @@id([instr_ref, seq_no])
-}
-
-model instr_classification {
-  instr_ref    String
-  class_type   String
-  class_code   String?
-  user_def     String?
-  description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-
-  @@id([instr_ref, class_type])
-}
-
-model instr_date {
-  instr_ref    String
-  date_type    String
-  date         DateTime?
-  user_def     String?
-  description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-
-  @@id([instr_ref, date_type])
-}
-
-model instr_ext_ref {
-  instr_ref          String
-  instr_ext_ref_type String
-  instr_ext_ref      String?
-  user_def           String?
-  description        String?
-  version_date       DateTime?
-  version_no         Int?
-  version_user       String?
-
-  @@id([instr_ref, instr_ext_ref_type])
-}
-
-model instr_flag {
-  instr_ref    String
-  flag_type    Int
-  flag_code    String
-  user_def     String?
-  description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-
-  @@id([instr_ref, flag_type, flag_code])
-}
-
-model instr_narrative {
-  instr_ref    String
-  narr_type    String
-  narrative    String?
-  user_def     String?
-  description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-
-  @@id([instr_ref, narr_type])
+  @@id([party_ref, client_ref, addr_type])
 }
 
 model kb_task {
@@ -210,9 +76,10 @@ model kb_task {
   Id           Int?
   dependencies String?   @default("")
   description  String?
-  due_date     DateTime? @default(now())
+  due_date     DateTime? @default(now()) @db.Date
   parentId     Int?
-  start_date   DateTime? @default(now()) 
+  start_date   DateTime? @default(now()) @db.Date
+  client_ref   String?
 }
 
 model kb_subtask {
@@ -248,278 +115,137 @@ model kb_type {
   updateusr   String?
 }
 
-model party {
-  party_ref             String    @id
-  party_type            String?
-  party_short_name      String?
-  party_long_name       String?
-  party_extra_long_name String?
-  active_ind            String?
-  version_date          DateTime?
-  version_no            Int?
-  version_user          String?
+model kb_team {
+  team_member String    @id
+  first_name  String?
+  last_name   String?
+  location    String?
+  title       String?
+  updatedte   DateTime?
+  updateusr   String?
+  party_ref   String    @default("CMP")
 }
 
-model party_addr {
-  party_ref     String
-  addr_type     String
-  contact_name  String
-  contact_title String
-  addr_line1    String
-  addr_line2    String
-  addr_line3    String
-  addr_line4    String
-  addr_line5    String
-  addr_line6    String
-  post_code     String
-  int_dial_code String
-  phone_no      String
-  fax_no        String
-  email         String
-  version_date  DateTime?
-  version_no    Int
-  version_user  String
-
-  @@id([party_ref, addr_type])
+model kb_comment {
+  task_id      String    @id
+  comment_text String?
+  image_url    String?
+  title        String?
+  updatedte    DateTime?
+  updateusr    String?
+  party_ref    String    @default("CMP")
 }
 
-model party_assoc {
-  party_ref       String
-  assoc_type      String
-  assoc_party_ref String?
-  user_def        String?
-  description     String?
-  version_date    DateTime?
-  version_no      Int?
-  version_user    String?
+model ct_dashboard {
+  client_id       Int     @unique @default(autoincrement())
+  client_name     String? @db.VarChar(20)
+  rag             String? @db.Char(1)
+  trend           String?
+  applications    String?
+  type            String?
+  csm             String?
+  environment     String?
+  open_issues     String?
+  csm_contacts    String?
+  t_m_goals       String?
+  client_contacts String?
 
-  @@id([party_ref, assoc_type])
+  @@id([client_id])
 }
 
-model party_audit {
-  party_ref                 String
-  party_data                String?
-  party_ext_ref_data        String?
-  party_classification_data String?
-  party_flag_data           String?
-  party_narrative_data      String?
-  party_assoc_data          String?
-  party_instr_data          String?
-  party_ssi_data            String?
-  party_date_data           String?
-  party_address_data        String?
-  party_template_data       String?
-  party_class_assoc_data    String?
-  party_netting_data        String?
-  version_date              DateTime?
-  version_no                Int
-  version_user              String?
+model ct_dashboards {
+  clientid                Int
+  dashboardtype           String  @db.VarChar(10)
+  maintitle               String?
+  maintitlecount          String?
+  subtitle                String?
+  maintitlecountyesterday String?
+  maintitlecountthreedays String?
+  maintitlecounttwodays   String?
 
-  @@id([party_ref, version_no])
+  @@id([clientid, dashboardtype])
 }
 
-model party_classification {
-  party_ref    String
-  class_type   String
-  class_code   String?
-  user_def     String?
-  description  String?
-  version_date DateTime?
-  version_no   Int?
-  version_user String?
-
-  @@id([party_ref, class_type])
+model ct_master {
+  clientid    Int       @id
+  client_name String?
+  geneos_id   String?
+  jira_id     String?
+  remedy_id   String?
+  location    String?
+  description String?
+  update_date DateTime? @db.Date
+  update_user String?
 }
 
-model party_date {
-  party_ref    String
-  date_type    String
-  date         String
-  time         String
-  version_date DateTime
-  version_no   Int
-  version_user String
-
-  @@id([party_ref, date_type])
+model ct_csm_master {
+  clientid               Int       @id
+  clientname             String?
+  rag                    String?
+  rag_trend              String?
+  application            String?
+  type                   String?
+  client_service_manager String?
+  environment            String?
+  open_issues            String?
+  csm_contacts           String?
+  timeandmaterialgoals   String?
+  contacts               String?
+  last_updated           DateTime? @db.Date
+  last_updated_by        String?
 }
 
-model party_ext_ref {
-  party_ref          String
-  party_ext_ref_type String
-  party_ext_ref      String?
-  user_def           String?
-  description        String?
-  version_date       DateTime?
-  version_no         Int?
-  version_user       String?
-
-  @@id([party_ref, party_ext_ref_type])
+model ct_alerts {
+  geneos_id       Int       @id
+  japan_date      DateTime? @db.Date
+  day_of_the_week String?
+  severity        String?
+  client          String?
+  gateway         String?
+  entity          String?
+  sampler         String?
+  varname         String?
 }
 
-model party_flag {
-  party_ref    String
-  flag_type    Int
-  flag_code    String
-  user_def     String?
-  description  String?
-  version_date DateTime? @default(now())
-  version_no   Int?
-  version_user String?
-
-  @@id([party_ref, flag_type, flag_code])
+model ct_contacts {
+  contact_id   Int       @id
+  clientid     Int?
+  name         String?
+  email        String?
+  phone_1      String?
+  phone_2      String?
+  country_code String?   @db.VarChar(3)
+  position     String?
+  update_date  DateTime? @db.Date
+  update_user  String?
 }
 
-model party_instr {
-  party_ref      String
-  instr_type     String
-  instr_ref_type String?
-  instr_ref      String?
-  user_def       String?
-  description    String?
-  version_date   DateTime?
-  version_no     Int?
-  version_user   String?
-
-  @@id([party_ref, instr_type])
+model ct_issue {
+  issueid     Int       @id
+  clientid    Int?
+  severity    String?
+  description String?
+  start_date  DateTime? @db.Date
+  due_date    DateTime? @db.Date
+  update_date DateTime? @db.Date
+  update_user String?
 }
 
-model party_narrative {
-  party_ref    String
-  narr_type    String
-  narrative    String?
-  user_def     String?
-  description  String?
-  version_date DateTime? @default(now())
-  version_no   Int?      @default(1)
-  /// The value of this field is generated by the database as: `USER`.
-  version_user String?
-
-  @@id([party_ref, narr_type])
-}
-
-model party_ssi {
-  party_ref     String
-  depot_alias   String
-  depot_descr   String?
-  depot_type    String?
-  ccy           String?
-  comms_service String?
-  dacc_ref      String?
-  account_no    String?
-  account_name  String?
-  depo_ref      String?
-  active_ind    String?
-  user_def      String?
-  description   String?
-  version_date  DateTime?
-  version_no    Int?
-  version_user  String?
-
-  @@id([party_ref, depot_alias])
-}
-
-model party_swift_router {
-  party_ref       String   @id
-  company_name    String
-  logical_term_id String[]
-  queue_mgr       String
-  incoming_queue  String
-  outgoing_queue  String
-  channel         String
-  host            String
-  port_number     Int
-  version_date    DateTime
-  version_no      Int
-  version_user    String
-  branch_code     String?
-}
-
-model party_template {
-  party_ref          String    @id
-  template_party_ref String
-  party_short_name   String
-  party_long_name    String
-  version_date       DateTime?
-  version_no         Int?
-  version_user       String?
-}
-
-model gloss_scheduler {
-  msg_type             Int
-  event_ref            String
-  database_type        String?
-  database_code        String
-  sql_db_code          String?
-  bus_day              String?
-  holiday_id           String?
-  frequency_unit       String?
-  frequency_interval   Int?
-  frequency_start_time DateTime?
-  frequency_end_time   DateTime?
-  due_date_time        DateTime
-  start_by_unit        String?
-  start_by_interval    Int?
-  end_by_interval      Int?
-  use_current_date     String?
-  active_ind_p2k       String?
-  start_by_time        DateTime?
-  end_by_time          DateTime?
-  batch_size           Int?
-  supercede            String?
-  dst_region_code      String?
-  version_no           Int?
-  version_date         DateTime?
-  version_user         String?
-
-  @@id([msg_type, event_ref, due_date_time, database_code])
-}
-
-model gloss_netting {
-  party_ref                String
-  net_driver               String
-  settle_code              String
-  transaction_type         String
-  trade_group              Int?
-  late_rule                String?
-  net_schedule_code        String?
-  date_type                String?
-  buy_and_sell_flag        String?
-  net_party_ref            String?
-  net_book                 String?
-  override_net_book        String?
-  secondary_party          String?
-  settle_terms             String?
-  operation_type           String?
-  net_primary              String?
-  primary_comp_service     String?
-  primary_secp_service     String?
-  net_secondary            String?
-  secondary_comp_service   String?
-  secondary_secp_service   String?
-  primary_instr            String?
-  primary_comp_alias       String?
-  primary_depot_type       String?
-  primary_party_ref        String?
-  primary_secp_alias       String?
-  settle_instr             String?
-  secondary_comp_alias     String?
-  secondary_depot_type     String?
-  secondary_party_ref      String?
-  secondary_secp_alias     String?
-  market_party             String?
-  start_date_type          String?
-  start_offset_ind         String?
-  start_offset_code        String?
-  end_date_type            String?
-  end_offset_ind           String?
-  end_offset_code          String?
-  net_cash_when_zero_stock String?
-  split_buy_sell           String?
-  version_date             DateTime?
-  version_no               Int?
-  version_user             String?
-
-  @@id([party_ref, net_driver, settle_code, transaction_type])
+model ct_service_request {
+  sr_id                String    @id
+  first_name           String?
+  last_name            String?
+  summary              String?
+  service_request_stat String?
+  severity             String?
+  requested_by         String?
+  case_overview        String?
+  work_around          String?
+  assigned_to          String?
+  submitted_by         String?
+  target_date          DateTime? @db.Date
+  product_name         String?
+  info                 String?
 }
 
 enum Role {

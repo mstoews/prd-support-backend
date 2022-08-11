@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { InternalServerErrorException, Logger, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import {
   Args, Mutation, Query, Resolver
@@ -6,9 +7,9 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/services/prisma.service';
 import { UserService } from 'src/services/user.service';
 import { UserEntity } from '../../decorators/user.decorator';
-import { User } from '../../models/user.model';
 import { LoginInput } from '../auth/dto/login.input';
 import { SignupInput } from '../auth/dto/signup.input';
+import { User } from '../../models/user.model';
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -27,7 +28,7 @@ export class UserResolver {
   @Query((returns) => [User])
   async users() {
     this.logger.log('prisma.User => FindMany');
-    return this.prisma.user.findMany();
+    return this.prisma.prd_user.findMany();
   }
 
   @Mutation((returns) => User)

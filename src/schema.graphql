@@ -11,326 +11,60 @@ type Auth {
   user: User!
 }
 
-type ClassAssoc {
-  applied: Boolean!
-  class_1: Int!
-  class_2: Int!
-  class_assoc_code: String!
-  code_1: String!
-  code_2: [String!]!
-  code_type: String!
-  party_ref: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
+input ClientServiceInputs {
+  application: String!
+  client_service_manager: String!
+  clientid: String!
+  clientname: String!
+  contacts: String!
+  csm_contacts: String!
+  environment: String!
+  last_updated: String!
+  open_issues_id: String!
+  rag: String!
+  rag_trend: String!
+  timeandmaterialgoalsid: String!
 }
 
-input ClassAssocInput {
-  applied: Boolean!
-  class_1: Int!
-  class_2: Int!
-  class_assoc_code: String!
-  code_1: String!
-  code_2: [String!]!
-  code_type: String!
-  party_ref: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
+type ClientServiceModel {
+  application: String!
+  client_service_manager: String!
+  clientid: String!
+  clientname: String!
+  contacts: String!
+  csm_contacts: String!
+  environment: String!
+  last_updated: String!
+  open_issues_id: String!
+  rag: String!
+  rag_trend: String!
+  timeandmaterialgoalsid: String!
+}
+
+input DashboardInputs {
+  clientid: Int!
+  dashboardtype: String!
+  maintitle: String
+  maintitlecount: String
+  maintitlecountthreedays: String
+  maintitlecounttwodays: String
+  maintitlecountyesterday: String
+  subtitle: String
+}
+
+type DashboardModel {
+  clientid: Int!
+  dashboardtype: String!
+  maintitle: String
+  maintitlecount: String
+  maintitlecountthreedays: String
+  maintitlecounttwodays: String
+  maintitlecountyesterday: String
+  subtitle: String
 }
 
 """Date custom scalar type"""
 scalar Date
-
-type Environment {
-  active: String!
-  description: String!
-  environment: String!
-  sst_nestjsserver_url: String!
-  sst_pythonserver_url: String!
-  sst_springserver_url: String!
-}
-
-type GlossCodes {
-  active_ind: String!
-  class_value: Int!
-  code_long_desc: String!
-  code_short_desc: String!
-  code_value: String!
-}
-
-type GlossScheduler {
-  active_ind_p2k: String!
-  batch_size: Int!
-  bus_day: String!
-  database_code: String!
-  database_type: String!
-  dst_region_code: String!
-  due_date_time: Date!
-  end_by_interval: Int!
-  end_by_time: Date!
-  event_ref: String!
-  frequency_end_time: Date!
-  frequency_interval: Int!
-  frequency_start_time: Date!
-  frequency_unit: String!
-  holiday_id: String!
-  msg_type: Int!
-  sql_db_code: String!
-  start_by_interval: Int!
-  start_by_time: Date!
-  start_by_unit: String!
-  supercede: String!
-  use_current_date: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input GlossSchedulerInput {
-  active_ind_p2k: String
-  batch_size: Int!
-  bus_day: String!
-  database_code: String!
-  database_type: String!
-  dst_region_code: String
-  due_date_time: Date
-  end_by_interval: Int!
-  end_by_time: Date!
-  event_ref: String!
-  frequency_end_time: Date!
-  frequency_interval: Int!
-  frequency_start_time: Date!
-  frequency_unit: String!
-  holiday_id: String!
-  msg_type: Int!
-  sql_db_code: String!
-  start_by_interval: Int!
-  start_by_time: Date!
-  start_by_unit: String!
-  supercede: String!
-  use_current_date: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type Instr {
-  active_ind: String!
-  book_ref: String
-  classes: [InstrClassification!]!
-  denom_ccy: String!
-  instr_long_name: String!
-  instr_ref: String!
-  instr_short_name: String!
-  instr_type: String!
-  issu_date: Date
-  issu_price: String
-  lot_size: Int!
-  market_ref: String
-  matu_date: Date
-  matu_price: String
-  price_dec: Int!
-  price_div: Int!
-  price_mul: Int!
-  price_type: String!
-  qty_dec_places: Int!
-  template_ref: String!
-  tick_value: Int!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type InstrAccrual {
-  accr_basis: String!
-  amort_flag: String!
-  cal_code: String!
-  capi_flag: String!
-  cpon_rate: String
-  date_rule: String!
-  description: String!
-  eom_flag: String!
-  first_paym_date: Date!
-  freq_rule: String!
-  freq_unit: Int!
-  frn_flag: String!
-  instr_ref: String!
-  last_paym_date: Date!
-  neg_flag: String!
-  paym_ccy: String!
-  rdat_offset: Int!
-  rnd_rule: String!
-  seq_no: Int!
-  start_accr_date: Date!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrAccrualInput {
-  accr_basis: String
-  amort_flag: String
-  cal_code: String
-  capi_flag: String
-  cpon_rate: Int
-  date_rule: String
-  description: String!
-  eom_flag: String
-  first_paym_date: Date
-  freq_rule: String
-  freq_unit: Int
-  frn_flag: String
-  instr_ref: String!
-  last_paym_date: Date
-  neg_flag: String
-  paym_ccy: String
-  rdat_offset: Int
-  rnd_rule: String
-  seq_no: Int!
-  start_accr_date: Date
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type InstrClassification {
-  class_code: String
-  class_type: String!
-  description: String!
-  instr_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrClassInput {
-  class_code: String
-  class_type: String!
-  description: String
-  instr_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-type InstrDate {
-  date: Date!
-  date_type: String!
-  description: String!
-  instr_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrDateInput {
-  date: String
-  date_type: String!
-  description: String
-  instr_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-type InstrExtRef {
-  description: String!
-  instr_ext_ref: String
-  instr_ext_ref_type: String!
-  instr_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrExtRefInput {
-  description: String
-  instr_ext_ref: String
-  instr_ext_ref_type: String!
-  instr_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-type InstrFlag {
-  description: String!
-  flag_code: String!
-  flag_type: Int!
-  instr_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrFlagInput {
-  description: String
-  flag_code: String
-  flag_type: Int!
-  instr_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-input InstrInput {
-  active_ind: String
-  book_ref: String
-  denom_ccy: String
-  instr_long_name: String
-  instr_ref: String!
-  instr_short_name: String
-  instr_type: String!
-  issu_date: Date
-  issu_price: Int
-  lot_size: Int
-  market_ref: String
-  matu_date: Date
-  matu_price: Int
-  price_dec: Int
-  price_div: Int
-  price_mul: Int
-  price_type: String
-  qty_dec_places: Int
-  template_ref: String
-  tick_value: Int
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-type InstrNarrative {
-  description: String!
-  instr_ref: String!
-  narr_type: String!
-  narrative: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input InstrNarrativeInput {
-  description: String
-  instr_ref: String!
-  narr_type: String!
-  narrative: String
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
 
 input KanbanInputs {
   assignee: String
@@ -407,216 +141,32 @@ input LoginInput {
 }
 
 type Mutation {
-  backUpPartyData(party_ref: String!): PartyAudit!
-  cloneParty(new_party_ref: String!, old_party_ref: String!): Party!
-  cloneSwiftParty(new_party_ref: String!, old_party_ref: String!): PartySwift!
-  createClassAssoc(data: ClassAssocInput!): ClassAssoc!
-  createExtRefParty(data: PartyExtRefInput!): PartyExtRef!
-  createglossScheduler(data: GlossSchedulerInput!): GlossScheduler!
-  createInstrAccrual(data: InstrAccrualInput!): InstrAccrual!
-  createInstrClassification(data: InstrClassInput!): InstrClassification!
-  createInstrExtRef(data: InstrExtRefInput!): InstrExtRef!
-  createInstrFlag(data: InstrFlagInput!): InstrFlag!
-  createInstrInput(data: InstrDateInput!): InstrDate!
-  createInstrNarrative(data: InstrNarrativeInput!): InstrNarrative!
+  createClientServices(data: ClientServiceInputs!): ClientServiceModel!
+  createDashboards(data: DashboardInputs!): DashboardModel!
   createKanbanPriority(kanbanData: TaskPriorityInputs!): kb_priority!
   createKanbanStatus(data: TaskStatusInputs!): kb_status!
   createKanbanType(data: TaskStatusInputs!): kb_type!
-  createNetting(data: NettingInput!): Netting!
-  createParty(data: PartyInput!): Party!
-  createPartyAddress(data: PartyAddressInput!): PartyAddress!
-  createPartyAssoc(data: PartyAssocInput!): PartyAssoc!
-  createPartyClassification(data: PartyClassInput!): PartyClassification!
-  createPartyDate(data: PartyDateInput!): PartyDate!
-  createPartyFlag(data: PartyFlagInput!): PartyFlag!
-  createPartyGlossXML(environment: String!, party_ref: String!): Party!
-  createPartyInput(data: PartyInput!): Party!
-  createPartyInstrument(data: PartyInstrInput!): PartyInstr!
-  createPartyNarrative(data: PartyNarrativeInput!): PartyNarrative!
-  createPartySSI(data: PartySSIInput!): PartySSI!
-  createPartySSIGlossXML(party_ref: String!): Party!
-  createPartySwift(data: PartySwiftInput!): PartySwift!
-  createPartyTemplate(data: PartyTemplateInput!): PartyTemplate!
   createSubTask(data: SubTaskInputs!): SubTasks!
   createTask(data: KanbanInputs!): kb_task!
-  deleteglossScheduler(database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
-  deleteInstrAccrual(instr_ref: String!, seq_no: Int!): InstrAccrual!
-  deleteInstrByRef(instr_ref: String!): Instr!
-  deleteInstrClassification(class_type: String!, party_ref: String!): InstrClassification!
-  deleteInstrDate(class_type: String!, party_ref: String!): InstrDate!
-  deleteInstrExtRef(instr_ext_ref_type: String!, instr_ref: String!): InstrExtRef!
-  deleteInstrFlag(flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
-  deleteInstrNarrative(instr_ref: String!, narr_type: String!): InstrNarrative!
+  deleteClientServices(clientid: Int!): ClientServiceModel!
+  deleteDashboards(clientid: Int!, dashboardtype: String!): DashboardModel!
   deleteKanbanPriority(priority: String!): kb_priority!
-  deleteKanbanStatus(type: String!): kb_type!
+  deleteKanbanStatus(status: String!): kb_status!
   deleteKanbanSubTask(subid: String!, task_id: String!): SubTasks!
-  deleteNarrative(narr_type: String!, party_ref: String!): PartyNarrative!
-  deleteNetting(data: NettingInput!): Netting!
-  deletePartyAddressByRef(addr_type: String!, party_ref: String!): PartyAddress!
-  deletePartyAssoc(assoc_type: String!, party_ref: String!): PartyAssoc!
-  deletePartyByRef(party_ref: String!): Party!
-  deletePartyClassification(class_type: String!, party_ref: String!): PartyClassification!
-  deletePartyDateByRef(date_type: String!, party_ref: String!): PartyDate!
-  deletePartyExtRef(party_ext_ref_type: String!, party_ref: String!): PartyExtRef!
-  deletePartyFlag(flag_code: String!, flag_type: Int!, party_ref: String!): PartyFlag!
-  deletePartyInstr(instr_type: String!, party_ref: String!): PartyInstr!
-  deletePartySwiftByRef(party_ref: String!): PartySwift!
-  deletePartyTemplateByRef(party_ref: String!): PartyTemplate!
-  deletePartyTree(party_ref: String!): Party!
-  deleteSSI(depot_alias: String!, party_ref: String!): PartySSI!
+  deleteKanbanType(type: String!): kb_type!
   deleteTask(task_id: String!): kb_task!
   login(data: LoginInput!): Auth!
   refreshToken(refreshtoken: String!): Token!
   resetPassword(data: LoginInput!): User!
-  restorePartyData(party_ref: String!, version_no: Int!): PartyAudit!
-  sendClassAssocStaticToGloss(environment: String!, party_ref: String!): ClassAssoc!
-  sendNettingStaticToGloss(environment: String!, party_ref: String!): Netting!
-  sendSchedulerStaticToGloss: GlossScheduler!
-  sendSwiftStaticToGloss(party_ref: String!): PartySwift!
   signup(data: SignupInput!): User!
-  updateClassAssoc(data: ClassAssocInput!): ClassAssoc!
-  updateglossScheduler(data: GlossSchedulerInput!, database_code: String!, due_date_time: Date!, event_ref: String!, msg_type: Int!): GlossScheduler!
-  updateInstrAccrual(data: InstrAccrualInput!, instr_ref: String!, seq_no: Int!): InstrAccrual!
-  updateInstrByRef(data: InstrInput!, instr_ref: String!): Instr!
-  updateInstrClassification(class_type: String!, data: InstrClassInput!, party_ref: String!): InstrClassification!
-  updateInstrDate(data: InstrDateInput!, date_type: String!, instr_ref: String!): InstrDate!
-  updateInstrExtRef(data: InstrExtRefInput!, instr_ext_ref_type: String!, instr_ref: String!): InstrExtRef!
-  updateInstrFlag(data: InstrFlagInput!, flag_code: String!, flag_type: Int!, instr_ref: String!): InstrFlag!
-  updateInstrNarrative(data: InstrNarrativeInput!, instr_ref: String!, narr_type: String!): InstrNarrative!
+  updateClientServices(clientid: Int!, newData: ClientServiceInputs!): ClientServiceModel!
+  updateDashboards(clientid: Int!, dashboard: DashboardInputs!, dashboardtype: String!): DashboardModel!
   updateKanbanPriority(kanbanData: TaskPriorityInputs!, priority: String!): kb_priority!
   updateKanbanStatus(id: String!, newData: TaskStatusInputs!): kb_status!
   updateKanbanType(newData: TaskStatusInputs!, type: String!): kb_type!
-  updateNetting(data: NettingInput!): Netting!
-  updatePartyAddress(addr_type: String!, data: PartyAddressInput!, party_ref: String!): PartyAddress!
-  updatePartyAssoc(assoc_type: String!, data: PartyAssocInput!, party_ref: String!): PartyAssoc!
-  updatePartyByRef(data: PartyInput!, party_ref: String!): Party!
-  updatePartyClassification(class_type: String!, data: PartyClassInput!, party_ref: String!): PartyClassification!
-  updatePartyDate(data: PartyDateInput!, date_type: String!, party_ref: String!): PartyDate!
-  updatePartyExtRef(data: PartyExtRefInput!, party_ext_ref_type: String!, party_ref: String!): PartyExtRef!
-  updatePartyFlag(data: PartyFlagInput!, flag_code: String!, flag_type: Int!, party_ref: String!): PartyFlag!
-  updatePartyInstr(data: PartyInstrInput!, instr_type: String!, party_ref: String!): PartyInstr!
-  updatePartyNarrative(narr_type: String!, newData: PartyNarrativeInput!, party_ref: String!): PartyNarrative!
-  updatePartySwift(data: PartySwiftInput!, party_ref: String!): PartySwift!
-  updatePartyTemplate(data: PartyTemplateInput!, party_ref: String!): PartyTemplate!
-  updateSSI(data: PartySSIInput!, depot_alias: String!, party_ref: String!): PartySSI!
   updateTask(newData: KanbanInputs!, task_id: String!): kb_task!
   updateTaskDependency(dependency: String!, task_id: String!): kb_task!
   updateTaskParentId(parentId: Int!, task_id: String!): kb_task!
-}
-
-type Netting {
-  buy_and_sell_flag: String!
-  date_type: String!
-  end_date_type: String!
-  end_offset_code: String!
-  end_offset_ind: String!
-  late_rule: String!
-  market_party: String!
-  net_book: String!
-  net_cash_when_zero_stock: String!
-  net_driver: String!
-  net_party_ref: String!
-  net_primary: String!
-  net_schedule_code: String!
-  net_secondary: String!
-  operation_type: String!
-  override_net_book: String!
-  party_ref: String!
-  primary_comp_alias: String!
-  primary_comp_service: String!
-  primary_depot_type: String!
-  primary_instr: String!
-  primary_party_ref: String!
-  primary_secp_alias: String!
-  primary_secp_service: String!
-  secondary_comp_alias: String!
-  secondary_comp_service: String!
-  secondary_depot_type: String!
-  secondary_party: String!
-  secondary_party_ref: String!
-  secondary_secp_alias: String!
-  secondary_secp_service: String!
-  settle_code: String!
-  settle_instr: String!
-  settle_terms: String!
-  split_buy_sell: String!
-  start_date_type: String!
-  start_offset_code: String!
-  start_offset_ind: String!
-  trade_group: Int!
-  transaction_type: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input NettingInput {
-  buy_and_sell_flag: String!
-  date_type: String!
-  end_date_type: String!
-  end_offset_code: String!
-  end_offset_ind: String!
-  late_rule: String!
-  market_party: String!
-  net_book: String!
-  net_cash_when_zero_stock: String!
-  net_driver: String!
-  net_party_ref: String!
-  net_primary: String!
-  net_schedule_code: String!
-  net_secondary: String!
-  operation_type: String!
-  override_net_book: String!
-  party_ref: String!
-  primary_comp_alias: String!
-  primary_comp_service: String!
-  primary_depot_type: String!
-  primary_instr: String!
-  primary_party_ref: String!
-  primary_secp_alias: String!
-  primary_secp_service: String!
-  secondary_comp_alias: String!
-  secondary_comp_service: String!
-  secondary_depot_type: String!
-  secondary_party: String!
-  secondary_party_ref: String!
-  secondary_secp_alias: String!
-  secondary_secp_service: String!
-  settle_code: String!
-  settle_instr: String!
-  settle_terms: String!
-  split_buy_sell: String!
-  start_date_type: String!
-  start_offset_code: String!
-  start_offset_ind: String!
-  trade_group: Int!
-  transaction_type: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type Party {
-  active_ind: String
-  ExtRef: [PartyExtRef!]!
-  party_extra_long_name: String
-  party_long_name: String
-  party_ref: String
-  party_short_name: String
-  party_type: String
-  PartyAddress: [PartyAddress!]!
-  PartyAssoc: [PartyAssoc!]!
-  PartyClassification: [PartyClassification!]!
-  PartyDate: [PartyDate!]!
-  PartyFlag: [PartyFlag!]!
-  PartyInstr: [PartyInstr!]!
-  PartyNarrative: [PartyNarrative!]!
-  PartySSI: [PartySSI!]!
-  PartySwift: [PartySwift!]!
-  RefType: [PartyExtRef!]!
-  version_date: Date
-  version_no: Int!
-  version_user: String
 }
 
 type PartyAddress {
@@ -640,64 +190,12 @@ type PartyAddress {
   version_user: String!
 }
 
-input PartyAddressInput {
-  addr_line1: String
-  addr_line2: String
-  addr_line3: String
-  addr_line4: String
-  addr_line5: String
-  addr_line6: String
-  addr_type: String!
-  contact_name: String
-  contact_title: String
-  email: String
-  fax_no: String
-  int_dial_code: String
-  party_ref: String!
-  phone_no: String
-  post_code: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
 type PartyAssoc {
   assoc_party_ref: String!
   assoc_type: String!
   description: String!
   party_ref: String!
   user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input PartyAssocInput {
-  assoc_party_ref: String!
-  assoc_type: String!
-  description: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyAudit {
-  party_address_data: String!
-  party_assoc_data: String!
-  party_class_assoc_data: String!
-  party_classification_data: String!
-  party_data: String!
-  party_date_data: String!
-  party_ext_ref_data: String!
-  party_flag_data: String!
-  party_instr_data: String!
-  party_narrative_data: String!
-  party_netting_data: String!
-  party_ref: String!
-  party_ssi_data: String!
-  party_template_data: String!
   version_date: Date!
   version_no: Int!
   version_user: String!
@@ -714,17 +212,6 @@ type PartyClassification {
   version_user: String!
 }
 
-input PartyClassInput {
-  class_code: String
-  class_type: String!
-  description: String
-  party_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
 type PartyDate {
   date: String!
   date_type: String!
@@ -733,16 +220,6 @@ type PartyDate {
   version_date: Date!
   version_no: Int!
   version_user: String!
-}
-
-input PartyDateInput {
-  date: String
-  date_type: String!
-  party_ref: String!
-  time: String
-  version_date: Date
-  version_no: Int
-  version_user: String
 }
 
 type PartyExtRef {
@@ -756,17 +233,6 @@ type PartyExtRef {
   version_user: String!
 }
 
-input PartyExtRefInput {
-  description: String
-  party_ext_ref: String
-  party_ext_ref_type: String!
-  party_ref: String!
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
 type PartyFlag {
   description: String!
   flag_code: String!
@@ -776,29 +242,6 @@ type PartyFlag {
   version_date: Date!
   version_no: Int!
   version_user: String!
-}
-
-input PartyFlagInput {
-  description: String
-  flag_code: String
-  flag_type: Int
-  party_ref: String
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
-input PartyInput {
-  active_ind: String
-  party_extra_long_name: String
-  party_long_name: String
-  party_ref: String
-  party_short_name: String
-  party_type: String
-  version_date: Date
-  version_no: Int
-  version_user: String
 }
 
 type PartyInstr {
@@ -813,18 +256,6 @@ type PartyInstr {
   version_user: String!
 }
 
-input PartyInstrInput {
-  description: String
-  instr_ref: String
-  instr_ref_type: String
-  instr_type: String
-  party_ref: String
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
 type PartyNarrative {
   description: String!
   narr_type: String!
@@ -836,37 +267,7 @@ type PartyNarrative {
   version_user: String!
 }
 
-input PartyNarrativeInput {
-  description: String
-  narr_type: String
-  narrative: String
-  party_ref: String
-  user_def: String
-  version_date: Date
-  version_no: Int
-  version_user: String
-}
-
 type PartySSI {
-  account_name: String!
-  account_no: String!
-  active_ind: String!
-  ccy: String!
-  comms_service: String!
-  dacc_ref: String!
-  depo_ref: String!
-  depot_alias: String!
-  depot_descr: String!
-  depot_type: String!
-  description: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input PartySSIInput {
   account_name: String!
   account_no: String!
   active_ind: String!
@@ -901,74 +302,12 @@ type PartySwift {
   version_user: String!
 }
 
-input PartySwiftInput {
-  branch_code: String!
-  channel: String!
-  company_name: String!
-  host: String!
-  incoming_queue: String!
-  logical_term_id: [String!]!
-  outgoing_queue: String!
-  party_ref: String!
-  port_number: Int!
-  queue_mgr: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyTemplate {
-  party_long_name: String!
-  party_ref: String!
-  party_short_name: String!
-  template_party_ref: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-input PartyTemplateInput {
-  party_long_name: String!
-  party_ref: String!
-  party_short_name: String!
-  template_party_ref: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
 type Query {
-  createInstrGlossXML(Type: String!): String!
-  environment: [Environment!]!
-  firstPartyByType(party_type: String!): Party!
-  firstPartyType: Party!
-  getBicCodeByRef(party_ref: String!): PartyExtRef!
-  getFirstPartyByType(party_type: String!): Party!
+  ClientService: [ClientServiceModel!]!
+  ClientServicesById(clientid: Int!): [ClientServiceModel!]!
+  Dashboards: [DashboardModel!]!
+  DashboardsById(clientid: Int!, dashboardtype: String!): DashboardModel!
   GIB: String!
-  glossCodesByClass(class_value: Int!): [GlossCodes!]!
-  glossScheduler: [GlossScheduler!]!
-  instr: [Instr!]!
-  instr_classification: [InstrClassification!]!
-  instr_date: [InstrDate!]!
-  instr_ext_ref: [InstrExtRef!]!
-  instr_flag: [InstrFlag!]!
-  instrAccrual: [InstrAccrual!]!
-  instrAccrualByRef(instr_ref: String!): [InstrAccrual!]!
-  instrAccrualByRefAndSeq(instr_ref: String!, seq_no: Int!): [InstrAccrual!]!
-  instrByRef(instr_ref: String!): Instr!
-  instrByType(instr_type: String!): [Instr!]!
-  instrClassification: [InstrClassification!]!
-  instrClassificationByRef(instr_ref: String!): [InstrClassification!]!
-  instrClassificationByRefAndClass(class_type: String!, instr_ref: String!): [InstrClassification!]!
-  instrDate: [InstrDate!]!
-  instrDateByRef(instr_ref: String!): [InstrDate!]!
-  instrExtRef: [InstrExtRef!]!
-  instrExtRefByRef(instr_ref: String!): [InstrExtRef!]!
-  instrFlag: [InstrFlag!]!
-  instrFlagByRef(instr_ref: String!): [InstrFlag!]!
-  instrNarrative: [InstrNarrative!]!
-  instrNarrativeByRef(instr_ref: String!): [InstrNarrative!]!
-  instrNarrativeByRefAndType(instr_ref: String!, narrative_type: String!): [InstrNarrative!]!
   KanbanByTaskId(task_id: String!): [kb_task!]!
   KanbanFirstTask(party_ref: String!): kb_task!
   KanbanPriority: [kb_priority!]!
@@ -984,26 +323,6 @@ type Query {
   KanbanTypeById(type: String!): [kb_type!]!
   KanbanUniqueByTaskId(task_id: String!): kb_task!
   me: User!
-  party: [Party!]!
-  partyAddressByRef(party_ref: String!): [PartyAddress!]!
-  partyAssocByRef(party_ref: String!): [PartyAssoc!]!
-  partyAssocByRefAndType(assoc_type: String!, party_ref: String!): [PartyAssoc!]!
-  partyAuditByRef(party_ref: String!): [PartyAudit!]!
-  partyByRef(party_ref: String!): Party!
-  partyByType(party_type: String!): [Party!]!
-  partyClassAssocByRef(party_ref: String!): [ClassAssoc!]!
-  partyClassificationByRef(party_ref: String!): [PartyClassification!]!
-  partyDateByRef(party_ref: String!): [PartyDate!]!
-  partyExtRefByRef(party_ref: String!): [PartyExtRef!]!
-  partyFlagByRef(party_ref: String!): [PartyFlag!]!
-  partyInstrByRef(party_ref: String!): [PartyInstr!]!
-  partyNarrativeByRef(party_ref: String!): [PartyNarrative!]!
-  partyNarrativeByRefAndType(narrative_type: String!, party_ref: String!): [PartyNarrative!]!
-  partyNettingByRef(party_ref: String!): [Netting!]!
-  partySSIByRef(party_ref: String!): [PartySSI!]!
-  partySwiftByRef(party_ref: String!): [PartySwift!]!
-  partyTemplateByRef(party_ref: String!): [PartyTemplate!]!
-  PartyTreeByRef(party_ref: String!): Party!
   SubTaskById(subid: String!, task_id: String!): [SubTasks!]!
   SubTasks: [SubTasks!]!
   SubTasksByTaskId(task_id: String!): [SubTasks!]!
@@ -1011,6 +330,7 @@ type Query {
 }
 
 input SignupInput {
+  client_ref: String
   createdAt: String!
   email: String!
   firstname: String
@@ -1019,10 +339,6 @@ input SignupInput {
   role: String!
   updatedAt: String!
   userid: String!
-}
-
-type Subscription {
-  partyChanged: Party!
 }
 
 input SubTaskInputs {

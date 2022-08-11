@@ -15,7 +15,7 @@ import { HttpExceptionFilter } from './http.exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const logger = new Logger('bootstrap', true);
+  const logger = new Logger('Bootstrap', true);
 
   // Validation
   app.useGlobalPipes(new ValidationPipe());

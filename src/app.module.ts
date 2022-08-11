@@ -1,5 +1,5 @@
 import { GraphQLModule } from '@nestjs/graphql';
-import { HttpModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
 import { AppService } from './services/app.service';
 import { AuthModule } from './resolvers/auth/auth.module';
@@ -7,16 +7,19 @@ import { UserModule } from './resolvers/user/user.module';
 import { AppResolver } from './resolvers/app.resolver';
 import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PartyModule } from './resolvers/party/party.module';
-import { InstrumentsModule } from './resolvers/instruments/instruments.module';
+
+
 import { HttpPostService } from './services/http-post/http-post.service';
 import { MessagesController } from './messages/messages.controller';
 import { KanbanModule} from './resolvers/kanban/kanban.module';
 import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
-import { SchedulerModule } from './resolvers/scheduler/scheduler.module';
-import { JiraModule } from './resolvers/jira/jira.module';
-import { GeneosModule } from './resolvers/geneos/geneos.module';
+
+import { JiraModule } from './resolvers/clients/jira/jira.module';
+import { GeneosModule } from './resolvers/clients/geneos/geneos.module';
+import { DashboardsModule } from './resolvers/clients/dashboards.module';
+import { ClientsModule } from './resolvers/clients/clients.module';
+import { ClientsMasterResolver } from './resolvers/clients/master/clients-master.resolver';
 
 @Module({
   imports: [
@@ -40,9 +43,6 @@ import { GeneosModule } from './resolvers/geneos/geneos.module';
     }),
     AuthModule,
     UserModule,
-    PartyModule,
-    SchedulerModule,
-    InstrumentsModule,
     KanbanModule,
     HttpModule.register({
       timeout: 5000,
@@ -50,9 +50,11 @@ import { GeneosModule } from './resolvers/geneos/geneos.module';
     }),
     JiraModule,
     GeneosModule,
+    DashboardsModule,
+    ClientsModule,
     
   ],
   controllers: [AppController, MessagesController],
-  providers: [AppService, AppResolver, DateScalar, HttpPostService],
+  providers: [AppService, AppResolver, DateScalar, HttpPostService, ClientsMasterResolver],
 })
 export class AppModule {}

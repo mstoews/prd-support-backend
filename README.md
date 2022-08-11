@@ -1,10 +1,59 @@
+# Installation of the Postgress Database Docker Container
+The easiest way to run a postgresql database is via a container. 
+In order to install a container we need something to run and manage the container. 
+Usually we use docker. It is easy to use and already configured in the source code. 
+
+1. Install docker desktop on your PC 
+2. run docker-compose command 
+```bash
+docker-compose -f docker-compose.db.yml up -d
+docker ps
+```
+
+```angular2html
+CONTAINER ID   IMAGE                 COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+19a549d537f2   postgres:12           "docker-entrypoint.s…"   15 seconds ago   Up 14 seconds   0.0.0.0:3302->5432/tcp, :::3302->5432/tcp   postgres
+```
+'docker ps' is like the unix command and tells us which containers are running. 
+This is important as we need to know the ports that are exposed to the outside world of the container.
+
+In this case 3302 is being used. You can change it 31432 by editing the docker-compose.db.yml file. 
+We can do this without docker compose but it makes it easier and in addition the storage location is specified so that the data won't be lost.
+All containers are meant to be stateless. They can go up and down with no data loss.
+
+The first time you run the command it will take a bit of time to start as docker needs to download the container to the local machine.  
+After the first download, stopping and starting the container is almost instantaneous.
+3. To bring down the container use: 
+```bash
+docker-compose -f docker-compose.db.yml down 
+```
+```angular2html
+Stopping postgres ... done
+Removing postgres ... done
+Removing network prd-support-backend_default
+```
+
+The application is expecting the database structure to be created and the data available.
+
+# Installation of the Software
+The software relies upon  several support tools.
+The include :
+prisma (ORM tool to connect to the database)
+graphql from apollo (connection from the server to API interface)
+postgres database connection
+
+```bash
+cd prd-support-backend
+npm install
+npx prisma db push 
+````
+The npx command creates the structure of the database tables. 
+
+TL;DR
 # GKE Setting Up the Application on GKE (Google Kubernetes Engine)
 
 ## Updating Workload Identity
 https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
-
-
-
 
 ```bash
 To clear containers:
@@ -36,13 +85,15 @@ nodejs needs to be installed.
 sudo yum install podman
 id -Gn
 userId wheel
-
 sysctl -ar max_user_namespaces
-
-$ cat /etc/subuid /etc/subgid
+```
+```angular2html
+cat /etc/subuid /etc/subgid
 userId:100000:65536
 userID:100000:65536
 ```
+
+
 To allow for rootless containers user namespaces need to be
 configured which are by default in CentOS 8. New users to the system
 will be assigned their own unique mappings in the subuid and subgid
@@ -333,7 +384,7 @@ You can use [class-validator](https://docs.nestjs.com/techniques/validation) to 
 
 To implement the new query, a new resolver function needs to be added to `users.resolver.ts`.
 
-```ts
+```
 @Query(returns => User)
 async getUser(@Args() args): Promise<User> {
   return await this.prisma.client.user(args);
@@ -362,7 +413,7 @@ ng add apollo-angular
 
 `HttpLink` from apollo-angular requires the `HttpClient`. Therefore, you need to add the `HttpClientModule` to the `AppModule`:
 
-```ts
+```
 imports: [BrowserModule,
     HttpClientModule,
     ...,
@@ -373,7 +424,7 @@ You can also add the `GraphQLModule` in the `AppModule` to make `Apollo` availab
 
 You need to set the URL to the NestJS Graphql Api. Open the file `src/app/graphql.module.ts` and update `uri`:
 
-```ts
+```
 const uri = 'http://localhost:3000/graphql';
 ```
 
@@ -385,7 +436,7 @@ To use Apollo-Angular you can inject `private apollo: Apollo` into the construct
 
 To execute a query you can use:
 
-```ts
+```
 this.apollo.query({query: YOUR_QUERY});
 
 # or
@@ -397,7 +448,7 @@ this.apollo.watchQuery({
 
 Here is an example how to fetch your profile from the NestJS Graphql Api:
 
-```ts
+```
 const CurrentUserProfile = gql`
   query CurrentUserProfile {
     me {

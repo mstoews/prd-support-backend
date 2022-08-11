@@ -16,6 +16,9 @@ export class SignupInput {
   @Field({ nullable: true })
   firstname?: string;
 
+  @Field({ nullable: true })
+  client_ref?: string;
+
   @Field({ nullable: false })
   role: Role;
 
