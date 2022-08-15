@@ -13,7 +13,7 @@ export class UserService {
 
   async createUser(payload: SignupInput): Promise<prd_user> {
     const hashedPassword = await this.passwordService.hashPassword(
-      payload.password
+      payload.hashed_password
     );
     return this.prisma.prd_user.create({
       data: {

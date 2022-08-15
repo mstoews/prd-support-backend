@@ -21,35 +21,35 @@ export class KanbanTaskResolver {
     return this.prisma.kb_task.findMany();
   }
 
-  @ResolveField()
-  async subtasks(@Parent() task: kb_task) {
-    const { task_id } = task;
-    this.logger.verbose(`Retrieve subtasks for task :${task_id}`);
-    return this.prisma.kb_subtask.findMany({ where: { task_id: task_id } });
-  }
+  // @ResolveField()
+  // async subtasks(@Parent() task: kb_task) {
+  //   const { task_id } = task;
+  //   this.logger.verbose(`Retrieve subtasks for task :${task_id}`);
+  //   return this.prisma.kb_subtask.findMany({ where: { task_id: task_id } });
+  // }
 
   @ResolveField()
-  async Status(@Parent() task: kb_task) {
+  async status(@Parent() task: kb_task) {
     const { status } = task;
     return this.prisma.kb_status.findMany({ where: { status: status } });
   }
 
 
   @ResolveField()
-  async Type(@Parent() task: kb_task) {
+  async type(@Parent() task: kb_task) {
     const { type } = task;
     return this.prisma.kb_type.findMany({ where: { type: type } });
   }
 
   @ResolveField()
-  async Priority(@Parent() task: kb_task) {
+  async priority(@Parent() task: kb_task) {
     const { priority } = task;
     return this.prisma.kb_priority.findMany({ where: { priority: priority } });
   }
 
   @Query((returns) => [kb_task])
   async KanbanTaskByRefAndStatus(
-    @Args('partyRef', { type: () => String }) partyRef: string,
+    @Args('client_id', { type: () => String }) client_id: string, 
     @Args('status', { type: () => String }) status: string) {
     return this.prisma.kb_task.findMany({
       orderBy : [{
@@ -57,7 +57,7 @@ export class KanbanTaskResolver {
       }
       ],
       where: {
-        party_ref: partyRef,
+        client_id: client_id,
         status: status
       },
     });
@@ -65,10 +65,10 @@ export class KanbanTaskResolver {
 
   @Query((returns) => [kb_task])
   async KanbanTaskByRef(
-    @Args('partyRef', { type: () => String }) partyRef: string) {
+    @Args('client_id', { type: () => String }) client_id: string) {
     return this.prisma.kb_task.findMany({
       where: {
-        party_ref: partyRef
+        client_id: client_id
       },
     });
   }
@@ -99,10 +99,10 @@ export class KanbanTaskResolver {
 
   @Query((returns) => kb_task)
   async KanbanFirstTask(  
-    @Args('party_ref', { type: () => String }) party_ref: string) {
+    @Args('client_id', { type: () => String }) client_id: string) {
     return this.prisma.kb_task.findFirst({
       where: {
-        party_ref: party_ref
+        client_id: client_id
       },
     });
   }

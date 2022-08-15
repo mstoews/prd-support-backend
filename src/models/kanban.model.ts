@@ -4,7 +4,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class kb_task {
    @Field({ nullable: false })task_id: string;
-   @Field({ nullable: true }) party_ref: string;
+   @Field({ nullable: true }) client_id: string;
    @Field({ nullable: true }) title: string;
    @Field({ nullable: true }) status: string;
    @Field({ nullable: true }) summary: string;
@@ -22,6 +22,29 @@ export class kb_task {
    @Field({ nullable: true }) dependencies: string;
    @Field({ nullable: true }) parentId: number;
    @Field({ nullable: true }) Id: number;
+}
+@ObjectType()
+   export class kb_task1 {
+   @Field({ nullable: false }) task_id: string;
+   @Field({nullable: true}) client_id: string;
+   @Field({nullable: true}) title: string;
+   @Field({nullable: true}) status: string;
+   @Field({nullable: true}) summary: string;
+   @Field({nullable: true}) type: string;
+   @Field({nullable: true}) priority: string;
+   @Field({nullable: true}) tags: string;
+   @Field({nullable: true}) estimate: string;
+   @Field({nullable: true}) assignee: string;
+   @Field({nullable: true}) rankid: string;
+   @Field({nullable: true}) color: string;
+   @Field({nullable: true}) classname: string;
+   @Field({nullable: true}) Id: string;
+   @Field({nullable: true}) dependencies: string;
+   @Field({nullable: true}) description: string;
+   @Field({nullable: true}) due_date: string;
+   @Field({nullable: true}) parentId: string;
+   @Field({nullable: true}) start_date: string;
+   
    
    @Field(type => [SubTasks]) 
    subtasks: SubTasks[];

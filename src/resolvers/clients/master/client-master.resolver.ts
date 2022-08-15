@@ -20,11 +20,11 @@ export class ClientMasterResolver {
 
     @Query((returns) => [ClientMasterModel])
     async ClientMastersById(
-        @Args('clientid', { nullable: false }) clientid?: number)
+        @Args('client_id', { nullable: false }) client_id?: number)
         {
         return this.prisma.ct_master.findMany({
             where: {
-                clientid
+                client_id
             },
         });
     }
@@ -40,11 +40,11 @@ export class ClientMasterResolver {
     // Update
     @Mutation((returns) => ClientMasterModel)
     async updateClientMasters(
-        @Args('clientid', { nullable: false }) clientid?: number,
+        @Args('client_id', { nullable: false }) client_id?: number,
         @Args('newData', { type: () => ClientMasterInputs }) data?: Prisma.ct_masterCreateInput) {
         return this.prisma.ct_master.update({
             where: {
-                clientid: clientid
+                client_id: client_id
             },
             data: data
         });
@@ -53,12 +53,12 @@ export class ClientMasterResolver {
     // Delete
     @Mutation((returns) => ClientMasterModel)
     async deleteClientMasters(
-        @Args('clientid', { type: () => Number }) clientid?: number,)
+        @Args('client_id', { type: () => Number }) client_id?: number,)
         {
         return this.prisma.ct_master.delete(
             {
                 where: {
-                    clientid
+                    client_id
                 }
             });
     }

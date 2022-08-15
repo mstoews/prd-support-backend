@@ -8,8 +8,6 @@ import { AppResolver } from './resolvers/app.resolver';
 import { DateScalar } from './common/scalars/date.scalar';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-
-import { HttpPostService } from './services/http-post/http-post.service';
 import { MessagesController } from './messages/messages.controller';
 import { KanbanModule} from './resolvers/kanban/kanban.module';
 import config from './configs/config';
@@ -55,6 +53,6 @@ import { ClientsMasterResolver } from './resolvers/clients/master/clients-master
     
   ],
   controllers: [AppController, MessagesController],
-  providers: [AppService, AppResolver, DateScalar, HttpPostService, ClientsMasterResolver],
+  providers: [AppService, AppResolver, DateScalar, ClientsMasterResolver],
 })
 export class AppModule {}

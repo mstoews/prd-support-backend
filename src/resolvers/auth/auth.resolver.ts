@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BadRequestException, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import {
   Args, Mutation, Resolver

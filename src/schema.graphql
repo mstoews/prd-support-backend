@@ -2,6 +2,30 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AlertInputs {
+  client_id: Int!
+  day_of_the_week: String!
+  entity: String!
+  gateway: String!
+  geneos_id: String!
+  japan_date: String!
+  sampler: String!
+  severity: String!
+  varname: String!
+}
+
+type AlertModel {
+  client_id: Int!
+  day_of_the_week: String!
+  entity: String!
+  gateway: String!
+  geneos_id: String!
+  japan_date: String!
+  sampler: String!
+  severity: String!
+  varname: String!
+}
+
 type Auth {
   """JWT access token"""
   accessToken: String!
@@ -41,26 +65,12 @@ type ClientServiceModel {
   timeandmaterialgoalsid: String!
 }
 
-input DashboardInputs {
-  clientid: Int!
-  dashboardtype: String!
-  maintitle: String
-  maintitlecount: String
-  maintitlecountthreedays: String
-  maintitlecounttwodays: String
-  maintitlecountyesterday: String
-  subtitle: String
-}
-
 type DashboardModel {
-  clientid: Int!
-  dashboardtype: String!
-  maintitle: String
-  maintitlecount: String
-  maintitlecountthreedays: String
-  maintitlecounttwodays: String
-  maintitlecountyesterday: String
-  subtitle: String
+  amount: Int
+  dashboard_child: String!
+  dashboard_parent: String!
+  data_item: String
+  title: String
 }
 
 """Date custom scalar type"""
@@ -105,6 +115,7 @@ type kb_status {
 type kb_task {
   assignee: String
   classname: String
+  client_id: String
   color: String
   dependencies: String
   description: String
@@ -112,20 +123,15 @@ type kb_task {
   estimate: Int
   Id: Int
   parentId: Int
-  party_ref: String
   priority: String
-  Priority: [kb_priority!]!
   rankid: Int
   start_date: Date
   status: String
-  Status: [kb_status!]!
-  subtasks: [SubTasks!]!
   summary: String
   tags: String
   task_id: String!
   title: String
   type: String
-  Type: [kb_type!]!
 }
 
 type kb_type {
@@ -142,14 +148,14 @@ input LoginInput {
 
 type Mutation {
   createClientServices(data: ClientServiceInputs!): ClientServiceModel!
-  createDashboards(data: DashboardInputs!): DashboardModel!
+  createDashboards(data: AlertInputs!): AlertModel!
   createKanbanPriority(kanbanData: TaskPriorityInputs!): kb_priority!
   createKanbanStatus(data: TaskStatusInputs!): kb_status!
   createKanbanType(data: TaskStatusInputs!): kb_type!
   createSubTask(data: SubTaskInputs!): SubTasks!
   createTask(data: KanbanInputs!): kb_task!
-  deleteClientServices(clientid: Int!): ClientServiceModel!
-  deleteDashboards(clientid: Int!, dashboardtype: String!): DashboardModel!
+  deleteClientServices(client_id: Int!): ClientServiceModel!
+  deleteDashboards(geneos_id: Int!): AlertModel!
   deleteKanbanPriority(priority: String!): kb_priority!
   deleteKanbanStatus(status: String!): kb_status!
   deleteKanbanSubTask(subid: String!, task_id: String!): SubTasks!
@@ -159,8 +165,8 @@ type Mutation {
   refreshToken(refreshtoken: String!): Token!
   resetPassword(data: LoginInput!): User!
   signup(data: SignupInput!): User!
-  updateClientServices(clientid: Int!, newData: ClientServiceInputs!): ClientServiceModel!
-  updateDashboards(clientid: Int!, dashboard: DashboardInputs!, dashboardtype: String!): DashboardModel!
+  updateClientServices(client_id: Int!, newData: ClientServiceInputs!): ClientServiceModel!
+  updateDashboards(alert: AlertInputs!, geneos_id: Int!): AlertModel!
   updateKanbanPriority(kanbanData: TaskPriorityInputs!, priority: String!): kb_priority!
   updateKanbanStatus(id: String!, newData: TaskStatusInputs!): kb_status!
   updateKanbanType(newData: TaskStatusInputs!, type: String!): kb_type!
@@ -169,154 +175,22 @@ type Mutation {
   updateTaskParentId(parentId: Int!, task_id: String!): kb_task!
 }
 
-type PartyAddress {
-  addr_line1: String!
-  addr_line2: String!
-  addr_line3: String!
-  addr_line4: String!
-  addr_line5: String!
-  addr_line6: String!
-  addr_type: String!
-  contact_name: String!
-  contact_title: String!
-  email: String!
-  fax_no: String!
-  int_dial_code: String!
-  party_ref: String!
-  phone_no: String!
-  post_code: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyAssoc {
-  assoc_party_ref: String!
-  assoc_type: String!
-  description: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyClassification {
-  class_code: String!
-  class_type: String!
-  description: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyDate {
-  date: String!
-  date_type: String!
-  party_ref: String!
-  time: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyExtRef {
-  description: String!
-  party_ext_ref: String!
-  party_ext_ref_type: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyFlag {
-  description: String!
-  flag_code: String!
-  flag_type: Int!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyInstr {
-  description: String!
-  instr_ref: String!
-  instr_ref_type: String!
-  instr_type: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartyNarrative {
-  description: String!
-  narr_type: String!
-  narrative: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartySSI {
-  account_name: String!
-  account_no: String!
-  active_ind: String!
-  ccy: String!
-  comms_service: String!
-  dacc_ref: String!
-  depo_ref: String!
-  depot_alias: String!
-  depot_descr: String!
-  depot_type: String!
-  description: String!
-  party_ref: String!
-  user_def: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
-type PartySwift {
-  branch_code: String!
-  channel: String!
-  company_name: String!
-  host: String!
-  incoming_queue: String!
-  logical_term_id: [String!]!
-  outgoing_queue: String!
-  party_ref: String!
-  port_number: Int!
-  queue_mgr: String!
-  version_date: Date!
-  version_no: Int!
-  version_user: String!
-}
-
 type Query {
+  AlertById(geneos_id: Int!): AlertModel!
   ClientService: [ClientServiceModel!]!
   ClientServicesById(clientid: Int!): [ClientServiceModel!]!
-  Dashboards: [DashboardModel!]!
-  DashboardsById(clientid: Int!, dashboardtype: String!): DashboardModel!
+  Dashboards: [AlertModel!]!
+  DashboardsById(dashboard_child: Int!, dashboard_parent: Int!): DashboardModel!
   GIB: String!
   KanbanByTaskId(task_id: String!): [kb_task!]!
-  KanbanFirstTask(party_ref: String!): kb_task!
+  KanbanFirstTask(client_id: String!): kb_task!
   KanbanPriority: [kb_priority!]!
   KanbanPriorityById(priority: String!): [kb_priority!]!
   KanbanStatus: [kb_status!]!
   KanbanStatusById(status: String!): [kb_status!]!
   KanbanTask: [kb_task!]!
-  KanbanTaskByRef(partyRef: String!): [kb_task!]!
-  KanbanTaskByRefAndStatus(partyRef: String!, status: String!): [kb_task!]!
+  KanbanTaskByRef(client_id: String!): [kb_task!]!
+  KanbanTaskByRefAndStatus(client_id: String!, status: String!): [kb_task!]!
   KanbanTaskByStatus(status: String!): [kb_task!]!
   KanbanTaskByTaskId(task_id: String!): kb_task!
   KanbanType: [kb_type!]!
@@ -331,13 +205,14 @@ type Query {
 
 input SignupInput {
   client_ref: String
-  createdAt: String!
+  createdAt: Date!
   email: String!
   firstname: String
+  hashed_password: String!
   lastname: String
-  password: String!
+  passport_changed_at: Date!
   role: String!
-  updatedAt: String!
+  updatedAt: Date!
   userid: String!
 }
 

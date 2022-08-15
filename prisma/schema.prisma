@@ -8,36 +8,26 @@ datasource db {
 }
 
 model prd_user {
-  userid     String   @id
-  createdAt  DateTime @db.Date
-  updatedAt  DateTime @db.Date
-  email      String
-  password   String
-  firstname  String?
-  lastname   String?
-  role       Role?
+  userid              String   @id @db.VarChar
+  email               String   @db.VarChar
+  hashed_password     String   @db.VarChar
+  passport_changed_at String   @db.VarChar
+  firstname           String   @db.VarChar
+  lastname            String   @db.VarChar
+  role                role?
+  createdAt           DateTime @db.Date
+  updatedAt           DateTime @db.Date
 }
 
 model prd_env {
-  environment      String  @id @db.VarChar(15)
-  description      String? @db.VarChar(30)
-  sst_glossapi_url String  @db.VarChar(30)
-  active           String  @db.VarChar(1)
-  client_id        String  @db.VarChar(12)
-}
-
-model ct_main {
-  client_id  String @id @db.VarChar(12)
-  name       String @db.VarChar(30)
-  active     String @db.VarChar(1)
-  createdAt  DateTime @db.Date
-  updatedAt  DateTime @db.Date
-  email      String
+  environment String  @id @db.VarChar(15)
+  description String? @db.VarChar(30)
+  active      String  @db.VarChar(1)
+  client_id   String  @db.VarChar(12)
 }
 
 model ct_addr {
-  party_ref     String   @db.VarChar(12)
-  client_ref    String   @db.VarChar(12)
+  client_id     Int      @unique
   addr_type     String   @db.VarChar(4)
   contact_name  String   @db.VarChar(35)
   contact_title String   @db.VarChar(35)
@@ -55,13 +45,11 @@ model ct_addr {
   version_date  DateTime @db.Timestamp(6)
   version_no    Int
   version_user  String   @db.VarChar(12)
-
-  @@id([party_ref, client_ref, addr_type])
 }
 
 model kb_task {
   task_id      String    @id
-  party_ref    String?
+  client_id    String?
   title        String?
   status       String?
   summary      String?
@@ -74,12 +62,11 @@ model kb_task {
   color        String?
   classname    String?
   Id           Int?
-  dependencies String?   @default("")
+  dependencies String?
   description  String?
-  due_date     DateTime? @default(now()) @db.Date
+  due_date     DateTime? @default(now()) @db.Timestamp(6)
   parentId     Int?
-  start_date   DateTime? @default(now()) @db.Date
-  client_ref   String?
+  start_date   DateTime? @default(now()) @db.Timestamp(6)
 }
 
 model kb_subtask {
@@ -102,72 +89,57 @@ model kb_priority {
 }
 
 model kb_status {
-  status      String    @id
+  status      String    @unique
   description String?
   updatedte   DateTime?
   updateusr   String?
 }
 
 model kb_type {
-  type        String    @id
+  type        String    @unique
   description String?
   updatedte   DateTime?
   updateusr   String?
 }
 
 model kb_team {
-  team_member String    @id
+  team_member String    @unique
   first_name  String?
   last_name   String?
   location    String?
   title       String?
   updatedte   DateTime?
   updateusr   String?
-  party_ref   String    @default("CMP")
+  party_ref   String?
 }
 
 model kb_comment {
-  task_id      String    @id
+  task_id      String    @unique
   comment_text String?
   image_url    String?
   title        String?
   updatedte    DateTime?
   updateusr    String?
-  party_ref    String    @default("CMP")
 }
 
 model ct_dashboard {
-  client_id       Int     @unique @default(autoincrement())
+  dashboard_id    Int     @id @default(autoincrement())
+  client_id       Int?
   client_name     String? @db.VarChar(20)
   rag             String? @db.Char(1)
   trend           String?
   applications    String?
   type            String?
-  csm             String?
+  userid          Int?
   environment     String?
   open_issues     String?
   csm_contacts    String?
   t_m_goals       String?
   client_contacts String?
-
-  @@id([client_id])
-}
-
-model ct_dashboards {
-  clientid                Int
-  dashboardtype           String  @db.VarChar(10)
-  maintitle               String?
-  maintitlecount          String?
-  subtitle                String?
-  maintitlecountyesterday String?
-  maintitlecountthreedays String?
-  maintitlecounttwodays   String?
-
-  @@id([clientid, dashboardtype])
 }
 
 model ct_master {
-  clientid    Int       @id
+  client_id   Int       @id
   client_name String?
   geneos_id   String?
   jira_id     String?
@@ -179,28 +151,28 @@ model ct_master {
 }
 
 model ct_csm_master {
-  clientid               Int       @id
+  client_id              Int       @id
   clientname             String?
   rag                    String?
   rag_trend              String?
   application            String?
-  type                   String?
   client_service_manager String?
   environment            String?
-  open_issues            String?
-  csm_contacts           String?
-  timeandmaterialgoals   String?
-  contacts               String?
   last_updated           DateTime? @db.Date
+  csm_contacts           String?
+  contacts               String?
   last_updated_by        String?
+  open_issues            String?
+  timeandmaterialgoals   String?
+  type                   String?
 }
 
 model ct_alerts {
+  client_id       Int?
   geneos_id       Int       @id
   japan_date      DateTime? @db.Date
   day_of_the_week String?
   severity        String?
-  client          String?
   gateway         String?
   entity          String?
   sampler         String?
@@ -209,7 +181,7 @@ model ct_alerts {
 
 model ct_contacts {
   contact_id   Int       @id
-  clientid     Int?
+  client_id    Int?
   name         String?
   email        String?
   phone_1      String?
@@ -222,7 +194,7 @@ model ct_contacts {
 
 model ct_issue {
   issueid     Int       @id
-  clientid    Int?
+  client_id   Int?
   severity    String?
   description String?
   start_date  DateTime? @db.Date
@@ -233,22 +205,71 @@ model ct_issue {
 
 model ct_service_request {
   sr_id                String    @id
-  first_name           String?
-  last_name            String?
+  client_id            Int?
+  userid               String?
   summary              String?
   service_request_stat String?
   severity             String?
   requested_by         String?
   case_overview        String?
   work_around          String?
-  assigned_to          String?
   submitted_by         String?
-  target_date          DateTime? @db.Date
   product_name         String?
   info                 String?
+  completion_date      DateTime? @db.Date
+}
+
+model ct_dashboard_data {
+  dashboard_parent Int
+  dashboard_child  Int
+  data_item        String?
+  title            String?
+  amount           Decimal? @db.Decimal
+
+  @@id([dashboard_parent, dashboard_child])
+}
+
+model ct_dashboard_issues {
+  dashboard_id Int       @unique
+  issue_id     Int?
+  description  String?
+  rag          String?   @db.Char(1)
+  active       Boolean?
+  createAt     DateTime?
+  updateAt     DateTime?
+  assigned_to  Int?
+}
+
+model ct_time_and_material {
+  tm_id         Int       @unique
+  client_id     Int?
+  description   String?
+  amount        Decimal?  @db.Decimal
+  man_days      Decimal?  @db.Decimal
+  total_revenue Decimal?  @db.Decimal
+  due_date      DateTime?
+  createAt      DateTime?
+  updateAt      DateTime?
+  userid        Int?
+}
+
+model prd_session {
+  userid        String   @id @db.VarChar
+  refresh_token String   @db.VarChar
+  user_agent    String   @db.VarChar
+  client_ip     String   @db.VarChar
+  createdAt     DateTime @db.Date
+  updatedAt     DateTime @db.Date
+  role          role?
 }
 
 enum Role {
+  ADMIN
+  TEAMOPERATOR
+  TEAMSUPERVISOR
+}
+
+enum role {
   ADMIN
   TEAMOPERATOR
   TEAMSUPERVISOR

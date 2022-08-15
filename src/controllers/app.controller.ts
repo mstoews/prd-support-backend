@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Post, HttpService } from '@nestjs/common';
 import { AppService } from '../services/app.service';
-import { HttpPostService} from '../services/http-post/http-post.service'
+
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private  httpService :HttpService, private httpPostService: HttpPostService  ) {}
+  constructor(private readonly appService: AppService, private  httpService :HttpService ) {}
 
   @Get()
   getHello(): string {
